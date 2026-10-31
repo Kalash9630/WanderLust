@@ -1,7 +1,7 @@
 <% layout("./layouts/boilerplate") %>
 <div class="row">
     <div class="col-8 offset-3">
-        <h3 class="mb-6 mt-6">Listing Details</h3>
+        <h3 class="mb-6 mt-6"><%= listing.title %></h3>
     </div>
 </div>
 
@@ -11,7 +11,6 @@
             <img src="<%= listing.image %>" class="card-img-top show-img mb-5" alt="listing_image" />
             <div class="card-body">
               <p class="card-text">
-                <b><%= listing.title %></b><br />
                 <%= listing.description %> <br />
                 &#8377; <%= String(listing.price).replace(/\B(?=(\d{3})+(?!\d))/g, ",") %> / night<br />
                 <%= listing.location %>, &nbsp;<%= listing.country %> <br />
