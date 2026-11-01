@@ -44,10 +44,11 @@
         Please add some comments review.
       </div>
     </div>
-    <button class="btn mb-3 btn-outline theme-secondary" type="submit">Submit</button>
+    <button class="btn mb-4 btn-outline theme-secondary" type="submit">Submit</button>
   </form>
 </div>
 
+<% if (listing.reviews.length > 0) { %>
 <div class="class=col-8 offset-3 mb-6">
   <hr>
   <h4 >All Reviews</h4>
@@ -67,3 +68,4 @@
     <% } %>
   </div>
 </div>
+<% } %>
