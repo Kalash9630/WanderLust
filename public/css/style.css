@@ -78,7 +78,7 @@ body {
 
 /* Styling index Page */
 /* Cards */
-.card {
+.listing-card {
   border: none !important;
   margin-bottom: 2rem;
 }
@@ -224,4 +224,48 @@ body {
 /* Valid field hover */
 .was-validated .form-control:valid:hover {
   border-color: #198754;
+}
+
+/* Flash Success Message */
+.flash-message {
+    position: fixed;
+    top: 80px;
+    left: 20px;
+    z-index: 1050;
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    width: fit-content;
+    max-width: 320px;
+    padding: 14px 20px;
+
+    background-color: #d1e7dd;
+    color: #0f5132;
+    border: 1px solid #badbcc;
+    border-radius: 8px;
+
+    font-size: 15px;
+    font-weight: 500;
+
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+
+    animation: flashFadeOut 0.5s ease 2.5s forwards;
+}
+
+/* Success icon */
+.flash-message i {
+    font-size: 18px;
+}
+
+/* Disappear after 3 seconds */
+@keyframes flashFadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+        visibility: hidden;
+    }
 }
