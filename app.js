@@ -18,12 +18,19 @@ app.use(methodOverride("_method"));
 app.engine('ejs', ejsMate);
 app.use(express.static(path.join(__dirname,"/public")))
 
-// Session configuration
-app.use(session({
-    secret: "wanderlustsecret",
+const sessionOptions = {
+    secret: "mysupersecretcode",
     resave: false,
-    saveUninitialized: true
-}));
+    saveUninitialized: true,
+    cookie : {
+        expires : Date.now() + 7 * 24 * 60 * 60 * 1000,
+        maxAge : 7 * 24 * 60 * 60 * 1000,
+        httpOnly : true,
+    },
+};
+
+// Session configuration
+app.use(session(sessionOptions));
 
 // Flash messages
 app.use(flash());
