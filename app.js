@@ -7,8 +7,13 @@ const ejsMate = require("ejs-mate");
 const ExpressError = require("./utils/ExpressError.js");
 const session = require("express-session");
 const flash = require("connect-flash");
+const passport = require("passport");
+const LocalStrategy = require("passport-local");
+const User = require("./models/user.js");
+
 const listingRouter = require("./routes/listing.js");
 const reviewRouter = require("./routes/review.js");
+const userRouter = require("./routes/user.js");
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
@@ -38,8 +43,22 @@ app.use(flash());
 // Making success messages available to EJS
 app.use((req, res, next) => {
     res.locals.success = req.flash("success");
+    res.locals.error = req.flash("error");
     next();
 });
+
+// passport
+app.use(passport.initialize());
+app.use(passport.session());
+
+// used to authenticate user for passport local strategy
+passport.use(new LocalStrategy(User.authenticate()));
+
+// storing user related info in session
+passport.serializeUser(User.serializeUser());
+
+// unstoring user related info in session
+passport.deserializeUser(User.deserializeUser());
 
 const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
 async function main() {
@@ -54,16 +73,18 @@ main()
         console.log(`Error while connecting Database wanderlust - ${err}`);
     })
 
-
-
-
 app.get("/", (req, res) => {
     res.send("Hi, I am root");
 })
 
+// listing router
 app.use("/listings",listingRouter);
 
+// review router
 app.use("/listings/:id/reviews",reviewRouter);
+
+// user router
+app.use("/",userRouter);
 
 // handling if any other page is requested other than the one that are created
 app.all("/{*splat}", (req,res,next) => {

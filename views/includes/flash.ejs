@@ -4,3 +4,9 @@
         <span><%= success[0] %></span>
     </div>
 <% } %>
+
+<% if (error && error.length > 0) { %>
+    <div class="flash-error">
+        <%= error[0] %>
+    </div>
+<% } %>

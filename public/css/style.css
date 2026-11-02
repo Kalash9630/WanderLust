@@ -269,3 +269,19 @@ body {
         visibility: hidden;
     }
 }
+
+/* flash for error */
+.flash-error {
+  position: fixed;
+  top: 100px;
+  left: 20px;
+  z-index: 1050;
+  width: fit-content;
+  max-width: 320px;
+  padding: 14px 20px;
+  background-color: #f8d7da;
+  color: #842029;
+  border: 1px solid #f5c2c7;
+  border-radius: 8px;
+  animation: flashFadeOut 0.5s ease 2.5s forwards;
+}
