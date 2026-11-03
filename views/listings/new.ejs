@@ -1,96 +1,142 @@
 <% layout("./layouts/boilerplate") %>
-<div class="row">
-  <div class="col-8 offset-2">
-    <h3 class="mt-6">Create a new Listing</h3>
-    <form action="/listings" method="post" class="needs-validation" novalidate>
-      <div class="mt-6 mb-5">
-        <label for="title" class="form-label">Title </label>
-        <input
-          type="text"
-          name="title"
-          placeholder="Add a catchy title"
-          class="form-control"
-          id="title"
-          required
-        />
-        <div class="invalid-feedback">
-          Please enter valid title.
-        </div>
-      </div>
 
-      <div class="mb-5">
-        <label for="description" class="form-label">Description </label>
-        <textarea
-          name="description"
-          placeholder="enter description"
-          class="form-control"
-          id="description"
-          required
-        ></textarea>
-        <div class="invalid-feedback">
-          Please enter a short description.
-        </div>
-      </div>
+<div class="create-listing-page">
 
-      <div class="mb-5">
-        <label for="image" class="form-label">Image Link</label>
-        <input
-          type="text"
-          name="image"
-          placeholder="enter URL/Link"
-          class="form-control"
-          id="image"
-        />
-      </div>
+    <div class="create-listing-header">
+        <span class="create-listing-eyebrow">
+            <i class="fa-regular fa-compass"></i>
+            WANDERLUST HOSTING
+        </span>
 
-      <div class="row mb-5">
-        <div class="col-4">
-            <label for="price" class="form-label">Price</label>
-            <input
-              type="number"
-              name="price"
-              placeholder="enter price"
-              class="form-control"
-              id="price"
-              required
-            />
-            <div class="invalid-feedback">
-              Please enter a valid price.
+        <h2>Create a new Listing</h2>
+
+        <p>
+            Share your place with travellers and give them
+            somewhere memorable to stay.
+        </p>
+    </div>
+
+    <div class="create-listing-card">
+
+        <form action="/listings" method="post" class="needs-validation" novalidate>
+
+            <!-- TITLE -->
+            <div class="create-listing-field">
+                <label for="title" class="form-label">Title</label>
+
+                <input
+                    type="text"
+                    name="title"
+                    placeholder="Add a catchy title"
+                    class="form-control"
+                    id="title"
+                    required
+                />
+
+                <div class="invalid-feedback">
+                    Please enter valid title.
+                </div>
             </div>
-          </div>
-    
-          <div class="col-8">
-            <label for="country" class="form-label">Country</label>
-            <input
-              type="text"
-              name="country"
-              placeholder="enter country"
-              class="form-control"
-              id="country"
-              required
-            />
-            <div class="invalid-feedback">
-              Please enter a valid country name.
+
+            <!-- DESCRIPTION -->
+            <div class="create-listing-field">
+                <label for="description" class="form-label">Description</label>
+
+                <textarea
+                    name="description"
+                    placeholder="Describe what makes your place special..."
+                    class="form-control create-listing-textarea"
+                    id="description"
+                    required
+                ></textarea>
+
+                <div class="invalid-feedback">
+                    Please enter a short description.
+                </div>
             </div>
-          </div>
-      </div>
 
-      <div class="mb-5">
-        <label for="location" class="form-label">Location</label>
-        <input
-          type="text"
-          name="location"
-          placeholder="enter city"
-          class="form-control"
-          id="location"
-          required
-        />
-        <div class="invalid-feedback">
-          Please enter valid city name.
-        </div>
-      </div>
+            <!-- IMAGE LINK -->
+            <div class="create-listing-field">
+                <label for="image" class="form-label">Image Link</label>
 
-      <button type="submit" class="btn-solid add-btn mt-3 mb-6">Add</button>
-    </form>
-  </div>
+                <input
+                    type="text"
+                    name="image"
+                    placeholder="Paste your image URL"
+                    class="form-control"
+                    id="image"
+                />
+
+                <small class="create-listing-hint">
+                    Add a link to an image of your property.
+                </small>
+            </div>
+
+            <!-- PRICE AND COUNTRY -->
+            <div class="create-listing-row">
+
+                <div class="create-listing-field">
+                    <label for="price" class="form-label">Price</label>
+
+                    <input
+                        type="number"
+                        name="price"
+                        placeholder="Enter price"
+                        class="form-control"
+                        id="price"
+                        required
+                    />
+
+                    <div class="invalid-feedback">
+                        Please enter a valid price.
+                    </div>
+                </div>
+
+                <div class="create-listing-field">
+                    <label for="country" class="form-label">Country</label>
+
+                    <input
+                        type="text"
+                        name="country"
+                        placeholder="Enter country"
+                        class="form-control"
+                        id="country"
+                        required
+                    />
+
+                    <div class="invalid-feedback">
+                        Please enter a valid country name.
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- LOCATION -->
+            <div class="create-listing-field">
+                <label for="location" class="form-label">Location</label>
+
+                <input
+                    type="text"
+                    name="location"
+                    placeholder="Enter city"
+                    class="form-control"
+                    id="location"
+                    required
+                />
+
+                <div class="invalid-feedback">
+                    Please enter valid city name.
+                </div>
+            </div>
+
+            <!-- SUBMIT BUTTON -->
+            <button type="submit" class="create-listing-submit">
+                <i class="fa-solid fa-plus"></i>
+                Add Listing
+            </button>
+
+        </form>
+
+    </div>
+
 </div>

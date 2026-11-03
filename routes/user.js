@@ -71,4 +71,14 @@ router.get("/logout", (req, res, next) => {
   });
 });
 
+// privacy page
+router.get("/privacy", (req, res) => {
+  res.render("privacy.ejs");
+});
+
+// terms and conditions page
+router.get("/terms", (req, res) => {
+  res.render("terms.ejs");
+});
+
 module.exports = router;

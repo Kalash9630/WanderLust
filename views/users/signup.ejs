@@ -1,45 +1,152 @@
 <% layout("./layouts/boilerplate") %>
 
-<div class="row mt-3">
-  <h1 class="col-6 offset-3">SignUp on WanderLust</h1>
-  <div class="col-6 offset-3">
-    <form action="/signup" method="post" class="needs-validation" novalidate>
-      <div class="mb-3">
-        <label for="username" class="form-label">Username</label>
-        <input
-          type="text"
-          id="usernname"
-          name="username"
-          class="form-control"
-          required
-        />
-        <div class="invalid-feedback">Enter valid username</div>
-      </div>
+<div class="wanderlust-signup-page">
 
-      <div class="mb-3">
-        <label for="email" class="form-label">Email</label>
-        <input
-            type="email"
-            name="email"
-            id="email"
-            class="form-control"
-            required
-        />
-        <div class="invalid-feedback">Enter valid email</div>
-    </div>
+    <!-- LEFT SIDE: BRANDING AND VISUALS -->
+    <section class="signup-visual-section">
 
-      <div class="mb-3">
-        <label for="password">Password</label>
-        <input
-          type="password"
-          name="password"
-          id="password"
-          class="form-control"
-          required
-        />
-        <div class="invalid-feedback">Enter valid password</div>
-      </div>
-      <button class="btn-solid theme-success">Sign Up</button>
-    </form>
-  </div>
+        <div class="signup-brand">
+            <i class="fa-regular fa-compass"></i>
+            <span>WanderLust</span>
+        </div>
+
+        <div class="signup-visual-content">
+
+            <h1>
+                Your next adventure
+                <br>
+                starts <span>here.</span>
+            </h1>
+
+            <p>
+                Discover beautiful destinations, find unique stays,
+                and make memories that last a lifetime.
+            </p>
+
+            <div class="signup-image-collage">
+
+                <div class="signup-collage-card signup-collage-left">
+                    <img
+                        src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=500"
+                        alt="Mountain destination"
+                    >
+                </div>
+
+                <div class="signup-collage-card signup-collage-center">
+                    <img
+                        src="https://images.unsplash.com/photo-1530789253388-582c481c54b0?w=600"
+                        alt="Travel destination"
+                    >
+                </div>
+
+                <div class="signup-collage-card signup-collage-right">
+                    <img
+                        src="https://images.unsplash.com/photo-1516483638261-f4dbaf036963?w=500"
+                        alt="Beautiful coastal village"
+                    >
+                </div>
+
+                <div class="signup-floating-icon signup-heart">
+                    <i class="fa-solid fa-heart"></i>
+                </div>
+
+                <div class="signup-floating-icon signup-star">
+                    <i class="fa-solid fa-star"></i>
+                </div>
+
+            </div>
+
+            <div class="signup-visual-caption">
+                <span></span>
+                Explore more. Experience more.
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- RIGHT SIDE: SIGNUP FORM -->
+    <section class="signup-form-section">
+
+        <div class="signup-form-container">
+
+            <div class="signup-mobile-brand">
+                <i class="fa-regular fa-compass"></i>
+                <span>WanderLust</span>
+            </div>
+
+            <h2>Create your account</h2>
+
+            <p class="signup-subtitle">
+                Join WanderLust and start exploring.
+            </p>
+
+            <form action="/signup" method="post" class="needs-validation" novalidate>
+
+                <div class="signup-input-group">
+                    <label for="username">Username</label>
+                    <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        placeholder="Choose a username"
+                        autocomplete="username"
+                        required
+                    />
+                    <div class="invalid-feedback">
+                        Enter valid username
+                    </div>
+                </div>
+
+                <div class="signup-input-group">
+                    <label for="email">Email</label>
+                    <input
+                        type="email"
+                        name="email"
+                        id="email"
+                        placeholder="Enter your email address"
+                        autocomplete="email"
+                        required
+                    />
+                    <div class="invalid-feedback">
+                        Enter valid email
+                    </div>
+                </div>
+
+                <div class="signup-input-group">
+                    <label for="password">Password</label>
+                    <input
+                        type="password"
+                        name="password"
+                        id="password"
+                        placeholder="Create a password"
+                        autocomplete="new-password"
+                        required
+                    />
+                    <div class="invalid-feedback">
+                        Enter valid password
+                    </div>
+                </div>
+
+                <button type="submit" class="wanderlust-signup-button">
+                    Create account
+                </button>
+
+            </form>
+
+            <div class="signup-login-prompt">
+                Already have an account?
+                <a href="/login">Log in</a>
+            </div>
+
+            <div class="signup-form-footer">
+                <i class="fa-regular fa-compass"></i>
+                <span>WanderLust</span>
+            </div>
+
+        </div>
+
+    </section>
+
 </div>
