@@ -40,16 +40,18 @@ app.use(session(sessionOptions));
 // Flash messages
 app.use(flash());
 
-// Making success messages available to EJS
-app.use((req, res, next) => {
-    res.locals.success = req.flash("success");
-    res.locals.error = req.flash("error");
-    next();
-});
-
 // passport
 app.use(passport.initialize());
 app.use(passport.session());
+
+// Making success messages available to EJS
+app.use((req, res, next) => {
+
+    res.locals.success = req.flash("success");
+    res.locals.error = req.flash("error");
+    res.locals.currUser = req.user;
+    next();
+});
 
 // used to authenticate user for passport local strategy
 passport.use(new LocalStrategy(User.authenticate()));
