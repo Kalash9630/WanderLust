@@ -1046,6 +1046,31 @@ body {
     transform: translateY(-1px);
 }
 
+.current-image-preview,
+.new-image-preview {
+    margin: 15px 0;
+}
+
+.current-image-preview p,
+.new-image-preview p {
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.current-image-preview img,
+.new-image-preview img {
+    width: 220px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 12px;
+    border: 1px solid #ddd;
+    display: block;
+}
+
+.new-image-preview {
+    margin-top: 20px;
+}
+
 /* RESPONSIVE */
 
 @media (max-width: 600px) {

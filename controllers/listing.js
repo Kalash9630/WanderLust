@@ -14,7 +14,7 @@ module.exports.create =async (req,res) => {
     let newListing = new Listing({
         title : title,
         description : description,
-        image : image || undefined,
+        image: req.file ? req.file.path : undefined,
         price : price,
         location : location,
         country : country,
@@ -46,17 +46,23 @@ module.exports.edit = async (req,res) => {
     res.render("./listings/edit.ejs", {listing});
 }
 
-module.exports.update = async (req,res) => {
-    let {id} = req.params;
-    let {title, description, image, price, location, country} = req.body;
-    await Listing.findByIdAndUpdate(id, {
-        title : title,
-        description : description,
-        image : image,
-        price : price,
-        location : location,
-        country : country,
+module.exports.update = async (req, res) => {
+    let { id } = req.params;
+    let { title, description, price, location, country } = req.body;
+
+    let updatedListing = await Listing.findByIdAndUpdate(id, {
+        title,
+        description,
+        price,
+        location,
+        country,
     });
+
+    if (req.file) {
+        updatedListing.image = req.file.path;
+        await updatedListing.save();
+    }
+
     req.flash("success", "Listing updated successfully!");
     res.redirect(`/listings/${id}`);
 }

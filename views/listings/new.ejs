@@ -18,7 +18,7 @@
 
     <div class="create-listing-card">
 
-        <form action="/listings" method="post" class="needs-validation" novalidate>
+        <form action="/listings" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
 
             <!-- TITLE -->
             <div class="create-listing-field">
@@ -57,18 +57,18 @@
 
             <!-- IMAGE LINK -->
             <div class="create-listing-field">
-                <label for="image" class="form-label">Image Link</label>
-
+                <label for="image" class="form-label">Upload Listing Image</label>
+            
                 <input
-                    type="text"
+                    type="file"
                     name="image"
-                    placeholder="Paste your image URL"
                     class="form-control"
                     id="image"
+                    accept="image/*"
                 />
-
+            
                 <small class="create-listing-hint">
-                    Add a link to an image of your property.
+                    Select an image of your property from your device.
                 </small>
             </div>
 

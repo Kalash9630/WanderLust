@@ -1,147 +1,170 @@
 <% layout("./layouts/boilerplate") %>
 
 <div class="edit-listing-page">
+  <div class="edit-listing-header">
+    <span class="edit-listing-eyebrow">
+      <i class="fa-regular fa-compass"></i>
+      WANDERLUST HOSTING
+    </span>
 
-    <div class="edit-listing-header">
-        <span class="edit-listing-eyebrow">
-            <i class="fa-regular fa-compass"></i>
-            WANDERLUST HOSTING
-        </span>
+    <h2>Edit your Listing</h2>
 
-        <h2>Edit your Listing</h2>
+    <p>
+      Update your property details and keep your listing looking its best for
+      travellers.
+    </p>
+  </div>
 
-        <p>
-            Update your property details and keep your listing
-            looking its best for travellers.
-        </p>
-    </div>
+  <div class="edit-listing-card">
+    <form
+      action="/listings/<%= listing._id %>?_method=PUT"
+      method="post"
+      enctype="multipart/form-data"
+      class="needs-validation"
+      novalidate
+    >
+      <!-- TITLE -->
+      <div class="edit-listing-field">
+        <label for="title" class="form-label">Title</label>
 
-    <div class="edit-listing-card">
+        <input
+          type="text"
+          name="title"
+          value="<%= listing.title %>"
+          class="form-control"
+          id="title"
+          required
+        />
 
-        <form
-            action="/listings/<%= listing._id %>?_method=PUT"
-            method="post"
-            class="needs-validation"
-            novalidate
+        <div class="invalid-feedback">Please enter valid title.</div>
+      </div>
+
+      <!-- DESCRIPTION -->
+      <div class="edit-listing-field">
+        <label for="description" class="form-label">Description</label>
+
+        <textarea
+          name="description"
+          class="form-control edit-listing-textarea"
+          id="description"
+          required
+        >
+<%= listing.description %></textarea
         >
 
-            <!-- TITLE -->
-            <div class="edit-listing-field">
-                <label for="title" class="form-label">Title</label>
+        <div class="invalid-feedback">Please enter a short description.</div>
+      </div>
 
-                <input
-                    type="text"
-                    name="title"
-                    value="<%= listing.title %>"
-                    class="form-control"
-                    id="title"
-                    required
-                />
-
-                <div class="invalid-feedback">
-                    Please enter valid title.
-                </div>
-            </div>
-
-            <!-- DESCRIPTION -->
-            <div class="edit-listing-field">
-                <label for="description" class="form-label">Description</label>
-
-                <textarea
-                    name="description"
-                    class="form-control edit-listing-textarea"
-                    id="description"
-                    required
-                ><%= listing.description %></textarea>
-
-                <div class="invalid-feedback">
-                    Please enter a short description.
-                </div>
-            </div>
-
-            <!-- IMAGE -->
-            <div class="edit-listing-field">
-                <label for="image" class="form-label">Image</label>
-
-                <input
-                    type="text"
-                    name="image"
-                    value="<%= listing.image %>"
-                    class="form-control"
-                    id="image"
-                    required
-                />
-
-                <div class="invalid-feedback">
-                    Please enter a valid url.
-                </div>
-            </div>
-
-            <!-- PRICE AND COUNTRY -->
-            <div class="edit-listing-row">
-
-                <div class="edit-listing-field">
-                    <label for="price" class="form-label">Price</label>
-
-                    <input
-                        type="number"
-                        name="price"
-                        value="<%= listing.price %>"
-                        class="form-control"
-                        id="price"
-                        required
-                    />
-
-                    <div class="invalid-feedback">
-                        Please enter a valid price.
-                    </div>
-                </div>
-
-                <div class="edit-listing-field">
-                    <label for="country" class="form-label">Counrty</label>
-
-                    <input
-                        type="text"
-                        name="country"
-                        value="<%= listing.country %>"
-                        id="country"
-                        class="form-control"
-                        required
-                    />
-
-                    <div class="invalid-feedback">
-                        Please enter a valid country name.
-                    </div>
-                </div>
-
-            </div>
-
-            <!-- LOCATION -->
-            <div class="edit-listing-field">
-                <label for="location" class="form-label">Location</label>
-
-                <input
-                    type="text"
-                    name="location"
-                    value="<%= listing.location %>"
-                    class="form-control"
-                    id="location"
-                    required
-                />
-
-                <div class="invalid-feedback">
-                    Please enter valid city name.
-                </div>
-            </div>
-
-            <!-- SUBMIT -->
-            <button type="submit" class="edit-listing-submit">
-                <i class="fa-regular fa-pen-to-square"></i>
-                Save Changes
-            </button>
-
-        </form>
-
+      <!-- IMAGE -->
+      <div class="edit-listing-field">
+        <label for="image" class="form-label">Change Listing Image</label>
+    
+        <!-- Current Image Preview -->
+        <div class="current-image-preview">
+            <p>Current Listing Image:</p>
+            <img
+                src="<%= listing.image %>"
+                alt="Current Listing"
+                id="currentImage"
+            />
+        </div>
+    
+        <!-- Upload New Image -->
+        <input
+            type="file"
+            name="image"
+            class="form-control"
+            id="image"
+            accept="image/*"
+        />
+    
+        <small class="create-listing-hint">
+            Select a new image to replace the current one.
+        </small>
+    
+        <!-- New Image Preview -->
+        <div class="new-image-preview" id="newImagePreviewContainer" style="display: none;">
+            <p>New Image Preview:</p>
+            <img
+                src=""
+                alt="New Listing Preview"
+                id="newImagePreview"
+            />
+        </div>
     </div>
 
+      <!-- PRICE AND COUNTRY -->
+      <div class="edit-listing-row">
+        <div class="edit-listing-field">
+          <label for="price" class="form-label">Price</label>
+
+          <input
+            type="number"
+            name="price"
+            value="<%= listing.price %>"
+            class="form-control"
+            id="price"
+            required
+          />
+
+          <div class="invalid-feedback">Please enter a valid price.</div>
+        </div>
+
+        <div class="edit-listing-field">
+          <label for="country" class="form-label">Counrty</label>
+
+          <input
+            type="text"
+            name="country"
+            value="<%= listing.country %>"
+            id="country"
+            class="form-control"
+            required
+          />
+
+          <div class="invalid-feedback">Please enter a valid country name.</div>
+        </div>
+      </div>
+
+      <!-- LOCATION -->
+      <div class="edit-listing-field">
+        <label for="location" class="form-label">Location</label>
+
+        <input
+          type="text"
+          name="location"
+          value="<%= listing.location %>"
+          class="form-control"
+          id="location"
+          required
+        />
+
+        <div class="invalid-feedback">Please enter valid city name.</div>
+      </div>
+
+      <!-- SUBMIT -->
+      <button type="submit" class="edit-listing-submit">
+        <i class="fa-regular fa-pen-to-square"></i>
+        Save Changes
+      </button>
+    </form>
+  </div>
 </div>
+
+<script>
+  let imageInput = document.getElementById("image");
+  let newImagePreview = document.getElementById("newImagePreview");
+  let previewContainer = document.getElementById("newImagePreviewContainer");
+
+  imageInput.addEventListener("change", function () {
+      let file = this.files[0];
+
+      if (file) {
+          newImagePreview.src = URL.createObjectURL(file);
+          previewContainer.style.display = "block";
+      } else {
+          newImagePreview.src = "";
+          previewContainer.style.display = "none";
+      }
+  });
+</script>

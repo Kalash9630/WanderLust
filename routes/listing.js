@@ -6,6 +6,7 @@ const {listingSchema} = require("../schema.js");
 const ExpressError = require("../utils/ExpressError.js");
 const { isLoggedIn } = require("../middleware.js");
 const listingController = require("../controllers/listing.js");
+const upload = require("../config/multer.js");
 
 // validating listing schema
 const validateListing = (req, res, next) => {
@@ -25,7 +26,7 @@ router.get("/", wrapAsync (listingController.index));
 router.get("/new", isLoggedIn, listingController.new);
 
 // Create Route (for adding in backend)
-router.post("/", isLoggedIn, validateListing, wrapAsync(listingController.create));
+router.post("/", isLoggedIn, upload.single("image"), validateListing, wrapAsync(listingController.create));
 
 // Read : Show route
 router.get("/:id", wrapAsync(listingController.show));
@@ -34,7 +35,7 @@ router.get("/:id", wrapAsync(listingController.show));
 router.get("/:id/edit", isLoggedIn, wrapAsync (listingController.edit));
 
 // Update Route (for saving the edited part in database)
-router.put("/:id", isLoggedIn, validateListing, wrapAsync (listingController.update));
+router.put("/:id", isLoggedIn, upload.single("image"),validateListing, wrapAsync (listingController.update));
 
 // Delete Route (for deleting a listing)
 router.delete("/:id", isLoggedIn, wrapAsync (listingController.delete));
