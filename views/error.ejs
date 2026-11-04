@@ -1,21 +1,57 @@
 <% layout("./layouts/boilerplate") %>
-<div class="row mt-6">
-    <div
-  class="alert d-flex align-items-center"
-  role="alert"
-  style="background-color: #f8d7da; color: #842029; border-color: #f5c2c7;"
->
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="20"
-    height="20"
-    fill="currentColor"
-    class="flex-shrink-0 me-2"
-    viewBox="0 0 16 16"
-    aria-hidden="true"
-  >
-    <path d="M8.982 1.566a1.13 1.13 0 0 0-1.964 0L.165 13.233c-.457.778.091 1.767.982 1.767h13.706c.89 0 1.438-.99.982-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm0 6a.905.905 0 1 1 0 1.81A.905.905 0 0 1 8 11z"/>
-  </svg>
-  <div><%= err.message %></div>
-</div>
+
+<div class="error-page">
+    <div class="error-card">
+
+        <div class="error-illustration">
+            <div class="error-circle">
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     width="65" height="65"
+                     viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="1.4"
+                     stroke-linecap="round"
+                     stroke-linejoin="round">
+
+                    <path d="M10.3 3.9 2.5 17.4a2 2 0 0 0 1.7 3h15.6a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/>
+                    <path d="M12 9v4"/>
+                    <path d="M12 17h.01"/>
+                </svg>
+            </div>
+
+            <span class="error-decoration decoration-one"></span>
+            <span class="error-decoration decoration-two"></span>
+        </div>
+
+        <p class="error-label">WANDERLUST • SOMETHING WENT WRONG</p>
+
+        <h1>Oops! We've hit a little roadblock.</h1>
+
+        <p class="error-description">
+            Looks like something didn't go as planned.
+            Don't worry, every great journey has a few unexpected turns.
+        </p>
+
+        <div class="error-message">
+            <span class="error-message-title">ERROR DETAILS</span>
+            <p><%= err.message %></p>
+        </div>
+
+        <div class="error-actions">
+            <a href="/listings" class="error-home-btn">
+                <span>Explore Listings</span>
+                <span class="arrow">&rarr;</span>
+            </a>
+
+            <a href="javascript:history.back()" class="error-back-btn">
+                Go Back
+            </a>
+        </div>
+
+        <div class="error-footer">
+            <span>✦</span> Your next adventure is just around the corner.
+        </div>
+
+    </div>
 </div>
