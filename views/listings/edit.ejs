@@ -150,21 +150,3 @@
     </form>
   </div>
 </div>
-
-<script>
-  let imageInput = document.getElementById("image");
-  let newImagePreview = document.getElementById("newImagePreview");
-  let previewContainer = document.getElementById("newImagePreviewContainer");
-
-  imageInput.addEventListener("change", function () {
-      let file = this.files[0];
-
-      if (file) {
-          newImagePreview.src = URL.createObjectURL(file);
-          previewContainer.style.display = "block";
-      } else {
-          newImagePreview.src = "";
-          previewContainer.style.display = "none";
-      }
-  });
-</script>

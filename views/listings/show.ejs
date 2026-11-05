@@ -236,3 +236,26 @@
       </div>
   </div>
 <% } %>
+
+<!-- Map Section -->
+<div class="row mt-5 mb-5">
+    <div class="col-10 offset-1">
+        <hr>
+        <h3 class="fw-bold mb-3">Where you'll be</h3>
+        <p class="text-muted">
+            <%= listing.location %>, <%= listing.country %>
+        </p>
+        <div
+            id="map"
+            data-map-token="<%= mapToken %>"
+            data-location="<%= listing.location %>, <%= listing.country %>"
+        ></div>
+    </div>
+</div>
+
+<script>
+    mapboxgl.accessToken = <%- JSON.stringify(mapToken) %>;
+
+    const locationName = <%- JSON.stringify(listing.location + ', ' + listing.country) %>;
+
+</script>

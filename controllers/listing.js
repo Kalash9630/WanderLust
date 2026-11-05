@@ -28,6 +28,7 @@ module.exports.create =async (req,res) => {
 
 module.exports.show = async (req,res) => {
     let {id} = req.params;
+
     let listing = await Listing.findById(id).populate({
         path: "reviews",
         populate: {
@@ -36,8 +37,10 @@ module.exports.show = async (req,res) => {
         }
     })
     .populate("owner");
+
     let currUser = req.user || null;
-    res.render("./listings/show.ejs",{listing, currUser});
+
+    res.render("./listings/show.ejs", {listing, currUser});
 }
 
 module.exports.edit = async (req,res) => {

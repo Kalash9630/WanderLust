@@ -18,3 +18,17 @@
       }, false)
     })
 })()
+
+if (imageInput && newImagePreview && previewContainer) {
+  imageInput.addEventListener("change", function () {
+      let file = this.files[0];
+
+      if (file) {
+          newImagePreview.src = URL.createObjectURL(file);
+          previewContainer.style.display = "block";
+      } else {
+          newImagePreview.src = "";
+          previewContainer.style.display = "none";
+      }
+  });
+}
