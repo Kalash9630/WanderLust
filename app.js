@@ -84,9 +84,10 @@ main()
         console.log(`Error while connecting Database wanderlust - ${err}`);
     })
 
-app.get("/", (req, res) => {
-    res.send("Hi, I am root");
-})
+// root page
+// app.get("/", (req, res) => {
+//     res.send("Hi, I am root");
+// })
 
 // listing router
 app.use("/listings",listingRouter);
