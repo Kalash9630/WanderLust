@@ -2043,6 +2043,11 @@ body:has(.wanderlust-login-page) footer {
   font-size: 34px;
 }
 
+.login-brand a {
+  text-decoration: none;
+  color: #fe424d;
+}
+
 .login-visual-content {
   width: 100%;
   max-width: 700px;
@@ -2267,7 +2272,7 @@ body:has(.wanderlust-login-page) footer {
 
 /* FORGOT PASSWORD */
 
-.login-forgot-link {
+/* .login-forgot-link {
   display: block;
   margin: 27px auto 65px;
   text-align: center;
@@ -2275,7 +2280,7 @@ body:has(.wanderlust-login-page) footer {
   font-size: 15px;
   font-weight: 600;
   text-decoration: none;
-}
+} */
 
 .login-forgot-link:hover {
   color: #fe424d;
@@ -2284,6 +2289,7 @@ body:has(.wanderlust-login-page) footer {
 /* DIVIDER */
 
 .login-divider {
+  margin: 27px auto 65px;
   display: flex;
   align-items: center;
   gap: 15px;
@@ -2327,6 +2333,7 @@ body:has(.wanderlust-login-page) footer {
 /* FORM FOOTER */
 
 .login-form-footer {
+
   display: flex;
   justify-content: center;
   align-items: center;
@@ -2340,6 +2347,11 @@ body:has(.wanderlust-login-page) footer {
 .login-form-footer i {
   color: #fe424d;
   font-size: 19px;
+}
+
+.login-form-footer a {
+  text-decoration: none;
+  color: #fe424d;
 }
 
 /* RESPONSIVE DESIGN */
@@ -2409,6 +2421,16 @@ body:has(.wanderlust-login-page) footer {
 
 body:has(.wanderlust-signup-page) {
   background: #fff;
+}
+
+.signup-brand a {
+  text-decoration: none;
+  color: #fe424d;
+}
+
+.signup-form-footer a {
+  text-decoration: none;
+  color: #fe424d;
 }
 
 body:has(.wanderlust-signup-page) .wanderlust-navbar,

@@ -1,152 +1,206 @@
 <% layout("./layouts/boilerplate") %>
 
 <div class="wanderlust-signup-page">
+  <!-- LEFT SIDE: BRANDING AND VISUALS -->
+  <section class="signup-visual-section">
+    <div class="signup-brand">
+      <a href="/listings">
+        <i class="fa-regular fa-compass"></i>
+        <span>WanderLust</span>
+      </a>
+    </div>
 
-    <!-- LEFT SIDE: BRANDING AND VISUALS -->
-    <section class="signup-visual-section">
+    <div class="signup-visual-content">
+      <h1>
+        Your next adventure
+        <br />
+        starts <span>here.</span>
+      </h1>
 
-        <div class="signup-brand">
-            <i class="fa-regular fa-compass"></i>
-            <span>WanderLust</span>
+      <p>
+        Discover beautiful destinations, find unique stays, and make memories
+        that last a lifetime.
+      </p>
+
+      <div class="signup-image-collage">
+        <div class="signup-collage-card signup-collage-left">
+          <img
+            src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=500"
+            alt="Mountain destination"
+          />
         </div>
 
-        <div class="signup-visual-content">
-
-            <h1>
-                Your next adventure
-                <br>
-                starts <span>here.</span>
-            </h1>
-
-            <p>
-                Discover beautiful destinations, find unique stays,
-                and make memories that last a lifetime.
-            </p>
-
-            <div class="signup-image-collage">
-
-                <div class="signup-collage-card signup-collage-left">
-                    <img
-                        src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=500"
-                        alt="Mountain destination"
-                    >
-                </div>
-
-                <div class="signup-collage-card signup-collage-center">
-                    <img
-                        src="https://images.unsplash.com/photo-1530789253388-582c481c54b0?w=600"
-                        alt="Travel destination"
-                    >
-                </div>
-
-                <div class="signup-collage-card signup-collage-right">
-                    <img
-                        src="https://images.unsplash.com/photo-1516483638261-f4dbaf036963?w=500"
-                        alt="Beautiful coastal village"
-                    >
-                </div>
-
-                <div class="signup-floating-icon signup-heart">
-                    <i class="fa-solid fa-heart"></i>
-                </div>
-
-                <div class="signup-floating-icon signup-star">
-                    <i class="fa-solid fa-star"></i>
-                </div>
-
-            </div>
-
-            <div class="signup-visual-caption">
-                <span></span>
-                Explore more. Experience more.
-            </div>
-
+        <div class="signup-collage-card signup-collage-center">
+          <img
+            src="https://images.unsplash.com/photo-1530789253388-582c481c54b0?w=600"
+            alt="Travel destination"
+          />
         </div>
 
-    </section>
-
-
-    <!-- RIGHT SIDE: SIGNUP FORM -->
-    <section class="signup-form-section">
-
-        <div class="signup-form-container">
-
-            <div class="signup-mobile-brand">
-                <i class="fa-regular fa-compass"></i>
-                <span>WanderLust</span>
-            </div>
-
-            <h2>Create your account</h2>
-
-            <p class="signup-subtitle">
-                Join WanderLust and start exploring.
-            </p>
-
-            <form action="/signup" method="post" class="needs-validation" novalidate>
-
-                <div class="signup-input-group">
-                    <label for="username">Username</label>
-                    <input
-                        type="text"
-                        id="username"
-                        name="username"
-                        placeholder="Choose a username"
-                        autocomplete="username"
-                        required
-                    />
-                    <div class="invalid-feedback">
-                        Enter valid username
-                    </div>
-                </div>
-
-                <div class="signup-input-group">
-                    <label for="email">Email</label>
-                    <input
-                        type="email"
-                        name="email"
-                        id="email"
-                        placeholder="Enter your email address"
-                        autocomplete="email"
-                        required
-                    />
-                    <div class="invalid-feedback">
-                        Enter valid email
-                    </div>
-                </div>
-
-                <div class="signup-input-group">
-                    <label for="password">Password</label>
-                    <input
-                        type="password"
-                        name="password"
-                        id="password"
-                        placeholder="Create a password"
-                        autocomplete="new-password"
-                        required
-                    />
-                    <div class="invalid-feedback">
-                        Enter valid password
-                    </div>
-                </div>
-
-                <button type="submit" class="wanderlust-signup-button">
-                    Create account
-                </button>
-
-            </form>
-
-            <div class="signup-login-prompt">
-                Already have an account?
-                <a href="/login">Log in</a>
-            </div>
-
-            <div class="signup-form-footer">
-                <i class="fa-regular fa-compass"></i>
-                <span>WanderLust</span>
-            </div>
-
+        <div class="signup-collage-card signup-collage-right">
+          <img
+            src="https://images.unsplash.com/photo-1516483638261-f4dbaf036963?w=500"
+            alt="Beautiful coastal village"
+          />
         </div>
 
-    </section>
+        <div class="signup-floating-icon signup-heart">
+          <i class="fa-solid fa-heart"></i>
+        </div>
 
+        <div class="signup-floating-icon signup-star">
+          <i class="fa-solid fa-star"></i>
+        </div>
+      </div>
+
+      <div class="signup-visual-caption">
+        <span></span>
+        Explore more. Experience more.
+      </div>
+    </div>
+  </section>
+
+  <!-- RIGHT SIDE: SIGNUP FORM -->
+  <section class="signup-form-section">
+    <div class="signup-form-container">
+      <div class="signup-mobile-brand">
+        <i class="fa-regular fa-compass"></i>
+        <span>WanderLust</span>
+      </div>
+
+      <h2>Create your account</h2>
+
+      <p class="signup-subtitle">Join WanderLust and start exploring.</p>
+
+      <form
+        action="/signup"
+        method="POST"
+        id="signupForm"
+        novalidate
+        data-verified-signup="<%= verifiedSignup ? 'true' : 'false' %>"
+        data-username="<%= verifiedSignup ? verifiedSignup.username : '' %>"
+        data-email="<%= verifiedSignup ? verifiedSignup.email : '' %>"
+      >
+        <!-- USERNAME -->
+        <div class="signup-input-group">
+          <label for="username">Username</label>
+
+          <input
+            type="text"
+            id="username"
+            name="username"
+            placeholder="Choose a username"
+            autocomplete="username"
+            required
+          />
+
+          <small id="usernameMessage"></small>
+        </div>
+
+        <!-- EMAIL -->
+        <div class="signup-input-group">
+          <label for="email">Email</label>
+
+          <input
+            type="email"
+            name="email"
+            id="email"
+            placeholder="Enter your email address"
+            autocomplete="email"
+            required
+            disabled
+          />
+
+          <small id="emailMessage"></small>
+          <small
+            id="emailVerifiedMessage"
+            style="display: none; color: green; font-weight: 600"
+          >
+            <i class="fa-solid fa-circle-check"></i> Email verified
+          </small>
+
+          <button
+            type="button"
+            id="sendOtpButton"
+            class="wanderlust-signup-button mt-2"
+            disabled
+          >
+            Send Verification Code
+          </button>
+        </div>
+
+        <!-- OTP -->
+        <div class="signup-input-group" id="otpSection" style="display: none">
+          <label for="otp">Email Verification Code</label>
+
+          <input
+            type="text"
+            id="otp"
+            placeholder="Enter 6-digit code"
+            maxlength="6"
+            inputmode="numeric"
+            autocomplete="one-time-code"
+          />
+
+          <small id="otpMessage"></small>
+
+          <button
+            type="button"
+            id="verifyOtpButton"
+            class="wanderlust-signup-button mt-2"
+          >
+            Verify Email
+          </button>
+        </div>
+
+        <!-- PASSWORD -->
+        <div
+          class="signup-input-group"
+          id="passwordSection"
+          style="display: none"
+        >
+          <label for="password">Password</label>
+
+          <input
+            type="password"
+            name="password"
+            id="password"
+            placeholder="Create a password"
+            autocomplete="new-password"
+            minlength="3"
+            required
+            disabled
+          />
+          <small id="passwordMessage" style="color: red">
+            <%= typeof signupError !== "undefined" ? signupError : "" %>
+          </small>
+
+          <div class="invalid-feedback">Enter a valid password</div>
+        </div>
+
+        <!-- SUBMIT -->
+        <button
+          type="submit"
+          id="signupButton"
+          class="wanderlust-signup-button"
+          style="display: none"
+          disabled
+        >
+          Create Account
+        </button>
+      </form>
+
+      <div class="signup-login-prompt">
+        Already have an account?
+        <a href="/login">Log in</a>
+      </div>
+
+      <div class="signup-form-footer">
+        <a href="/listings">
+          <i class="fa-regular fa-compass"></i>
+          <span>WanderLust</span>
+        </a>
+      </div>
+    </div>
+  </section>
 </div>

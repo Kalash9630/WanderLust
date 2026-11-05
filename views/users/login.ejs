@@ -1,174 +1,151 @@
 <% layout("./layouts/boilerplate") %>
 
 <div class="wanderlust-login-page">
+  <!-- LEFT SIDE: BRANDING AND VISUALS -->
+  <section class="login-visual-section">
+    <div class="login-brand">
+      <a href="/listings">
+        <i class="fa-regular fa-compass"></i>
+        <span>WanderLust</span></a
+      >
+    </div>
 
-    <!-- LEFT SIDE: BRANDING AND VISUALS -->
-    <section class="login-visual-section">
+    <div class="login-visual-content">
+      <h1>
+        Discover places.
+        <br />
+        Create <span>memories.</span>
+      </h1>
 
-        <div class="login-brand">
-            <i class="fa-regular fa-compass"></i>
-            <span>WanderLust</span>
+      <p>
+        Your next adventure is waiting. Log in and continue exploring the world.
+      </p>
+
+      <div class="login-image-collage">
+        <div class="collage-card collage-card-left">
+          <img
+            src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=500"
+            alt="Mountain landscape"
+          />
         </div>
 
-        <div class="login-visual-content">
-            <h1>
-                Discover places.
-                <br>
-                Create <span>memories.</span>
-            </h1>
-
-            <p>
-                Your next adventure is waiting.
-                Log in and continue exploring the world.
-            </p>
-
-            <div class="login-image-collage">
-
-                <div class="collage-card collage-card-left">
-                    <img
-                        src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=500"
-                        alt="Mountain landscape"
-                    >
-                </div>
-
-                <div class="collage-card collage-card-center">
-                    <img
-                        src="https://images.unsplash.com/photo-1530789253388-582c481c54b0?w=600"
-                        alt="Beautiful travel destination"
-                    >
-                </div>
-
-                <div class="collage-card collage-card-right">
-                    <img
-                        src="https://images.unsplash.com/photo-1516483638261-f4dbaf036963?w=500"
-                        alt="Coastal village"
-                    >
-                </div>
-
-                <div class="collage-floating-icon collage-heart">
-                    <i class="fa-solid fa-heart"></i>
-                </div>
-
-                <div class="collage-floating-icon collage-sparkle">
-                    <i class="fa-solid fa-star"></i>
-                </div>
-
-            </div>
-
-            <div class="login-visual-caption">
-                <span></span>
-                Find a place worth remembering.
-            </div>
+        <div class="collage-card collage-card-center">
+          <img
+            src="https://images.unsplash.com/photo-1530789253388-582c481c54b0?w=600"
+            alt="Beautiful travel destination"
+          />
         </div>
 
-    </section>
-
-
-    <!-- RIGHT SIDE: LOGIN FORM -->
-    <section class="login-form-section">
-
-        <div class="login-form-container">
-
-            <div class="login-mobile-brand">
-                <i class="fa-regular fa-compass"></i>
-                <span>WanderLust</span>
-            </div>
-
-            <h2>Log in to WanderLust</h2>
-
-            <p class="login-subtitle">
-                Welcome back! Enter your details to continue.
-            </p>
-
-            <form action="/login" method="post" class="needs-validation" novalidate>
-
-                <div class="login-input-group">
-                    <input
-                        type="text"
-                        id="username"
-                        name="username"
-                        placeholder="Username"
-                        autocomplete="username"
-                        required
-                    >
-                    <div class="invalid-feedback">
-                        Please enter your username.
-                    </div>
-                </div>
-
-                <div class="login-input-group password-input-group">
-                    <input
-                        type="password"
-                        id="password"
-                        name="password"
-                        placeholder="Password"
-                        autocomplete="current-password"
-                        required
-                    >
-
-                    <button
-                        type="button"
-                        class="password-toggle"
-                        id="togglePassword"
-                        aria-label="Show password"
-                    >
-                        <i class="fa-regular fa-eye"></i>
-                    </button>
-
-                    <div class="invalid-feedback">
-                        Please enter your password.
-                    </div>
-                </div>
-
-                <button type="submit" class="wanderlust-login-button">
-                    Log in
-                </button>
-
-            </form>
-
-            <a href="#" class="login-forgot-link">
-                Forgot password?
-            </a>
-            <div class="login-divider">
-                <span></span>
-                <p>OR</p>
-                <span></span>
-            </div>
-
-            <a href="/signup" class="create-account-button">
-                Create new account
-            </a>
-
-            <div class="login-form-footer">
-                <i class="fa-regular fa-compass"></i>
-                <span>WanderLust</span>
-            </div>
-
+        <div class="collage-card collage-card-right">
+          <img
+            src="https://images.unsplash.com/photo-1516483638261-f4dbaf036963?w=500"
+            alt="Coastal village"
+          />
         </div>
 
-    </section>
+        <div class="collage-floating-icon collage-heart">
+          <i class="fa-solid fa-heart"></i>
+        </div>
 
+        <div class="collage-floating-icon collage-sparkle">
+          <i class="fa-solid fa-star"></i>
+        </div>
+      </div>
+
+      <div class="login-visual-caption">
+        <span></span>
+        Find a place worth remembering.
+      </div>
+    </div>
+  </section>
+
+  <!-- RIGHT SIDE: LOGIN FORM -->
+  <section class="login-form-section">
+    <div class="login-form-container">
+      <div class="login-mobile-brand">
+        <i class="fa-regular fa-compass"></i>
+        <span>WanderLust</span>
+      </div>
+
+      <h2>Log in to WanderLust</h2>
+
+      <p class="login-subtitle">
+        Welcome back! Enter your details to continue.
+      </p>
+
+      <form action="/login" method="post" class="needs-validation" novalidate>
+        <div class="login-input-group">
+          <input
+            type="text"
+            id="username"
+            name="username"
+            placeholder="Username"
+            autocomplete="username"
+            required
+          />
+          <div class="invalid-feedback">Please enter your username.</div>
+        </div>
+
+        <div class="login-input-group password-input-group">
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Password"
+            autocomplete="current-password"
+            required
+          />
+
+          <button
+            type="button"
+            class="password-toggle"
+            id="togglePassword"
+            aria-label="Show password"
+          >
+            <i class="fa-regular fa-eye"></i>
+          </button>
+
+          <div class="invalid-feedback">Please enter your password.</div>
+        </div>
+
+        <button type="submit" class="wanderlust-login-button">Log in</button>
+      </form>
+
+      <!-- <a href="#" class="login-forgot-link"> Forgot password? </a> -->
+      <div class="login-divider">
+        <span></span>
+        <p>OR</p>
+        <span></span>
+      </div>
+
+      <a href="/signup" class="create-account-button"> Create new account </a>
+
+      <div class="login-form-footer">
+        <a href="/listings">
+          <i class="fa-regular fa-compass"></i>
+          <span>WanderLust</span></a
+        >
+      </div>
+    </div>
+  </section>
 </div>
 
-
 <script>
-    const passwordInput = document.getElementById("password");
-    const togglePassword = document.getElementById("togglePassword");
+  const passwordInput = document.getElementById("password");
+  const togglePassword = document.getElementById("togglePassword");
 
-    togglePassword.addEventListener("click", function () {
+  togglePassword.addEventListener("click", function () {
+    const isPassword = passwordInput.type === "password";
 
-        const isPassword = passwordInput.type === "password";
+    passwordInput.type = isPassword ? "text" : "password";
 
-        passwordInput.type = isPassword ? "text" : "password";
+    togglePassword.innerHTML = isPassword
+      ? '<i class="fa-regular fa-eye-slash"></i>'
+      : '<i class="fa-regular fa-eye"></i>';
 
-        togglePassword.innerHTML = isPassword
-            ? '<i class="fa-regular fa-eye-slash"></i>'
-            : '<i class="fa-regular fa-eye"></i>';
-
-        togglePassword.setAttribute(
-            "aria-label",
-            isPassword ? "Hide password" : "Show password"
-        );
-
-    });
+    togglePassword.setAttribute(
+      "aria-label",
+      isPassword ? "Hide password" : "Show password",
+    );
+  });
 </script>
