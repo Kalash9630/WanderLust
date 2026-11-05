@@ -2983,3 +2983,127 @@ body:has(.wanderlust-signup-page) footer {
   width: 100%;
   border-radius: 12px;
 }
+
+/* Main marker container */
+.custom-map-marker {
+    position: relative;
+    cursor: pointer;
+}
+
+/* Pink circular background */
+.marker-glow {
+    width: 110px;
+    height: 110px;
+    background: rgba(254, 64, 92, 0.15);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+}
+
+/* Red circular icon */
+.marker-icon {
+    width: 44px;
+    height: 44px;
+    background: #FE405C;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Home icon - visible initially */
+.home-icon {
+    display: inline-block;
+}
+
+/* Compass icon - hidden initially */
+.compass-icon {
+    display: none;
+}
+
+/* ================================
+   HOVER TOOLTIP
+================================ */
+
+.marker-tooltip {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translate(-50%, 10px);
+    background: white;
+    padding: 10px 16px;
+    border-radius: 10px;
+    width: 210px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    pointer-events: none;
+    margin-bottom: 5px;
+    z-index: 10;
+}
+
+/* Tooltip heading */
+.marker-tooltip strong {
+    display: block;
+    color: #FE405C;
+    font-size: 15px;
+}
+
+/* Tooltip description */
+.marker-tooltip span {
+    display: block;
+    color: #666;
+    font-size: 12px;
+    margin-top: 3px;
+}
+
+/* ================================
+   HOVER EFFECTS
+================================ */
+
+/* Slightly enlarge the pink circle */
+.custom-map-marker:hover .marker-glow {
+    transform: scale(1.1);
+}
+
+/* Hide home icon on hover */
+.custom-map-marker:hover .home-icon {
+    display: none;
+}
+
+/* Show compass icon on hover */
+.custom-map-marker:hover .compass-icon {
+    display: inline-block;
+}
+
+/* Show tooltip on hover */
+.custom-map-marker:hover .marker-tooltip {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, 0);
+}
+
+/* Initially show only the home icon */
+.custom-map-marker .home-icon {
+    display: inline-block !important;
+}
+
+.custom-map-marker .compass-icon {
+    display: none !important;
+}
+
+/* On hover, show only the compass icon */
+.custom-map-marker:hover .home-icon {
+    display: none !important;
+}
+
+.custom-map-marker:hover .compass-icon {
+    display: inline-block !important;
+}
