@@ -1,4 +1,7 @@
 async function initializeMap() {
+  const mapElement = document.getElementById("map");
+
+  if (!mapElement) return;
   try {
     const response = await fetch(
       `https://api.mapbox.com/search/geocode/v6/forward?q=${encodeURIComponent(locationName)}&access_token=${mapboxgl.accessToken}&limit=1`,

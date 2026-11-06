@@ -1,3 +1,7 @@
+const imageInput = document.getElementById("image");
+const newImagePreview = document.getElementById("newImagePreview");
+const previewContainer = document.getElementById("previewContainer");
+
 // Example starter JavaScript for disabling form submissions if there are invalid fields
 (function () {
   'use strict'

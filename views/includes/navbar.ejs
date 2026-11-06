@@ -23,7 +23,11 @@
                 <% if (currUser) { %>
                     <span class="desktop-user-info">
                         <i class="fa-regular fa-circle-user"></i>
-                        <%= currUser.username %>
+                        <%= currUser.username
+                            .toLowerCase()
+                            .split(" ")
+                            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                            .join(" ") %>
                     </span>
                     <a href="/logout" class="desktop-logout-link">Logout</a>
                 <% } %>
@@ -48,9 +52,8 @@
     <!-- Mobile Navigation -->
     <div class="mobile-navbar" id="mobileNavbar">
         <div class="mobile-nav-links">
-            <a href="/" class="mobile-nav-link">Home</a>
-            <a href="/listings" class="mobile-nav-link">All Listings</a>
-            <a href="/listings/new" class="mobile-nav-link">Add New Listing</a>
+            <a href="/listings" class="mobile-nav-link">Explore</a>
+            <a href="/listings/new" class="mobile-nav-link">List Your Property</a>
         </div>
 
         <div class="mobile-nav-divider"></div>
@@ -64,7 +67,11 @@
             <% if (currUser) { %>
                 <div class="mobile-user-info">
                     <i class="fa-regular fa-circle-user"></i>
-                    <%= currUser.username %>
+                    <%= currUser.username
+                            .toLowerCase()
+                            .split(" ")
+                            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                            .join(" ") %>
                 </div>
                 <a href="/logout" class="mobile-logout-link">Logout</a>
             <% } %>

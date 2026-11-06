@@ -1,142 +1,139 @@
 <% layout("./layouts/boilerplate") %>
 
 <div class="create-listing-page">
+  <div class="create-listing-header">
+    <span class="create-listing-eyebrow">
+      <i class="fa-regular fa-compass"></i>
+      WANDERLUST HOSTING
+    </span>
 
-    <div class="create-listing-header">
-        <span class="create-listing-eyebrow">
-            <i class="fa-regular fa-compass"></i>
-            WANDERLUST HOSTING
-        </span>
+    <h2>Create a new Listing</h2>
 
-        <h2>Create a new Listing</h2>
+    <p>
+      Share your place with travellers and give them somewhere memorable to
+      stay.
+    </p>
+  </div>
 
-        <p>
-            Share your place with travellers and give them
-            somewhere memorable to stay.
-        </p>
-    </div>
+  <div class="create-listing-card">
+    <form
+      action="/listings"
+      method="post"
+      enctype="multipart/form-data"
+      class="needs-validation"
+      novalidate
+    >
+      <!-- TITLE -->
+      <div class="create-listing-field">
+        <label for="title" class="form-label">Title</label>
 
-    <div class="create-listing-card">
+        <input
+          type="text"
+          name="title"
+          placeholder="Add a catchy title"
+          class="form-control"
+          id="title"
+          required
+        />
 
-        <form action="/listings" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+        <div class="invalid-feedback">Please enter valid title.</div>
+      </div>
 
-            <!-- TITLE -->
-            <div class="create-listing-field">
-                <label for="title" class="form-label">Title</label>
+      <!-- DESCRIPTION -->
+      <div class="create-listing-field">
+        <label for="description" class="form-label">Description</label>
 
-                <input
-                    type="text"
-                    name="title"
-                    placeholder="Add a catchy title"
-                    class="form-control"
-                    id="title"
-                    required
-                />
+        <textarea
+          name="description"
+          placeholder="Describe what makes your place special..."
+          class="form-control create-listing-textarea"
+          id="description"
+          required
+        ></textarea>
 
-                <div class="invalid-feedback">
-                    Please enter valid title.
-                </div>
-            </div>
+        <div class="invalid-feedback">Please enter a short description.</div>
+      </div>
 
-            <!-- DESCRIPTION -->
-            <div class="create-listing-field">
-                <label for="description" class="form-label">Description</label>
+      <!-- IMAGE LINK -->
+      <div class="create-listing-field">
+        <label for="image" class="form-label">Upload Listing Image</label>
 
-                <textarea
-                    name="description"
-                    placeholder="Describe what makes your place special..."
-                    class="form-control create-listing-textarea"
-                    id="description"
-                    required
-                ></textarea>
+        <input
+          type="file"
+          name="image"
+          class="form-control"
+          id="image"
+          accept="image/*"
+        />
 
-                <div class="invalid-feedback">
-                    Please enter a short description.
-                </div>
-            </div>
+        <small class="create-listing-hint">
+          Select an image of your property from your device.
+        </small>
+      </div>
 
-            <!-- IMAGE LINK -->
-            <div class="create-listing-field">
-                <label for="image" class="form-label">Upload Listing Image</label>
-            
-                <input
-                    type="file"
-                    name="image"
-                    class="form-control"
-                    id="image"
-                    accept="image/*"
-                />
-            
-                <small class="create-listing-hint">
-                    Select an image of your property from your device.
-                </small>
-            </div>
+      <!-- PRICE AND COUNTRY -->
+      <div class="create-listing-row">
+        <div class="create-listing-field">
+          <label for="price" class="form-label">Price</label>
 
-            <!-- PRICE AND COUNTRY -->
-            <div class="create-listing-row">
+          <input
+            type="number"
+            name="price"
+            placeholder="Enter price"
+            class="form-control"
+            id="price"
+            required
+          />
 
-                <div class="create-listing-field">
-                    <label for="price" class="form-label">Price</label>
+          <div class="invalid-feedback">Please enter a valid price.</div>
+        </div>
 
-                    <input
-                        type="number"
-                        name="price"
-                        placeholder="Enter price"
-                        class="form-control"
-                        id="price"
-                        required
-                    />
+        <div class="create-listing-field">
+          <label for="country" class="form-label">Country</label>
 
-                    <div class="invalid-feedback">
-                        Please enter a valid price.
-                    </div>
-                </div>
+          <input
+            type="text"
+            name="country"
+            placeholder="Search or select country"
+            class="form-control"
+            id="country"
+            list="countryOptions"
+            autocomplete="off"
+            required
+          />
 
-                <div class="create-listing-field">
-                    <label for="country" class="form-label">Country</label>
+          <datalist id="countryOptions"></datalist>
 
-                    <input
-                        type="text"
-                        name="country"
-                        placeholder="Enter country"
-                        class="form-control"
-                        id="country"
-                        required
-                    />
+          <div class="invalid-feedback">Please select a valid country.</div>
+        </div>
+      </div>
 
-                    <div class="invalid-feedback">
-                        Please enter a valid country name.
-                    </div>
-                </div>
+      <!-- LOCATION -->
+      <div class="create-listing-field">
+        <label for="location" class="form-label">Location (City)</label>
 
-            </div>
+        <input
+          type="text"
+          name="location"
+          placeholder="Select a country first"
+          class="form-control"
+          id="location"
+          list="cityOptions"
+          autocomplete="off"
+          required
+          disabled
+        />
 
-            <!-- LOCATION -->
-            <div class="create-listing-field">
-                <label for="location" class="form-label">Location</label>
+        <datalist id="cityOptions"></datalist>
 
-                <input
-                    type="text"
-                    name="location"
-                    placeholder="Enter city"
-                    class="form-control"
-                    id="location"
-                    required
-                />
+        <div class="invalid-feedback">Please select a valid city.</div>
+      </div>
 
-                <div class="invalid-feedback">
-                    Please enter valid city name.
-                </div>
-            </div>
-
-            <!-- SUBMIT BUTTON -->
-            <button type="submit" class="create-listing-submit">
-                <i class="fa-solid fa-plus"></i>
-                Add Listing
-            </button>
-
-        </form>
-
-    </div>
-
+      <!-- SUBMIT BUTTON -->
+      <button type="submit" class="create-listing-submit">
+        <i class="fa-solid fa-plus"></i>
+        Add Listing
+      </button>
+    </form>
+  </div>
 </div>

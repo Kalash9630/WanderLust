@@ -1,4 +1,5 @@
 const Listing = require("../models/listing");
+const { Country, City } = require("country-state-city");
 
 module.exports.index = async (req,res) => {
     let allListings = await Listing.find({});
@@ -77,3 +78,27 @@ module.exports.delete = async (req,res) => {
     req.flash("success", "Listing deleted successfully!");
     res.redirect("/listings");
 }
+
+// Get all countries
+module.exports.getCountries = (req, res) => {
+    const countries = Country.getAllCountries();
+
+    res.json(
+        countries.map(country => ({
+            name: country.name,
+            code: country.isoCode
+        }))
+    );
+};
+
+
+// Get cities of selected country
+module.exports.getCities = (req, res) => {
+    const { countryCode } = req.params;
+
+    const cities = City.getCitiesOfCountry(countryCode);
+
+    res.json(
+        (cities || []).map(city => city.name)
+    );
+};

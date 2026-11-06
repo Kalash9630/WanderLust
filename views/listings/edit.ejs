@@ -58,40 +58,40 @@
       <!-- IMAGE -->
       <div class="edit-listing-field">
         <label for="image" class="form-label">Change Listing Image</label>
-    
+
         <!-- Current Image Preview -->
         <div class="current-image-preview">
-            <p>Current Listing Image:</p>
-            <img
-                src="<%= listing.image %>"
-                alt="Current Listing"
-                id="currentImage"
-            />
+          <p>Current Listing Image:</p>
+          <img
+            src="<%= listing.image %>"
+            alt="Current Listing"
+            id="currentImage"
+          />
         </div>
-    
+
         <!-- Upload New Image -->
         <input
-            type="file"
-            name="image"
-            class="form-control"
-            id="image"
-            accept="image/*"
+          type="file"
+          name="image"
+          class="form-control"
+          id="image"
+          accept="image/*"
         />
-    
+
         <small class="create-listing-hint">
-            Select a new image to replace the current one.
+          Select a new image to replace the current one.
         </small>
-    
+
         <!-- New Image Preview -->
-        <div class="new-image-preview" id="newImagePreviewContainer" style="display: none;">
-            <p>New Image Preview:</p>
-            <img
-                src=""
-                alt="New Listing Preview"
-                id="newImagePreview"
-            />
+        <div
+          class="new-image-preview"
+          id="newImagePreviewContainer"
+          style="display: none"
+        >
+          <p>New Image Preview:</p>
+          <img src="" alt="New Listing Preview" id="newImagePreview" />
         </div>
-    </div>
+      </div>
 
       <!-- PRICE AND COUNTRY -->
       <div class="edit-listing-row">
@@ -111,36 +111,50 @@
         </div>
 
         <div class="edit-listing-field">
-          <label for="country" class="form-label">Counrty</label>
-
+          <label for="country" class="form-label">Country</label>
+      
           <input
-            type="text"
-            name="country"
-            value="<%= listing.country %>"
-            id="country"
-            class="form-control"
-            required
+              type="text"
+              name="country"
+              value="<%= listing.country %>"
+              placeholder="Search or select country"
+              id="country"
+              class="form-control"
+              list="countryOptions"
+              autocomplete="off"
+              required
           />
-
-          <div class="invalid-feedback">Please enter a valid country name.</div>
-        </div>
+      
+          <datalist id="countryOptions"></datalist>
+      
+          <div class="invalid-feedback">
+              Please select a valid country.
+          </div>
+      </div>
       </div>
 
       <!-- LOCATION -->
       <div class="edit-listing-field">
         <label for="location" class="form-label">Location</label>
-
+    
         <input
-          type="text"
-          name="location"
-          value="<%= listing.location %>"
-          class="form-control"
-          id="location"
-          required
+            type="text"
+            name="location"
+            value="<%= listing.location %>"
+            placeholder="Search or select city"
+            class="form-control"
+            id="location"
+            list="cityOptions"
+            autocomplete="off"
+            required
         />
-
-        <div class="invalid-feedback">Please enter valid city name.</div>
-      </div>
+    
+        <datalist id="cityOptions"></datalist>
+    
+        <div class="invalid-feedback">
+            Please select a valid city.
+        </div>
+    </div>
 
       <!-- SUBMIT -->
       <button type="submit" class="edit-listing-submit">

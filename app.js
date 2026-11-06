@@ -106,8 +106,13 @@ app.all("/{*splat}", (req,res,next) => {
 
 // Error-handling middleware
 app.use((err, req, res, next) => {
-    let { statusCode = 500, message = "Something went wrong!" } = err;
-    res.status(statusCode).render("error.ejs",{err});
+    if (res.headersSent) {
+        return next(err);
+    }
+
+    let { statusCode = 500 } = err;
+
+    res.status(statusCode).render("error.ejs", { err });
 });
 
 // Checking the server is started
