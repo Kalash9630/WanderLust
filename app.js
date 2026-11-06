@@ -17,6 +17,7 @@ const User = require("./models/user.js");
 const listingRouter = require("./routes/listing.js");
 const reviewRouter = require("./routes/review.js");
 const userRouter = require("./routes/user.js");
+const bookingRouter = require("./routes/booking.js");
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
@@ -91,6 +92,9 @@ main()
 
 // listing router
 app.use("/listings",listingRouter);
+
+// booking router
+app.use("/listings", bookingRouter);
 
 // review router
 app.use("/listings/:id/reviews",reviewRouter);

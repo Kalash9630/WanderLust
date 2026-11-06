@@ -18,7 +18,7 @@
 
             <div class="listing-card">
 
-                <a href="http://localhost:8080/listings/<%= listing._id %>"
+                <a href="/listings/<%= listing._id %>"
                    class="listing-card-link">
 
                     <!-- Listing Image -->
@@ -51,6 +51,13 @@
                     </div>
 
                 </a>
+                <div class="listing-card-booking">
+                    <a href="/listings/<%= listing._id %>/book/guest-details"
+                       class="listing-book-btn">
+                        Book Now
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
 
             </div>
 

@@ -1,0 +1,313 @@
+<% layout("./layouts/boilerplate") %>
+
+<main class="booking-container">
+  <!-- PAGE HEADER -->
+  <header class="booking-header">
+    <div>
+      <span class="booking-eyebrow">WANDERLUST RESERVATIONS</span>
+      <h1>Complete your booking</h1>
+      <p>Let's start with a few details about you.</p>
+    </div>
+
+    <div class="secure-label">
+      <i class="fa-solid fa-shield-halved"></i>
+      Secure reservation
+    </div>
+  </header>
+
+  <!-- BOOKING PROGRESS -->
+<div class="booking-progress">
+    <div class="progress-step active">
+        <span class="progress-number">01</span>
+        <div>
+            <strong>Guest details</strong>
+            <small>Your information</small>
+        </div>
+    </div>
+
+    <div class="progress-line"></div>
+
+    <div class="progress-step">
+        <span class="progress-number">02</span>
+        <div>
+            <strong>Stay details</strong>
+            <small>Your dates</small>
+        </div>
+    </div>
+
+    <div class="progress-line"></div>
+
+    <div class="progress-step">
+        <span class="progress-number">03</span>
+        <div>
+            <strong>Pricing details</strong>
+            <small>Price breakdown</small>
+        </div>
+    </div>
+
+    <div class="progress-line"></div>
+
+    <div class="progress-step">
+        <span class="progress-number">04</span>
+        <div>
+            <strong>Review</strong>
+            <small>Confirm booking</small>
+        </div>
+    </div>
+</div>
+
+  <!-- MAIN CONTENT -->
+  <div class="booking-layout">
+    <!-- LEFT COLUMN: GUEST DETAILS -->
+    <section class="guest-details-card">
+      <div class="section-heading">
+        <div class="heading-icon">
+          <i class="fa-regular fa-user"></i>
+        </div>
+
+        <div>
+          <h2>Guest information</h2>
+          <p>Enter the details of the person making this reservation.</p>
+        </div>
+      </div>
+
+      <div class="section-divider"></div>
+
+      <!-- GUEST DETAILS FORM -->
+      <form
+        id="guestDetailsForm"
+        action="/listings/<%= listing._id %>/book/guest-details"
+        method="POST"
+        novalidate
+      >
+        <!-- ACCOUNT INFORMATION -->
+        <div class="form-section">
+          <div class="subheading">
+            <span>01</span>
+            <h3>Account information</h3>
+          </div>
+
+          <div class="form-grid">
+            <!-- USERNAME -->
+            <div class="form-group">
+              <label for="fullName">Full name</label>
+
+              <div class="input-wrapper">
+                <i class="fa-regular fa-user"></i>
+
+                <input
+                  type="text"
+                  id="fullName"
+                  name="fullName"
+                  class="form-control"
+                  value="<%= currUser.username.toLowerCase()
+                  .split(" ")
+                  .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                  .join(" ") %>"
+                  placeholder="Enter your full name"
+                  required
+                />
+
+                <div class="invalid-feedback" id="fullNameFeedback">
+                  Please enter your full name.
+              </div>
+              </div>
+              
+              <small>Retrieved from your account</small>
+            </div>
+
+            <!-- EMAIL -->
+            <div class="form-group">
+              <label for="email">Email address</label>
+
+              <div class="input-wrapper">
+                <i class="fa-regular fa-envelope"></i>
+
+                <input
+                  type="email"
+                  id="email"
+                  class="form-control"
+                  value="<%= currUser.email %>"
+                  readonly
+                />
+              </div>
+
+              <small>Retrieved from your account</small>
+            </div>
+          </div>
+        </div>
+
+        <!-- CONTACT INFORMATION -->
+        <div class="form-section">
+          <div class="subheading">
+            <span>02</span>
+            <h3>Contact information</h3>
+          </div>
+
+          <div class="form-group">
+            <label for="mobileNumber">
+              Mobile number <span class="required">*</span>
+            </label>
+
+            <div class="phone-input">
+
+              <!-- MOBILE NUMBER -->
+              <input
+                type="tel"
+                id="mobileNumber"
+                name="mobileNumber"
+                class="form-control"
+                placeholder="Enter your mobile number"
+                inputmode="numeric"
+                pattern="[0-9]{10}"
+                minlength="10"
+                maxlength="10"
+                required
+              />
+            </div>
+
+            <div class="invalid-feedback" id="mobileFeedback">
+              Please enter a valid mobile number (10 digits).
+            </div>
+
+            <small>
+              We'll use this number for booking-related communication.
+            </small>
+          </div>
+        </div>
+
+        <!-- PERSONAL INFORMATION -->
+        <div class="form-section">
+          <div class="subheading">
+            <span>03</span>
+            <h3>Personal information</h3>
+          </div>
+
+          <div class="form-grid">
+            <!-- DATE OF BIRTH -->
+            <div class="form-group">
+              <label for="dateOfBirth">
+                Date of birth <span class="required">*</span>
+              </label>
+
+              <div class="input-wrapper">
+                <i class="fa-regular fa-calendar"></i>
+
+                <input
+                  type="text"
+                  id="dateOfBirth"
+                  name="dateOfBirth"
+                  class="form-control"
+                  placeholder="Select your date of birth"
+                  autocomplete="off"
+                  required
+                />
+              </div>
+
+              <div class="invalid-feedback" id="dobFeedback">
+                Please select your date of birth.
+              </div>
+            </div>
+
+            <!-- AGE -->
+            <div class="form-group">
+              <label for="age">Age</label>
+
+              <div class="input-wrapper">
+                <i class="fa-solid fa-cake-candles"></i>
+
+                <input
+                  type="text"
+                  id="age"
+                  class="form-control"
+                  placeholder="Calculated automatically"
+                  readonly
+                />
+              </div>
+            </div>
+
+            <!-- SEX -->
+            <div class="form-group full-width">
+              <label for="sex"> Sex <span class="required">*</span> </label>
+
+              <select id="sex" name="sex" class="form-select" required>
+                <option value="" selected disabled>Select your option</option>
+
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+                <option value="prefer_not_to_say">Prefer not to say</option>
+              </select>
+
+              <div class="invalid-feedback" id="sexFeedback">
+                Please select an option.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CONTINUE BUTTON -->
+        <div class="form-actions">
+          <button type="submit" id="continueBtn">
+            Continue to stay details
+            <i class="fa-solid fa-arrow-right"></i>
+          </button>
+        </div>
+      </form>
+    </section>
+
+    <!-- RIGHT COLUMN: PROPERTY SUMMARY -->
+    <aside class="property-summary-card">
+      <div class="property-image">
+        <img src="<%= listing.image %>" alt="<%= listing.title %>" />
+
+        <span class="property-tag">
+          <i class="fa-solid fa-house"></i>
+          Your selected stay
+        </span>
+      </div>
+
+      <div class="property-content">
+        <span class="property-category">PROPERTY DETAILS</span>
+
+        <h2><%= listing.title %></h2>
+
+        <p class="property-location">
+          <i class="fa-solid fa-location-dot"></i>
+          <%= listing.location %>, <%= listing.country %>
+        </p>
+
+        <div class="section-divider"></div>
+
+        <!-- PROPERTY PRICE -->
+        <div class="property-price">
+          <div>
+            <strong>Price per night</strong>
+            <small>Your selected property rate</small>
+          </div>
+
+          <h3>
+            ₹ <%= Number(listing.price).toLocaleString("en-IN") %>
+            <span>/ night</span>
+          </h3>
+        </div>
+
+        <!-- PROPERTY NOTE -->
+        <div class="property-note">
+          <i class="fa-solid fa-circle-info"></i>
+
+          <p>
+            Your selected property and pricing details will remain visible
+            throughout the booking process.
+          </p>
+        </div>
+      </div>
+    </aside>
+  </div>
+</main>
+
+<!-- Flatpickr JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+<!-- Guest Details JavaScript -->
+<script src="/js/guest-details.js"></script>

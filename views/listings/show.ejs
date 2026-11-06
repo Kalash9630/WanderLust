@@ -64,6 +64,21 @@
                     <small class="text-muted">Price per night</small>
                 </div>
 
+                <!-- BOOK NOW BUTTON -->
+                <div class="show-booking-section mb-4">
+                    <a href="/listings/<%= listing._id %>/book/guest-details"
+                    class="show-book-btn">
+                        <i class="fa-regular fa-calendar-check"></i>
+                        Book Now
+                        <i class="fa-solid fa-arrow-right booking-arrow"></i>
+                    </a>
+
+                    <small class="booking-note">
+                        <i class="fa-solid fa-shield-halved"></i>
+                        Continue to complete your reservation
+                    </small>
+                </div>
+
                 <!-- Location -->
                 <div class="listing-location-section">
                     <h6 class="fw-bold mb-2">
