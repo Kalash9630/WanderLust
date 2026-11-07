@@ -45,4 +45,18 @@ router.post(
     wrapAsync(bookingController.saveStayDetails)
 );
 
+// PRICING DETAILS GET
+router.get(
+    "/:id/book/pricing-details",
+    isLoggedIn,
+    wrapAsync(bookingController.renderPricingDetails)
+);
+
+// PRICING DETAILS POST
+router.post(
+    "/:id/book/pricing-details",
+    isLoggedIn,
+    wrapAsync(bookingController.savePricingDetails)
+);
+
 module.exports = router;

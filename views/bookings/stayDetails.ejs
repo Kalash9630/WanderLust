@@ -1,6 +1,10 @@
 <% layout("./layouts/boilerplate") %>
 
-<main class="booking-container" data-listing-id="<%= listing._id %>">
+<main
+    class="booking-container"
+    data-listing-id="<%= listing._id %>"
+    data-availability-checked="<%= stayDetails?.checkIn && stayDetails?.checkOut ? 'true' : 'false' %>"
+>
   <!-- PAGE HEADER -->
   <header class="booking-header">
     <div>
@@ -91,6 +95,7 @@
                     type="text"
                     class="form-control date-input"
                     id="checkIn"
+                    value="<%= stayDetails?.checkIn || '' %>"
                     placeholder="Select check-in date"
                     autocomplete="off"
                     required
@@ -115,6 +120,7 @@
                     type="text"
                     class="form-control date-input"
                     id="checkOut"
+                    value="<%= stayDetails?.checkOut || '' %>"
                     placeholder="Select check-out date"
                     autocomplete="off"
                     required

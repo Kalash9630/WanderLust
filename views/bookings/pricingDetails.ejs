@@ -1,0 +1,244 @@
+<% layout("./layouts/boilerplate") %>
+
+<main
+  class="booking-container"
+  id="pricingPage"
+  data-listing-id="<%= listing._id %>"
+  data-nightly-price="<%= listing.price %>"
+  data-check-in="<%= booking.stayDetails.checkIn %>"
+  data-check-out="<%= booking.stayDetails.checkOut %>"
+  data-nights="<%= booking.stayDetails.nights %>"
+>
+  <!-- PAGE HEADER -->
+  <header class="booking-header">
+    <div>
+      <span class="booking-eyebrow">WANDERLUST RESERVATIONS</span>
+
+      <h1>Review your price</h1>
+
+      <p>Here's a breakdown of your booking cost.</p>
+    </div>
+
+    <div class="secure-label">
+      <i class="fa-solid fa-shield-halved"></i>
+      Secure reservation
+    </div>
+  </header>
+
+  <!-- BOOKING PROGRESS -->
+  <div class="booking-progress">
+    <div class="progress-step completed">
+      <div class="progress-number">
+        <i class="fa-solid fa-check"></i>
+      </div>
+
+      <div>
+        <strong>Guest details</strong>
+        <small>Your information</small>
+      </div>
+    </div>
+
+    <div class="progress-line active"></div>
+
+    <div class="progress-step completed">
+      <div class="progress-number">
+        <i class="fa-solid fa-check"></i>
+      </div>
+
+      <div>
+        <strong>Stay details</strong>
+        <small>Your dates</small>
+      </div>
+    </div>
+
+    <div class="progress-line active"></div>
+
+    <div class="progress-step active">
+      <div class="progress-number">03</div>
+
+      <div>
+        <strong>Pricing details</strong>
+        <small>Price breakdown</small>
+      </div>
+    </div>
+
+    <div class="progress-line"></div>
+
+    <div class="progress-step">
+      <div class="progress-number">04</div>
+
+      <div>
+        <strong>Review</strong>
+        <small>Confirm booking</small>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN BOOKING LAYOUT -->
+  <div class="booking-layout">
+    <!-- LEFT: PRICE BREAKDOWN -->
+    <section class="pricing-card">
+      <div class="card-heading">
+        <h2>Price breakdown</h2>
+        <p>Review the charges for your selected stay.</p>
+      </div>
+
+      <!-- SELECTED STAY -->
+      <div class="selected-stay-section">
+        <h3>Your selected stay</h3>
+
+        <div class="stay-info-row">
+          <div class="stay-info-item">
+            <span class="info-icon">
+              <i class="fa-regular fa-calendar-check"></i>
+            </span>
+
+            <div>
+              <small>Check-in</small>
+              <strong id="checkInDate">--</strong>
+            </div>
+          </div>
+
+          <div class="stay-info-item">
+            <span class="info-icon">
+              <i class="fa-regular fa-calendar"></i>
+            </span>
+
+            <div>
+              <small>Check-out</small>
+              <strong id="checkOutDate">--</strong>
+            </div>
+          </div>
+
+          <div class="stay-info-item">
+            <span class="info-icon">
+              <i class="fa-regular fa-moon"></i>
+            </span>
+
+            <div>
+              <small>Duration</small>
+              <strong id="numberOfNights">--</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PRICE DETAILS -->
+      <div class="price-breakdown-section">
+        <h3>Cost details</h3>
+
+        <div class="price-row">
+          <div>
+            <span>Accommodation</span>
+            <small id="nightlyCalculation">--</small>
+          </div>
+
+          <strong id="accommodationPrice">₹0</strong>
+        </div>
+
+        <div class="price-row">
+          <div>
+            <span>Platform fee</span>
+            <small>2% of accommodation</small>
+          </div>
+
+          <strong id="platformFee">₹0</strong>
+        </div>
+
+        <div class="price-row">
+          <div>
+            <span>Taxes</span>
+            <small>5% of accommodation</small>
+          </div>
+
+          <strong id="taxAmount">₹0</strong>
+        </div>
+      </div>
+
+      <!-- TOTAL -->
+      <div class="total-price-section">
+        <div>
+          <span>Total booking amount</span>
+          <small>Including platform fee and taxes</small>
+        </div>
+
+        <strong id="totalPrice">₹0</strong>
+      </div>
+
+      <!-- PRICE NOTE -->
+      <div class="price-note">
+        <i class="fa-solid fa-circle-info"></i>
+
+        <p>
+          This is an estimated price breakdown for your selected dates. The
+          final amount will be confirmed before completing your reservation.
+        </p>
+      </div>
+
+      <!-- NAVIGATION -->
+      <div class="booking-navigation">
+        <a
+          href="/listings/<%= listing._id %>/book/stay-details"
+          class="back-btn"
+        >
+          <i class="fa-solid fa-arrow-left"></i>
+          Back
+        </a>
+
+        <a
+            href="/listings/<%= listing._id %>/book/review-details"
+            class="continue-btn disabled"
+            id="continueToReviewBtn"
+            aria-disabled="true"
+        >
+            Review Booking
+            <i class="fa-solid fa-arrow-right"></i>
+        </a>
+          
+      </div>
+    </section>
+
+    <!-- RIGHT: PROPERTY SUMMARY -->
+    <aside class="property-summary-card">
+      <div class="property-image-wrapper">
+        <img
+          src="<%= listing.image %>"
+          alt="<%= listing.title %>"
+          class="property-image"
+        />
+      </div>
+
+      <div class="property-summary-body">
+        <span class="property-label"> YOUR SELECTED PROPERTY </span>
+
+        <h2 class="property-title"><%= listing.title %></h2>
+
+        <p class="property-location">
+          <i class="fa-solid fa-location-dot"></i>
+          <%= listing.location %>, <%= listing.country %>
+        </p>
+
+        <div class="property-divider"></div>
+
+        <div class="property-price">
+          <div>
+            <strong>
+              ₹<%= Number(listing.price).toLocaleString("en-IN") %> <span>/ night</span>
+            </strong>
+            
+          </div>
+
+          <span class="price-note">Before taxes</span>
+        </div>
+
+        <div class="property-summary-note">
+          <i class="fa-solid fa-shield-halved"></i>
+
+          <span> Your booking details will be securely processed. </span>
+        </div>
+      </div>
+    </aside>
+  </div>
+</main>
+
+<script src="/js/pricing-details.js"></script>

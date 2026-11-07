@@ -29,6 +29,7 @@ let isAvailable = false;
 // 3. INITIALIZE CHECK-IN CALENDAR
 
 const checkInPicker = flatpickr(checkInInput, {
+  defaultDate: checkInInput.value || null,
   // Store the selected date in YYYY-MM-DD format
   dateFormat: "Y-m-d",
 
@@ -76,6 +77,7 @@ const checkInPicker = flatpickr(checkInInput, {
 // 4. INITIALIZE CHECK-OUT CALENDAR
 
 const checkOutPicker = flatpickr(checkOutInput, {
+  defaultDate: checkOutInput.value || null,
   dateFormat: "Y-m-d",
 
   // Initially, check-out must be at least tomorrow
@@ -256,10 +258,6 @@ checkAvailabilityBtn.addEventListener("click", function () {
             (1000 * 60 * 60 * 24)
         );
 
-        sessionStorage.setItem("checkIn", checkIn);
-        sessionStorage.setItem("checkOut", checkOut);
-        sessionStorage.setItem("nights", nights);
-
     }, 800);
 });
 
@@ -316,52 +314,49 @@ continueBtn.addEventListener("click", async function () {
 
 // 10. BACK TO GUEST DETAILS
 
-// Reset Continue button when returning to the Stay Details page
-function resetAvailability() {
-  isAvailable = false;
+// 11. RESTORE SAVED BOOKING DETAILS
 
-  continueBtn.disabled = true;
-  continueBtn.textContent = "Continue";
+const bookingContainer = document.querySelector(".booking-container");
 
-  availabilityResult.textContent = "";
-  availabilityResult.className = "availability-result";
+const availabilityChecked =
+    bookingContainer.dataset.availabilityChecked === "true";
 
-  checkAvailabilityBtn.disabled = false;
+// Restore the stay duration
+calculateStayDuration();
 
-  checkAvailabilityBtn.innerHTML =
-      '<i class="fa-solid fa-magnifying-glass"></i> Check Availability';
+// Restore availability if dates were previously saved
+if (
+    availabilityChecked &&
+    checkInPicker.selectedDates.length > 0 &&
+    checkOutPicker.selectedDates.length > 0
+) {
+    // Mark availability as checked
+    isAvailable = true;
 
-  sessionStorage.removeItem("availableDates");
+    // Enable Continue button
+    continueBtn.disabled = false;
+    continueBtn.textContent = "Continue";
+
+    // Restore availability message
+    availabilityResult.textContent =
+        "Great! This property is available for your selected dates.";
+
+    availabilityResult.className = "availability-result success";
+
+    // Restore availability button
+    checkAvailabilityBtn.disabled = false;
+
+    checkAvailabilityBtn.innerHTML =
+        '<i class="fa-solid fa-check"></i> Check Again';
+
+    // Update minimum check-out date
+    const selectedCheckIn = checkInPicker.selectedDates[0];
+
+    const nextDay = new Date(
+        selectedCheckIn.getFullYear(),
+        selectedCheckIn.getMonth(),
+        selectedCheckIn.getDate() + 1
+    );
+
+    checkOutPicker.set("minDate", nextDay);
 }
-
-// Restore availability when returning to Stay Details
-window.addEventListener("pageshow", function () {
-
-    const savedAvailability = sessionStorage.getItem("availableDates");
-
-    if (!savedAvailability) return;
-
-    const savedDates = JSON.parse(savedAvailability);
-
-    // Restore only if the selected dates are unchanged
-    if (
-        checkInInput.value === savedDates.checkIn &&
-        checkOutInput.value === savedDates.checkOut
-    ) {
-        isAvailable = true;
-
-        continueBtn.disabled = false;
-        continueBtn.textContent = "Continue";
-
-        availabilityResult.textContent =
-            "Great! This property is available for your selected dates.";
-
-        availabilityResult.className =
-            "availability-result success";
-
-        checkAvailabilityBtn.disabled = false;
-
-        checkAvailabilityBtn.innerHTML =
-            '<i class="fa-solid fa-check"></i> Check Again';
-    }
-});

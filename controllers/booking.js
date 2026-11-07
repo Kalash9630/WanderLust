@@ -114,21 +114,27 @@ module.exports.saveGuestDetails = async (req, res) => {
 // DISPLAY STAY DETAILS PAGE
 
 module.exports.renderStayDetails = async (req, res) => {
-  // Get the selected listing using its ID
   const listing = await Listing.findById(req.params.id);
 
-  // Check whether the listing exists
   if (!listing) {
-    req.flash("error", "Listing not found!");
-    return res.redirect("/listings");
+      req.flash("error", "Listing not found!");
+      return res.redirect("/listings");
   }
 
-  // Display the Stay Details page
+  let stayDetails = {};
+
+  if (
+      req.session.booking &&
+      req.session.booking.listingId.toString() === listing._id.toString()
+  ) {
+      stayDetails = req.session.booking.stayDetails || {};
+  }
+
   res.render("bookings/stayDetails.ejs", {
-    listing,
+      listing,
+      stayDetails
   });
 };
-
 // =========================================
 // STAY DETAILS - POST CONTROLLER
 // =========================================
@@ -163,6 +169,101 @@ module.exports.saveStayDetails = async (req, res) => {
 
   res.json({
       success: true,
-      redirectUrl: `/listings/${listing._id}/book/pricing`
+      redirectUrl: `/listings/${listing._id}/book/pricing-details`
   });
+};
+
+// Render Pricing Details page
+module.exports.renderPricingDetails = async (req, res) => {
+
+    // Find the selected listing
+    const listing = await Listing.findById(req.params.id);
+
+    if (!listing) {
+        req.flash("error", "Listing not found!");
+        return res.redirect("/listings");
+    }
+
+    // Check whether booking session exists
+    if (
+        !req.session.booking ||
+        req.session.booking.listingId.toString() !== listing._id.toString()
+    ) {
+        req.flash("error", "Please complete your booking details first!");
+        return res.redirect(`/listings/${listing._id}/book/guest-details`);
+    }
+
+    // Check whether guest and stay details exist
+    if (
+        !req.session.booking.guestDetails ||
+        !req.session.booking.stayDetails
+    ) {
+        req.flash("error", "Please complete your previous booking steps!");
+        return res.redirect(`/listings/${listing._id}/book/guest-details`);
+    }
+
+    // Render Pricing Details page
+    res.render("bookings/pricingDetails.ejs", {
+        listing,
+        booking: req.session.booking
+    });
+};
+
+// SAVE PRICING DETAILS
+
+module.exports.savePricingDetails = async (req, res) => {
+
+    // Find the selected listing
+    const listing = await Listing.findById(req.params.id);
+
+    if (!listing) {
+        return res.status(404).json({
+            message: "Listing not found!"
+        });
+    }
+
+    // Verify previous booking details
+    if (
+        !req.session.booking ||
+        req.session.booking.listingId.toString() !== listing._id.toString() ||
+        !req.session.booking.guestDetails ||
+        !req.session.booking.stayDetails
+    ) {
+        return res.status(400).json({
+            message: "Please complete your previous booking details first."
+        });
+    }
+
+    // Get the number of nights from the booking session
+    const nights = req.session.booking.stayDetails.nights;
+
+    // Get the actual listing price
+    const nightlyPrice = Number(listing.price);
+
+    // Calculate accommodation price
+    const accommodationPrice = nightlyPrice * nights;
+
+    // Calculate platform fee (2%)
+    const platformFee = accommodationPrice * 0.02;
+
+    // Calculate taxes (5%)
+    const taxAmount = accommodationPrice * 0.05;
+
+    // Calculate total amount
+    const totalPrice =
+        accommodationPrice + platformFee + taxAmount;
+
+    // Save pricing details in the existing booking session
+    req.session.booking.pricingDetails = {
+        accommodationPrice,
+        platformFee,
+        taxAmount,
+        totalPrice
+    };
+
+    // Send success response
+    res.json({
+        success: true,
+        message: "Pricing details saved successfully."
+    });
 };
