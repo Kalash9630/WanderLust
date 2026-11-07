@@ -59,4 +59,18 @@ router.post(
     wrapAsync(bookingController.savePricingDetails)
 );
 
+// REVIEW DETAILS GET
+router.get(
+    "/:id/book/review-details",
+    isLoggedIn,
+    wrapAsync(bookingController.renderReviewDetails)
+);
+
+// CANCEL BOOKING POST
+router.post(
+    "/:id/book/cancel",
+    isLoggedIn,
+    wrapAsync(bookingController.cancelBooking)
+);
+
 module.exports = router;

@@ -178,7 +178,7 @@ continueBtn.addEventListener("click", async function (event) {
 
         // Navigate to Review page after successful saving
         window.location.href =
-            `/listings/${listingId}/book/review`;
+            `/listings/${listingId}/book/review-details`;
 
     } catch (error) {
 

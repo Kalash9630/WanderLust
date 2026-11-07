@@ -1,0 +1,362 @@
+<% layout("./layouts/boilerplate") %>
+
+<main class="booking-container review-page">
+
+    <!-- PAGE HEADER -->
+    <header class="booking-header">
+        <div>
+            <span class="booking-eyebrow">WANDERLUST RESERVATIONS</span>
+            <h1>Review your booking</h1>
+            <p>Everything looks good? You're almost there.</p>
+        </div>
+
+        <div class="secure-label">
+            <i class="fa-solid fa-shield-halved"></i>
+            Secure reservation
+        </div>
+    </header>
+
+    <!-- FOUR-STAGE BOOKING PROGRESS -->
+    <div class="booking-progress">
+
+        <div class="progress-step completed">
+            <div class="progress-number">
+                <i class="fa-solid fa-check"></i>
+            </div>
+            <div>
+                <strong>Guest details</strong>
+                <small>Your information</small>
+            </div>
+        </div>
+
+        <div class="progress-line active"></div>
+
+        <div class="progress-step completed">
+            <div class="progress-number">
+                <i class="fa-solid fa-check"></i>
+            </div>
+            <div>
+                <strong>Stay details</strong>
+                <small>Your dates</small>
+            </div>
+        </div>
+
+        <div class="progress-line active"></div>
+
+        <div class="progress-step completed">
+            <div class="progress-number">
+                <i class="fa-solid fa-check"></i>
+            </div>
+            <div>
+                <strong>Pricing details</strong>
+                <small>Price breakdown</small>
+            </div>
+        </div>
+
+        <div class="progress-line active"></div>
+
+        <div class="progress-step active">
+            <div class="progress-number">04</div>
+            <div>
+                <strong>Review</strong>
+                <small>Confirm booking</small>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- MAIN BOOKING LAYOUT -->
+    <div class="booking-layout" id="reviewLayout">
+
+        <!-- LEFT: REVIEW DETAILS -->
+        <section class="review-card">
+
+            <div class="card-heading">
+                <h2>Booking summary</h2>
+                <p>Please verify your information before confirming.</p>
+            </div>
+
+            <!-- GUEST INFORMATION -->
+            <div class="review-section">
+
+                <div class="section-heading">
+                    <div class="section-title">
+                        <span class="section-icon">
+                            <i class="fa-regular fa-user"></i>
+                        </span>
+                        <h3>Guest information</h3>
+                    </div>
+
+                </div>
+
+                <div class="review-details-grid">
+
+                    <div class="review-detail">
+                        <span>Full name</span>
+                        <strong id="reviewFullName"><%= booking.guestDetails.fullName %></strong>
+                    </div>
+
+                    <div class="review-detail">
+                        <span>Email address</span>
+                        <strong id="reviewEmail"><%= booking.guestDetails.email %></strong>
+                    </div>
+
+                    <div class="review-detail">
+                        <span>Mobile number</span>
+                        <strong id="reviewMobile"><%= booking.guestDetails.mobileNumber %></strong>
+                    </div>
+
+                    <div class="review-detail">
+                        <span>Date of birth</span>
+                        <strong id="reviewDOB"><%= booking.guestDetails.dateOfBirth %></strong>
+                    </div>
+
+                    <div class="review-detail">
+                        <span>Age</span>
+                        <strong id="reviewAge"><%= booking.guestDetails.age %> years</strong>
+                    </div>
+
+                    <div class="review-detail">
+                        <span>Sex</span>
+                        <strong id="reviewSex">
+                            <%= {
+                                male: "Male",
+                                female: "Female",
+                                other: "Other",
+                                prefer_not_to_say: "Prefer not to say"
+                            }[booking.guestDetails.sex] || booking.guestDetails.sex %>
+                        </strong>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- STAY INFORMATION -->
+            <div class="review-section">
+
+                <div class="section-heading">
+                    <div class="section-title">
+                        <span class="section-icon">
+                            <i class="fa-regular fa-calendar-check"></i>
+                        </span>
+                        <h3>Stay details</h3>
+                    </div>
+
+                    <!-- Edit stay dates -->
+                    <a href="/listings/<%= listing._id %>/book/stay-details"
+                       class="edit-link">
+                        <i class="fa-solid fa-pen"></i>
+                        Edit
+                    </a>
+                </div>
+
+                <div class="review-details-grid">
+
+                    <div class="review-detail">
+                        <span>Check-in</span>
+                        <strong id="reviewCheckIn"><%= booking.stayDetails.checkIn %></strong>
+                    </div>
+
+                    <div class="review-detail">
+                        <span>Check-out</span>
+                        <strong id="reviewCheckOut"><%= booking.stayDetails.checkOut %></strong>
+                    </div>
+
+                    <div class="review-detail">
+                        <span>Duration</span>
+                        <strong id="reviewNights">
+                            <%= booking.stayDetails.nights %>
+                            <%= booking.stayDetails.nights === 1 ? "night" : "nights" %>
+                        </strong>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- PRICE SUMMARY -->
+            <div class="review-section price-review-section">
+
+                <div class="section-heading">
+                    <div class="section-title">
+                        <span class="section-icon">
+                            <i class="fa-solid fa-receipt"></i>
+                        </span>
+                        <h3>Payment summary</h3>
+                    </div>
+
+                    <!-- View pricing details -->
+                    <a href="/listings/<%= listing._id %>/book/pricing-details"
+                       class="edit-link">
+                    </a>
+                </div>
+
+                <div class="review-price-row">
+                    <span>Accommodation</span>
+                    <strong id="reviewAccommodation">
+                        ₹<%= booking.pricingDetails.accommodationPrice.toLocaleString("en-IN") %>
+                    </strong>
+                </div>
+
+                <div class="review-price-row">
+                    <span>Platform fee (2%)</span>
+                    <strong id="reviewPlatformFee">
+                        ₹<%= booking.pricingDetails.platformFee.toLocaleString("en-IN") %>
+                    </strong>
+                </div>
+
+                <div class="review-price-row">
+                    <span>Taxes (5%)</span>
+                    <strong id="reviewTax">
+                        ₹<%= booking.pricingDetails.taxAmount.toLocaleString("en-IN") %>
+                    </strong>
+                </div>
+
+                <div class="review-total-row">
+                    <div>
+                        <strong>Total booking amount</strong>
+                        <small>Including platform fee and taxes</small>
+                    </div>
+
+                    <strong id="reviewTotal">
+                        ₹<%= booking.pricingDetails.totalPrice.toLocaleString("en-IN") %>
+                    </strong>
+                </div>
+
+            </div>
+
+            <!-- CONFIRMATION NOTE -->
+            <div class="confirmation-note">
+                <i class="fa-solid fa-circle-info"></i>
+                <p>
+                    Please make sure all your details are correct.
+                    Once confirmed, your reservation will be submitted.
+                </p>
+            </div>
+
+            <!-- NAVIGATION -->
+            <!-- BOOKING NAVIGATION -->
+<div class="booking-navigation">
+
+    <!-- Cancel the current booking -->
+    <form
+        action="/listings/<%= listing._id %>/book/cancel"
+        method="POST"
+        id="cancelBookingForm"
+    >
+        <button type="submit" class="cancel-btn">
+            <i class="fa-solid fa-xmark"></i>
+            Cancel Booking
+        </button>
+    </form>
+
+    <!-- Confirm booking -->
+    <button
+        type="button"
+        class="confirm-btn"
+        id="confirmBookingBtn"
+    >
+        Confirm Booking
+        <i class="fa-solid fa-check"></i>
+    </button>
+
+</div>
+
+        </section>
+
+        <!-- RIGHT: PROPERTY SUMMARY -->
+        <aside class="property-summary-card">
+
+            <div class="property-image-wrapper">
+                <img
+                    src="<%= listing.image %>"
+                    alt="<%= listing.title %>"
+                    class="property-image"
+                >
+            </div>
+
+            <div class="property-summary-body">
+
+                <span class="property-label">
+                    YOUR SELECTED PROPERTY
+                </span>
+
+                <h2 class="property-title">
+                    <%= listing.title %>
+                </h2>
+
+                <p class="property-location">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <%= listing.location %>, <%= listing.country %>
+                </p>
+
+                <div class="property-divider"></div>
+
+                <div class="property-price">
+                    <div>
+                        <strong>
+                            ₹<%= Number(listing.price).toLocaleString("en-IN") %> <span>/ night</span>
+                        </strong>
+                        
+                    </div>
+
+                    <span class="price-note">Before taxes</span>
+                </div>
+
+                <div class="property-summary-note">
+                    <i class="fa-solid fa-shield-halved"></i>
+                    <span>
+                        Your booking details will be securely processed.
+                    </span>
+                </div>
+
+            </div>
+        </aside>
+
+    </div>
+
+    <!-- BOOKING SUCCESS SCREEN -->
+    <section class="success-card" id="bookingSuccess" hidden>
+
+        <div class="success-icon">
+            <i class="fa-solid fa-check"></i>
+        </div>
+
+        <span class="success-eyebrow">WANDERLUST RESERVATIONS</span>
+
+        <h2>Booking confirmed!</h2>
+
+        <p>
+            Your booking confirmation has been created successfully.
+        </p>
+
+        <div class="booking-reference-box">
+            <span>YOUR BOOKING REFERENCE</span>
+            <strong id="bookingReference">WL-000000</strong>
+        </div>
+
+        <div class="success-booking-details">
+
+            <div>
+                <span>Property</span>
+                <strong><%= listing.title %></strong>
+            </div>
+
+            <div>
+                <span>Stay duration</span>
+                <strong id="successNights">--</strong>
+            </div>
+
+            <div>
+                <span>Total amount</span>
+                <strong id="successTotal">₹0</strong>
+            </div>
+
+        </div>
+
+        <a href="/listings" class="home-btn">
+            Back to Explore
+        </a>
+
+    </section>
+
+</main>

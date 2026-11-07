@@ -267,3 +267,62 @@ module.exports.savePricingDetails = async (req, res) => {
         message: "Pricing details saved successfully."
     });
 };
+
+// RENDER REVIEW DETAILS PAGE
+module.exports.renderReviewDetails = async (req, res) => {
+    // Find the selected listing
+    const listing = await Listing.findById(req.params.id);
+
+    if (!listing) {
+        req.flash("error", "Listing not found!");
+        return res.redirect("/listings");
+    }
+
+    // Check whether a booking session exists for this listing
+    if (
+        !req.session.booking ||
+        req.session.booking.listingId.toString() !== listing._id.toString()
+    ) {
+        req.flash("error", "Please complete your booking details first!");
+        return res.redirect(`/listings/${listing._id}/book/guest-details`);
+    }
+
+    // Ensure guest and stay details are available
+    if (
+        !req.session.booking.guestDetails ||
+        !req.session.booking.stayDetails
+    ) {
+        req.flash("error", "Please complete your previous booking steps!");
+        return res.redirect(`/listings/${listing._id}/book/guest-details`);
+    }
+
+    // Ensure pricing details are available
+    if (!req.session.booking.pricingDetails) {
+        req.flash("error", "Please complete the pricing details first!");
+        return res.redirect(`/listings/${listing._id}/book/pricing-details`);
+    }
+
+    // Pass the listing and booking data to the review page
+    res.render("bookings/reviewDetails.ejs", {
+        listing,
+        booking: req.session.booking
+    });
+};
+
+// CANCEL BOOKING
+module.exports.cancelBooking = async (req, res) => {
+
+    // Check whether a booking session exists
+    if (!req.session.booking) {
+        req.flash("error", "No active booking found!");
+        return res.redirect("/listings");
+    }
+
+    // Remove all booking data from the session
+    delete req.session.booking;
+
+    // Show cancellation message and redirect to listings
+    req.flash("success", "Your booking has been cancelled successfully!");
+    res.redirect("/listings");
+
+};
