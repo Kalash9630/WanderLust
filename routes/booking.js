@@ -1,12 +1,8 @@
-
 const express = require("express");
 const router = express.Router();
 
 const wrapAsync = require("../utils/wrapAsync.js");
-const {
-    isLoggedIn,
-    validateGuestDetails
-} = require("../middleware.js");
+const { isLoggedIn, validateGuestDetails, validateStayDetails } = require("../middleware.js");
 
 const bookingController = require("../controllers/booking.js");
 
@@ -15,9 +11,9 @@ const bookingController = require("../controllers/booking.js");
 // =========================================
 
 router.get(
-    "/:id/book/guest-details",
-    isLoggedIn,
-    wrapAsync(bookingController.renderGuestDetails)
+  "/:id/book/guest-details",
+  isLoggedIn,
+  wrapAsync(bookingController.renderGuestDetails),
 );
 
 // =========================================
@@ -25,11 +21,28 @@ router.get(
 // =========================================
 
 router.post(
-    "/:id/book/guest-details",
-    isLoggedIn,
-    validateGuestDetails,
-    wrapAsync(bookingController.saveGuestDetails)
+  "/:id/book/guest-details",
+  isLoggedIn,
+  validateGuestDetails,
+  wrapAsync(bookingController.saveGuestDetails),
 );
 
+// =========================================
+// STAY DETAILS - GET ROUTE
+// =========================================
+
+router.get(
+    "/:id/book/stay-details",
+    isLoggedIn,
+    wrapAsync(bookingController.renderStayDetails)
+);
+
+// Stay Details POST
+router.post(
+    "/:id/book/stay-details",
+    isLoggedIn,
+    validateStayDetails,
+    wrapAsync(bookingController.saveStayDetails)
+);
 
 module.exports = router;

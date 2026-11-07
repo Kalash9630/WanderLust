@@ -64,3 +64,32 @@ module.exports.guestDetailsSchema = Joi.object({
     // This field is optional if the form submits it.
     email: Joi.string().email().optional()
 });
+
+// Stay Details validation
+module.exports.stayDetailsSchema = Joi.object({
+    checkIn: Joi.date()
+        .iso()
+        .min("now")
+        .required()
+        .messages({
+            "date.base": "Please enter a valid check-in date.",
+            "date.min": "Check-in date cannot be in the past.",
+            "any.required": "Check-in date is required."
+        }),
+
+    checkOut: Joi.date()
+        .iso()
+        .required()
+        .messages({
+            "date.base": "Please enter a valid check-out date.",
+            "any.required": "Check-out date is required."
+        })
+}).custom((value, helpers) => {
+    if (value.checkOut <= value.checkIn) {
+        return helpers.error("date.checkout");
+    }
+
+    return value;
+}).messages({
+    "date.checkout": "Check-out date must be after the check-in date."
+});

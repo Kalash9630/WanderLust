@@ -1,0 +1,238 @@
+<% layout("./layouts/boilerplate") %>
+
+<main class="booking-container" data-listing-id="<%= listing._id %>">
+  <!-- PAGE HEADER -->
+  <header class="booking-header">
+    <div>
+      <span class="booking-eyebrow">WANDERLUST RESERVATIONS</span>
+
+      <h1>Plan your stay</h1>
+
+      <p>Choose your dates and check availability.</p>
+    </div>
+
+    <div class="secure-label">
+      <i class="fa-solid fa-shield-halved"></i>
+      Secure reservation
+    </div>
+  </header>
+
+  <!-- BOOKING PROGRESS -->
+  <div class="booking-progress">
+    <!-- STEP 1: COMPLETED -->
+    <div class="progress-step completed">
+      <div class="progress-number">
+        <i class="fa-solid fa-check"></i>
+      </div>
+      <div>
+        <strong>Guest details</strong>
+        <small>Your information</small>
+      </div>
+    </div>
+
+    <div class="progress-line active"></div>
+
+    <!-- STEP 2: ACTIVE -->
+    <div class="progress-step active">
+      <div class="progress-number">02</div>
+      <div>
+        <strong>Stay details</strong>
+        <small>Your dates</small>
+      </div>
+    </div>
+
+    <div class="progress-line"></div>
+
+    <!-- STEP 3 -->
+    <div class="progress-step">
+      <div class="progress-number">03</div>
+      <div>
+        <strong>Pricing details</strong>
+        <small>Price breakdown</small>
+      </div>
+    </div>
+
+    <div class="progress-line"></div>
+
+    <!-- STEP 4 -->
+    <div class="progress-step">
+      <div class="progress-number">04</div>
+      <div>
+        <strong>Review</strong>
+        <small>Confirm booking</small>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN BOOKING LAYOUT -->
+  <div class="booking-layout">
+    <!-- LEFT: STAY DETAILS -->
+    <section class="stay-details-card">
+      <div class="card-heading">
+        <h2>Your stay</h2>
+        <p>Select when you would like to arrive and leave.</p>
+      </div>
+
+      <form id="stayDetailsForm" novalidate>
+        <!-- DATE SELECTION -->
+        <div class="form-section">
+          <h3>Choose your dates</h3>
+
+          <div class="row">
+            <!-- CHECK-IN -->
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="checkIn">Check-in</label>
+
+                <div class="input-wrapper">
+                  <i class="fa-regular fa-calendar"></i>
+
+                  <input
+                    type="text"
+                    class="form-control date-input"
+                    id="checkIn"
+                    placeholder="Select check-in date"
+                    autocomplete="off"
+                    required
+                  />
+                </div>
+
+                <div class="invalid-feedback" id="checkInFeedback">
+                  Please select a check-in date.
+                </div>
+              </div>
+            </div>
+
+            <!-- CHECK-OUT -->
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="checkOut">Check-out</label>
+
+                <div class="input-wrapper">
+                  <i class="fa-regular fa-calendar-check"></i>
+
+                  <input
+                    type="text"
+                    class="form-control date-input"
+                    id="checkOut"
+                    placeholder="Select check-out date"
+                    autocomplete="off"
+                    required
+                  />
+                </div>
+
+                <div class="invalid-feedback" id="checkOutFeedback">
+                  Please select a check-out date.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- STAY DURATION -->
+        <div class="stay-duration-card">
+          <div class="duration-icon">
+            <i class="fa-regular fa-moon"></i>
+          </div>
+
+          <div class="duration-info">
+            <span>Duration of stay</span>
+            <strong id="stayDuration">Select your dates</strong>
+          </div>
+        </div>
+
+        <!-- AVAILABILITY -->
+        <div class="availability-section">
+          <h3>Availability</h3>
+
+          <p>
+            Check whether this property is available for your selected dates.
+          </p>
+
+          <button
+            type="button"
+            class="availability-btn"
+            id="checkAvailabilityBtn"
+          >
+            <i class="fa-solid fa-magnifying-glass"></i>
+            Check Availability
+          </button>
+
+          <div
+            class="availability-result"
+            id="availabilityResult"
+            aria-live="polite"
+          ></div>
+        </div>
+
+        <!-- NAVIGATION BUTTONS -->
+        <div class="booking-navigation">
+          <a
+            href="/listings/<%= listing._id %>/book/guest-details"
+            class="back-btn"
+          >
+            <i class="fa-solid fa-arrow-left"></i>
+            Back
+          </a>
+
+          <button
+            type="button"
+            class="continue-btn"
+            id="continueToPricingBtn"
+            disabled
+          >
+            Continue
+            <i class="fa-solid fa-arrow-right"></i>
+          </button>
+        </div>
+      </form>
+    </section>
+
+    <!-- RIGHT: PROPERTY SUMMARY -->
+    <aside class="property-summary-card">
+      <div class="property-image-wrapper">
+        <img
+          src="<%= listing.image %>"
+          alt="<%= listing.title %>"
+          class="property-image"
+        />
+      </div>
+
+      <div class="property-summary-body">
+        <span class="property-label"> YOUR SELECTED PROPERTY </span>
+
+        <h2 class="property-title"><%= listing.title %></h2>
+
+        <p class="property-location">
+          <i class="fa-solid fa-location-dot"></i>
+          <%= listing.location %>, <%= listing.country %>
+        </p>
+
+        <div class="property-divider"></div>
+
+        <div class="property-price">
+          <div>
+            <strong>
+              ₹<%= Number(listing.price).toLocaleString("en-IN") %> <span>/ night</span>
+            </strong>
+            
+          </div>
+
+          <span class="price-note">Before taxes</span>
+        </div>
+
+        <div class="property-summary-note">
+          <i class="fa-solid fa-shield-halved"></i>
+
+          <span> Your booking details will be securely processed. </span>
+        </div>
+      </div>
+    </aside>
+  </div>
+</main>
+
+<!-- Flatpickr JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+<!-- Stay Details JavaScript -->
+<script src="/js/stay-details.js"></script>

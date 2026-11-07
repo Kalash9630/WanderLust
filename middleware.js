@@ -1,4 +1,4 @@
-const { guestDetailsSchema } = require("./schema.js");
+const { guestDetailsSchema, stayDetailsSchema } = require("./schema.js");
 
 // to check whether the user is logged in
 module.exports.isLoggedIn = (req, res, next) => {
@@ -41,5 +41,23 @@ module.exports.validateGuestDetails = (req, res, next) => {
     }
 
     // Continue to the controller if validation succeeds
+    next();
+};
+
+// Middleware to validate Stay Details
+module.exports.validateStayDetails = (req, res, next) => {
+    const { error } = stayDetailsSchema.validate(req.body, {
+        abortEarly: false,
+        stripUnknown: true
+    });
+
+    if (error) {
+        const errorMessages = error.details.map(el => el.message);
+
+        return res.status(400).json({
+            message: errorMessages.join(", ")
+        });
+    }
+
     next();
 };
