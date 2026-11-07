@@ -6302,11 +6302,21 @@ body:has(.review-page) {
     transition: 0.25s ease;
 }
 
-.cancel-btn:hover {
-    background: #dc3545;
-    color: #fff;
+/* CANCEL BUTTON HOVER */
+.cancel-btn {
+    transition: all 0.3s ease;
 }
 
+.cancel-btn:hover {
+    background-color: #fff0f1 !important;
+    border-color: #fe424d !important;
+    color: #fe424d !important;
+    box-shadow: 0 4px 12px rgba(254, 66, 77, 0.10);
+}
+
+.cancel-btn:hover i {
+    color: #fe424d !important;
+}
 
 /* =========================================
    RESPONSIVE DESIGN

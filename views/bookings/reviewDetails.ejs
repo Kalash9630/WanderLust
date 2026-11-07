@@ -1,99 +1,102 @@
 <% layout("./layouts/boilerplate") %>
 
-<main class="booking-container review-page">
+    <main class="booking-container review-page">
 
-    <!-- PAGE HEADER -->
-    <header class="booking-header">
-        <div>
-            <span class="booking-eyebrow">WANDERLUST RESERVATIONS</span>
-            <h1>Review your booking</h1>
-            <p>Everything looks good? You're almost there.</p>
-        </div>
-
-        <div class="secure-label">
-            <i class="fa-solid fa-shield-halved"></i>
-            Secure reservation
-        </div>
-    </header>
-
-    <!-- FOUR-STAGE BOOKING PROGRESS -->
-    <div class="booking-progress">
-
-        <div class="progress-step completed">
-            <div class="progress-number">
-                <i class="fa-solid fa-check"></i>
-            </div>
+        <!-- PAGE HEADER -->
+        <header class="booking-header">
             <div>
-                <strong>Guest details</strong>
-                <small>Your information</small>
+                <span class="booking-eyebrow">WANDERLUST RESERVATIONS</span>
+                <h1>Review your booking</h1>
+                <p>Everything looks good? You're almost there.</p>
             </div>
+
+            <div class="secure-label">
+                <i class="fa-solid fa-shield-halved"></i>
+                Secure reservation
+            </div>
+        </header>
+
+        <!-- FOUR-STAGE BOOKING PROGRESS -->
+        <div class="booking-progress">
+
+            <div class="progress-step completed">
+                <div class="progress-number">
+                    <i class="fa-solid fa-check"></i>
+                </div>
+                <div>
+                    <strong>Guest details</strong>
+                    <small>Your information</small>
+                </div>
+            </div>
+
+            <div class="progress-line active"></div>
+
+            <div class="progress-step completed">
+                <div class="progress-number">
+                    <i class="fa-solid fa-check"></i>
+                </div>
+                <div>
+                    <strong>Stay details</strong>
+                    <small>Your dates</small>
+                </div>
+            </div>
+
+            <div class="progress-line active"></div>
+
+            <div class="progress-step completed">
+                <div class="progress-number">
+                    <i class="fa-solid fa-check"></i>
+                </div>
+                <div>
+                    <strong>Pricing details</strong>
+                    <small>Price breakdown</small>
+                </div>
+            </div>
+
+            <div class="progress-line active"></div>
+
+            <div class="progress-step active">
+                <div class="progress-number">04</div>
+                <div>
+                    <strong>Review</strong>
+                    <small>Confirm booking</small>
+                </div>
+            </div>
+
         </div>
 
-        <div class="progress-line active"></div>
+        <!-- MAIN BOOKING LAYOUT -->
+        <div class="booking-layout" id="reviewLayout">
 
-        <div class="progress-step completed">
-            <div class="progress-number">
-                <i class="fa-solid fa-check"></i>
-            </div>
-            <div>
-                <strong>Stay details</strong>
-                <small>Your dates</small>
-            </div>
-        </div>
+            <!-- LEFT: REVIEW DETAILS -->
+            <section class="review-card">
 
-        <div class="progress-line active"></div>
-
-        <div class="progress-step completed">
-            <div class="progress-number">
-                <i class="fa-solid fa-check"></i>
-            </div>
-            <div>
-                <strong>Pricing details</strong>
-                <small>Price breakdown</small>
-            </div>
-        </div>
-
-        <div class="progress-line active"></div>
-
-        <div class="progress-step active">
-            <div class="progress-number">04</div>
-            <div>
-                <strong>Review</strong>
-                <small>Confirm booking</small>
-            </div>
-        </div>
-
-    </div>
-
-    <!-- MAIN BOOKING LAYOUT -->
-    <div class="booking-layout" id="reviewLayout">
-
-        <!-- LEFT: REVIEW DETAILS -->
-        <section class="review-card">
-
-            <div class="card-heading">
-                <h2>Booking summary</h2>
-                <p>Please verify your information before confirming.</p>
-            </div>
-
-            <!-- GUEST INFORMATION -->
-            <div class="review-section">
-
-                <div class="section-heading">
-                    <div class="section-title">
-                        <span class="section-icon">
-                            <i class="fa-regular fa-user"></i>
-                        </span>
-                        <h3>Guest information</h3>
-                    </div>
-
+                <div class="card-heading">
+                    <h2>Booking summary</h2>
+                    <p>Please verify your information before confirming.</p>
                 </div>
 
-                <div class="review-details-grid">
+                <!-- GUEST INFORMATION -->
+                <div class="review-section">
 
-                    <div class="review-detail">
-                        <span>Full name</span>
-                        <strong id="reviewFullName"><%= booking.guestDetails.fullName %></strong>
+                    <div class="section-heading">
+                        <div class="section-title">
+                            <span class="section-icon">
+                                <i class="fa-regular fa-user"></i>
+                            </span>
+                            <h3>Guest information</h3>
+                        </div>
+
+                    </div>
+
+                    <div class="review-details-grid">
+
+                        <div class="review-detail">
+                            <span>Full name</span>
+                            <strong id="reviewFullName">
+                                <%= booking.guestDetails.fullName.toLowerCase() .split(' ')
+                            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                            .join(' ') %></strong>
                     </div>
 
                     <div class="review-detail">
@@ -249,15 +252,21 @@
         </button>
     </form>
 
-    <!-- Confirm booking -->
-    <button
-        type="button"
-        class="confirm-btn"
-        id="confirmBookingBtn"
+    <!-- Confirm Booking Form -->
+    <form
+        action="/listings/<%= listing._id %>/book/confirm"
+        method="POST"
+        id="confirmBookingForm"
     >
+        <button
+            type="submit"
+            class="confirm-btn"
+            id="confirmBookingBtn"
+        >
         Confirm Booking
         <i class="fa-solid fa-check"></i>
     </button>
+</form>
 
 </div>
 
@@ -313,50 +322,4 @@
         </aside>
 
     </div>
-
-    <!-- BOOKING SUCCESS SCREEN -->
-    <section class="success-card" id="bookingSuccess" hidden>
-
-        <div class="success-icon">
-            <i class="fa-solid fa-check"></i>
-        </div>
-
-        <span class="success-eyebrow">WANDERLUST RESERVATIONS</span>
-
-        <h2>Booking confirmed!</h2>
-
-        <p>
-            Your booking confirmation has been created successfully.
-        </p>
-
-        <div class="booking-reference-box">
-            <span>YOUR BOOKING REFERENCE</span>
-            <strong id="bookingReference">WL-000000</strong>
-        </div>
-
-        <div class="success-booking-details">
-
-            <div>
-                <span>Property</span>
-                <strong><%= listing.title %></strong>
-            </div>
-
-            <div>
-                <span>Stay duration</span>
-                <strong id="successNights">--</strong>
-            </div>
-
-            <div>
-                <span>Total amount</span>
-                <strong id="successTotal">₹0</strong>
-            </div>
-
-        </div>
-
-        <a href="/listings" class="home-btn">
-            Back to Explore
-        </a>
-
-    </section>
-
 </main>

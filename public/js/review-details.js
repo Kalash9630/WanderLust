@@ -15,54 +15,46 @@ const cancelBookingForm = document.getElementById("cancelBookingForm");
 // =========================================
 
 if (reviewLayout) {
+  // =========================================
+  // FORMAT DATE
+  // =========================================
 
-    // =========================================
-    // FORMAT DATE
-    // =========================================
+  function formatDate(dateString) {
+    if (!dateString) return "--";
 
-    function formatDate(dateString) {
+    const [year, month, day] = dateString.split("-").map(Number);
 
-        if (!dateString) return "--";
+    const date = new Date(year, month - 1, day);
 
-        const [year, month, day] = dateString.split("-").map(Number);
+    return date.toLocaleDateString("en-IN", {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+    });
+  }
 
-        const date = new Date(year, month - 1, day);
+  // =========================================
+  // DISPLAY FORMATTED STAY DATES
+  // =========================================
 
-        return date.toLocaleDateString("en-IN", {
-            day: "numeric",
-            month: "short",
-            year: "numeric"
-        });
+  function displayStayDates() {
+    const checkIn = reviewCheckIn.textContent.trim();
+    const checkOut = reviewCheckOut.textContent.trim();
 
+    if (checkIn && checkIn !== "--") {
+      reviewCheckIn.textContent = formatDate(checkIn);
     }
 
-
-    // =========================================
-    // DISPLAY FORMATTED STAY DATES
-    // =========================================
-
-    function displayStayDates() {
-
-        const checkIn = reviewCheckIn.textContent.trim();
-        const checkOut = reviewCheckOut.textContent.trim();
-
-        if (checkIn && checkIn !== "--") {
-            reviewCheckIn.textContent = formatDate(checkIn);
-        }
-
-        if (checkOut && checkOut !== "--") {
-            reviewCheckOut.textContent = formatDate(checkOut);
-        }
-
+    if (checkOut && checkOut !== "--") {
+      reviewCheckOut.textContent = formatDate(checkOut);
     }
+  }
 
+  // =========================================
+  // INITIALIZE REVIEW PAGE
+  // =========================================
 
-    // =========================================
-    // INITIALIZE REVIEW PAGE
-    // =========================================
-
-    displayStayDates();
-
+  displayStayDates();
 }
 
 // =========================================
@@ -70,12 +62,11 @@ if (reviewLayout) {
 // =========================================
 
 if (cancelBookingForm) {
-
-    cancelBookingForm.addEventListener("submit", function () {
-
-        // Clear saved availability dates from browser session storage
-        sessionStorage.removeItem("availableDates");
-
-    });
-
+  cancelBookingForm.addEventListener("submit", function () {
+    // Clear saved availability dates from browser session storage
+    sessionStorage.removeItem("availableDates");
+  });
 }
+
+// Clear saved availability dates after successful booking
+sessionStorage.removeItem("availableDates");

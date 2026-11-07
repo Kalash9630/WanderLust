@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const wrapAsync = require("../utils/wrapAsync.js");
-const { isLoggedIn, validateGuestDetails, validateStayDetails } = require("../middleware.js");
+const { isLoggedIn, validateGuestDetails, validateStayDetails, validateBookingConfirmation} = require("../middleware.js");
 
 const bookingController = require("../controllers/booking.js");
 
@@ -71,6 +71,16 @@ router.post(
     "/:id/book/cancel",
     isLoggedIn,
     wrapAsync(bookingController.cancelBooking)
+);
+
+// =========================================
+// CONFIRM BOOKING POST ROUTE
+// =========================================
+router.post(
+    "/:id/book/confirm",
+    isLoggedIn,
+    validateBookingConfirmation,
+    wrapAsync(bookingController.confirmBooking)
 );
 
 module.exports = router;
