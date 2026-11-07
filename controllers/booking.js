@@ -397,3 +397,27 @@ module.exports.confirmBooking = async (req, res) => {
     bookingReference: newBooking.bookingReference,
   });
 };
+
+// =========================================
+// RENDER BOOKING SUCCESS PAGE
+// =========================================
+
+module.exports.renderBookingSuccess = async (req, res) => {
+
+    // Find the confirmed booking belonging to the logged-in user
+    const booking = await Booking.findOne({
+        _id: req.params.bookingId,
+        user: req.user._id
+    }).populate("listing");
+
+    // Check whether the booking exists
+    if (!booking) {
+        req.flash("error", "Booking not found!");
+        return res.redirect("/listings");
+    }
+
+    // Render the Booking Success page
+    res.render("bookings/bookingSuccess.ejs", {
+        booking
+    });
+};

@@ -1,0 +1,269 @@
+<% layout("./layouts/boilerplate") %>
+
+<main class="reservation-page">
+
+    <!-- CONFIRMATION HEADER -->
+    <section class="reservation-hero">
+        <div class="reservation-hero-left">
+            <div class="reservation-success-mark">
+                <i class="fa-solid fa-check"></i>
+            </div>
+
+            <div>
+                <span class="reservation-eyebrow">RESERVATION CONFIRMED</span>
+                <h1>Your stay is booked.</h1>
+                <p>Everything is set. We hope you have a wonderful stay!</p>
+            </div>
+        </div>
+
+        <div class="reservation-reference">
+            <span>BOOKING REFERENCE</span>
+            <strong><%= booking.bookingReference %></strong>
+        </div>
+    </section>
+
+    <!-- MAIN RESERVATION LAYOUT -->
+    <div class="reservation-layout">
+
+        <!-- LEFT COLUMN -->
+        <div class="reservation-main">
+
+            <!-- PROPERTY -->
+            <section class="reservation-property">
+                <div class="reservation-property-image">
+                    <img
+                        src="<%= booking.listing.image %>"
+                        alt="<%= booking.listing.title %>"
+                    />
+                </div>
+
+                <div class="reservation-property-info">
+                    <span class="reservation-label">YOUR ACCOMMODATION</span>
+
+                    <h2><%= booking.listing.title %></h2>
+
+                    <p class="reservation-location">
+                        <i class="fa-solid fa-location-dot"></i>
+                        <%= booking.listing.location %>, <%= booking.listing.country %>
+                    </p>
+
+                    <div class="reservation-nightly-price">
+                        ₹ <%= Number(booking.listing.price).toLocaleString("en-IN") %>
+                        <span>/ night</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- STAY DETAILS -->
+            <section class="reservation-panel">
+
+                <div class="reservation-panel-heading">
+                    <div>
+                        <span class="reservation-label">YOUR TRIP</span>
+                        <h2>Stay details</h2>
+                    </div>
+
+                    <span class="reservation-confirmed-label">
+                        <i class="fa-solid fa-check"></i> Confirmed
+                    </span>
+                </div>
+
+                <div class="reservation-dates">
+
+                    <div class="reservation-date">
+                        <span>CHECK-IN</span>
+                        <strong>
+                            <%= new Date(booking.stayDetails.checkIn).toLocaleDateString("en-IN", {
+                                day: "numeric",
+                                month: "long",
+                                year: "numeric",
+                                timeZone: "UTC"
+                            }) %>
+                        </strong>
+                        <small>Arrival</small>
+                    </div>
+
+                    <div class="reservation-date-divider">
+                        <i class="fa-solid fa-arrow-right"></i>
+                        <span><%= booking.stayDetails.nights %> nights</span>
+                    </div>
+
+                    <div class="reservation-date">
+                        <span>CHECK-OUT</span>
+                        <strong>
+                            <%= new Date(booking.stayDetails.checkOut).toLocaleDateString("en-IN", {
+                                day: "numeric",
+                                month: "long",
+                                year: "numeric",
+                                timeZone: "UTC"
+                            }) %>
+                        </strong>
+                        <small>Departure</small>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- GUEST DETAILS -->
+            <section class="reservation-panel">
+
+                <div class="reservation-panel-heading">
+                    <div>
+                        <span class="reservation-label">RESERVATION HOLDER</span>
+                        <h2>Guest information</h2>
+                    </div>
+                </div>
+
+                <div class="reservation-guest-grid">
+
+                    <div class="reservation-detail">
+                        <span>Full name</span>
+                        <strong><%= booking.guestDetails.fullName %></strong>
+                    </div>
+
+                    <div class="reservation-detail">
+                        <span>Email address</span>
+                        <strong><%= booking.guestDetails.email %></strong>
+                    </div>
+
+                    <div class="reservation-detail">
+                        <span>Mobile number</span>
+                        <strong><%= booking.guestDetails.mobileNumber %></strong>
+                    </div>
+
+                    <div class="reservation-detail">
+                        <span>Date of birth</span>
+                        <strong>
+                            <%= new Date(booking.guestDetails.dateOfBirth).toLocaleDateString("en-IN", {
+                                day: "numeric",
+                                month: "short",
+                                year: "numeric",
+                                timeZone: "UTC"
+                            }) %>
+                        </strong>
+                    </div>
+
+                    <div class="reservation-detail">
+                        <span>Sex</span>
+                        <strong>
+                            <%= booking.guestDetails.sex.replaceAll("_", " ").replace(/\b\w/g, char => char.toUpperCase()) %>
+                        </strong>
+                    </div>
+
+                </div>
+            </section>
+
+        </div>
+
+        <!-- RIGHT COLUMN -->
+        <aside class="reservation-sidebar">
+
+            <!-- PRICE SUMMARY -->
+            <section class="reservation-price-card">
+
+                <span class="reservation-label">PAYMENT SUMMARY</span>
+                <h2>Price breakdown</h2>
+
+                <p class="reservation-price-subtitle">
+                    Your reservation cost
+                </p>
+
+                <div class="reservation-price-rows">
+
+                    <div>
+                        <span>Accommodation</span>
+                        <strong>
+                            ₹ <%= booking.pricingDetails.accommodationPrice.toLocaleString("en-IN") %>
+                        </strong>
+                    </div>
+
+                    <div>
+                        <span>Platform fee (2%)</span>
+                        <strong>
+                            ₹ <%= booking.pricingDetails.platformFee.toLocaleString("en-IN") %>
+                        </strong>
+                    </div>
+
+                    <div>
+                        <span>Taxes (5%)</span>
+                        <strong>
+                            ₹ <%= booking.pricingDetails.taxAmount.toLocaleString("en-IN") %>
+                        </strong>
+                    </div>
+
+                </div>
+
+                <div class="reservation-total">
+                    <span>Total booking amount</span>
+                    <strong>
+                        ₹ <%= booking.pricingDetails.totalPrice.toLocaleString("en-IN") %>
+                    </strong>
+                </div>
+
+                <p class="reservation-price-note">
+                    <i class="fa-solid fa-circle-info"></i>
+                    Includes all listed fees and taxes.
+                </p>
+
+            </section>
+
+            <!-- CONFIRMATION INFORMATION -->
+            <section class="reservation-email-card">
+
+                <div class="reservation-email-icon">
+                    <i class="fa-regular fa-envelope"></i>
+                </div>
+
+                <div>
+                    <h3>Confirmation details</h3>
+                    <p>
+                        Your booking details and confirmation PDF will be sent to:
+                    </p>
+                    <strong><%= booking.guestDetails.email %></strong>
+                </div>
+
+            </section>
+
+            <!-- BOOKING STATUS -->
+            <section class="reservation-status-card">
+                <div class="reservation-status-row">
+                    <span>Reservation status</span>
+                    <strong>
+                        <i class="fa-solid fa-circle-check"></i>
+                        Confirmed
+                    </strong>
+                </div>
+
+                <div class="reservation-status-row">
+                    <span>Booking reference</span>
+                    <strong><%= booking.bookingReference %></strong>
+                </div>
+            </section>
+
+        </aside>
+
+    </div>
+
+    <!-- PAGE FOOTER -->
+    <footer class="reservation-footer">
+
+        <div>
+            <h3>Ready for your next stay?</h3>
+            <p>Your next experience with WanderLust awaits.</p>
+        </div>
+
+        <a href="/listings" class="reservation-home-button">
+            Explore listings
+            <i class="fa-solid fa-arrow-right"></i>
+        </a>
+
+        <p class="reservation-redirect-message">
+            Redirecting to listings in
+            <strong id="redirectCountdown">60</strong> seconds
+        </p>
+
+    </footer>
+
+</main>
+
+<script src="/js/booking-success.js"></script>

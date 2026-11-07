@@ -83,4 +83,14 @@ router.post(
     wrapAsync(bookingController.confirmBooking)
 );
 
+// =========================================
+// BOOKING SUCCESS GET ROUTE
+// =========================================
+
+router.get(
+    "/success/:bookingId",
+    isLoggedIn,
+    wrapAsync(bookingController.renderBookingSuccess)
+);
+
 module.exports = router;
