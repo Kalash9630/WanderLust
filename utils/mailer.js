@@ -34,4 +34,46 @@ async function sendVerificationEmail(email, otp) {
     return info;
 }
 
-module.exports = { transporter, sendVerificationEmail };
+async function sendBookingConfirmationEmail(booking) {
+    const info = await transporter.sendMail({
+        from: `"WanderLust" <${process.env.EMAIL_USER}>`,
+        to: booking.guestDetails.email,
+        subject: "Your WanderLust booking is confirmed!",
+        html: `
+            <div style="font-family: Arial, sans-serif; padding: 20px; color: #333;">
+                <h2 style="color: #FE405C;">Your stay is confirmed!</h2>
+
+                <p>Hello ${booking.guestDetails.fullName},</p>
+
+                <p>Your booking with WanderLust has been successfully confirmed.</p>
+
+                <h3>Booking Details</h3>
+
+                <p><strong>Booking Reference:</strong> ${booking.bookingReference}</p>
+                <p><strong>Property:</strong> ${booking.listing.title}</p>
+                <p><strong>Location:</strong> ${booking.listing.location}, ${booking.listing.country}</p>
+                <p><strong>Check-in:</strong> ${new Date(booking.stayDetails.checkIn).toDateString()}</p>
+                <p><strong>Check-out:</strong> ${new Date(booking.stayDetails.checkOut).toDateString()}</p>
+                <p><strong>Nights:</strong> ${booking.stayDetails.nights}</p>
+
+                <h3>Payment Summary</h3>
+
+                <p><strong>Total Amount:</strong> ₹ ${booking.pricingDetails.totalPrice.toLocaleString("en-IN")}</p>
+
+                <p>Thank you for choosing WanderLust!</p>
+
+                <p>Happy exploring!<br>Team WanderLust</p>
+            </div>
+        `,
+    });
+
+    console.log("Booking confirmation email sent:", info.messageId);
+
+    return info;
+}
+
+module.exports = {
+    transporter,
+    sendVerificationEmail,
+    sendBookingConfirmationEmail
+};

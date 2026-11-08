@@ -1,6 +1,7 @@
 const Listing = require("../models/listing.js");
 const Booking = require("../models/booking.js");
 const User = require("../models/user.js");
+const { sendBookingConfirmationEmail } = require("../utils/mailer.js");
 // =========================================
 // GUEST DETAILS - GET CONTROLLER
 // =========================================
@@ -389,13 +390,20 @@ module.exports.confirmBooking = async (req, res) => {
 
   // Clear temporary booking data from the session
   delete req.session.booking;
-
-  // Send success response
-  res.json({
-    success: true,
-    message: "Booking saved successfully!",
-    bookingReference: newBooking.bookingReference,
-  });
+  
+  // Send booking confirmation email
+  try {
+      await sendBookingConfirmationEmail({
+          ...newBooking.toObject(),
+          listing: listing,
+      });
+  } catch (error) {
+      // Email failure should not cancel the confirmed booking
+      console.error("Booking confirmation email failed:", error);
+  }
+  
+  // Redirect to the booking success page
+  return res.redirect(`/listings/success/${newBooking._id}`);
 };
 
 // =========================================
