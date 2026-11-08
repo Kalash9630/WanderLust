@@ -109,6 +109,33 @@ function calculateAge(birthDate) {
   return age;
 }
 
+function calculateAge(birthDate) {
+  const today = new Date();
+
+  let age = today.getFullYear() - birthDate.getFullYear();
+
+  const monthDifference = today.getMonth() - birthDate.getMonth();
+
+  if (
+    monthDifference < 0 ||
+    (monthDifference === 0 && today.getDate() < birthDate.getDate())
+  ) {
+    age--;
+  }
+
+  // =========================================
+  //  CALCULATE AGE FOR PRELOADED DOB
+  // =========================================
+
+  if (datePicker.selectedDates.length > 0) {
+    const age = calculateAge(datePicker.selectedDates[0]);
+
+    ageInput.value = age + " years";
+  }
+
+  return age;
+}
+
 // =========================================
 // 3. VALIDATE DATE OF BIRTH
 // =========================================

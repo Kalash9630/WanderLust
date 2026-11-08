@@ -6,8 +6,6 @@ const { sendBookingConfirmationEmail } = require("../utils/mailer.js");
 // GUEST DETAILS - GET CONTROLLER
 // =========================================
 
-// DISPLAY GUEST DETAILS PAGE
-
 module.exports.renderGuestDetails = async (req, res) => {
   // Get the selected listing
   const listing = await Listing.findById(req.params.id);
@@ -18,17 +16,28 @@ module.exports.renderGuestDetails = async (req, res) => {
     return res.redirect("/listings");
   }
 
-  // Retrieve previously saved guest details from the session
+  // Initialize guest details
   let guestDetails = {};
 
+  // Check whether guest details already exist in the current session
   if (
     req.session.booking &&
     req.session.booking.listingId.toString() === listing._id.toString()
   ) {
-    guestDetails = req.session.booking.guestDetails;
+    guestDetails = req.session.booking.guestDetails || {};
+  } else {
+    // Retrieve the user's most recent booking from MongoDB
+    const previousBooking = await Booking.findOne({
+      user: req.user._id,
+    }).sort({ createdAt: -1 });
+
+    // Reuse previously saved guest details
+    if (previousBooking) {
+      guestDetails = previousBooking.guestDetails;
+    }
   }
 
-  // Render Guest Details page with previously saved information
+  // Render Guest Details page
   res.render("bookings/guestDetails.ejs", {
     listing,
     guestDetails: guestDetails || {},
