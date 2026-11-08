@@ -7261,3 +7261,45 @@ body:has(.review-page) {
 
 }
 
+/* =========================================
+   FLATPICKR - FIX CALENDAR DAY ALIGNMENT
+========================================= */
+
+.flatpickr-calendar {
+    width: 360px ;
+    max-width: 360px ;
+    box-sizing: border-box ;
+}
+
+.flatpickr-innerContainer,
+.flatpickr-rContainer,
+.flatpickr-days {
+    width: 100% ;
+    max-width: 100% ;
+    box-sizing: border-box ;
+}
+
+.dayContainer {
+    display: grid ;
+    grid-template-columns: repeat(7, minmax(0, 1fr)) ;
+    width: 100% ;
+    min-width: 0 ;
+    max-width: 100% ;
+}
+
+.flatpickr-day {
+    width: 100% ;
+    max-width: none ;
+    box-sizing: border-box ;
+    margin: 0 ;
+}
+
+.flatpickr-weekdays {
+    width: 100% ;
+}
+
+.flatpickr-weekdaycontainer {
+    display: grid ;
+    grid-template-columns: repeat(7, minmax(0, 1fr)) ;
+    width: 100% ;
+}

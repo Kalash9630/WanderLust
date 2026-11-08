@@ -19,7 +19,8 @@ const checkInFeedback = document.getElementById("checkInFeedback");
 const checkOutFeedback = document.getElementById("checkOutFeedback");
 
 // Get the selected listing ID from the EJS page
-const listingId = document.querySelector(".booking-container").dataset.listingId;
+const listingId =
+  document.querySelector(".booking-container").dataset.listingId;
 
 // 2. BOOKING STATE
 
@@ -207,109 +208,162 @@ function validateDates() {
 
 // 8. CHECK AVAILABILITY
 
-checkAvailabilityBtn.addEventListener("click", function () {
+// =========================================
+// 8. CHECK AVAILABILITY
+// =========================================
 
-    // Validate the selected dates
-    if (!validateDates()) {
-        return;
+checkAvailabilityBtn.addEventListener("click", async function () {
+  // Validate the selected dates
+  if (!validateDates()) {
+    return;
+  }
+
+  // Get the selected dates
+  const checkIn = checkInInput.value;
+  const checkOut = checkOutInput.value;
+
+  // Reset previous availability
+  isAvailable = false;
+  continueBtn.disabled = true;
+
+  sessionStorage.removeItem("availableDates");
+
+  // Show loading state
+  checkAvailabilityBtn.disabled = true;
+
+  checkAvailabilityBtn.innerHTML =
+    '<i class="fa-solid fa-spinner fa-spin"></i> Checking...';
+
+  try {
+    // Send dates to the backend
+    const response = await fetch(
+      `/listings/${listingId}/book/check-availability`,
+      {
+        method: "POST",
+
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+
+        body: new URLSearchParams({
+          checkIn,
+          checkOut,
+        }),
+      },
+    );
+
+    // Get the backend response
+    const result = await response.json();
+
+    // Handle backend errors
+    if (!response.ok || !result.success) {
+      throw new Error(result.message || "Unable to check availability.");
     }
 
-    // Show loading state
-    checkAvailabilityBtn.disabled = true;
+    // Check whether the property is available
+    if (result.available) {
+      // Mark dates as available
+      isAvailable = true;
+
+      // Store available dates temporarily
+      sessionStorage.setItem(
+        "availableDates",
+        JSON.stringify({
+          checkIn,
+          checkOut,
+        }),
+      );
+
+      // Display success message
+      availabilityResult.textContent = result.message;
+
+      availabilityResult.className = "availability-result success";
+
+      // Enable Continue button
+      continueBtn.disabled = false;
+
+      // Update availability button
+      checkAvailabilityBtn.innerHTML =
+        '<i class="fa-solid fa-check"></i> Check Again';
+    } else {
+      // Mark dates as unavailable
+      isAvailable = false;
+
+      // Display unavailable message
+      availabilityResult.textContent = result.message;
+
+      availabilityResult.className = "availability-result error";
+
+      // Keep Continue button disabled
+      continueBtn.disabled = true;
+
+      // Update availability button
+      checkAvailabilityBtn.innerHTML =
+        '<i class="fa-solid fa-magnifying-glass"></i> Check Again';
+    }
+  } catch (error) {
+    // Handle request errors
+    console.error("Availability error:", error);
+
+    availabilityResult.textContent =
+      error.message || "Something went wrong. Please try again.";
+
+    availabilityResult.className = "availability-result error";
+
+    isAvailable = false;
+
+    continueBtn.disabled = true;
+
+    sessionStorage.removeItem("availableDates");
 
     checkAvailabilityBtn.innerHTML =
-        '<i class="fa-solid fa-spinner fa-spin"></i> Checking...';
-
-    // Simulate availability checking
-    setTimeout(function () {
-
-        
-        // Mark dates as available
-        isAvailable = true;
-
-        sessionStorage.setItem("availableDates", JSON.stringify({
-          checkIn: checkInInput.value,
-          checkOut: checkOutInput.value
-        }));
-
-        // Display availability message
-        availabilityResult.textContent =
-            "Great! This property is available for your selected dates.";
-
-        availabilityResult.className =
-            "availability-result success";
-
-        // Enable Continue button
-        continueBtn.disabled = false;
-
-        // Restore availability button
-        checkAvailabilityBtn.disabled = false;
-
-        checkAvailabilityBtn.innerHTML =
-            '<i class="fa-solid fa-check"></i> Check Again';
-
-        // Store dates temporarily in sessionStorage
-        const checkIn = checkInInput.value;
-        const checkOut = checkOutInput.value;
-
-        const nights = Math.round(
-            (new Date(`${checkOut}T00:00:00Z`) -
-             new Date(`${checkIn}T00:00:00Z`)) /
-            (1000 * 60 * 60 * 24)
-        );
-
-    }, 800);
+      '<i class="fa-solid fa-magnifying-glass"></i> Check Again';
+  } finally {
+    // Restore availability button
+    checkAvailabilityBtn.disabled = false;
+  }
 });
-
 
 // 9. CONTINUE TO PRICING
 
 continueBtn.addEventListener("click", async function () {
+  // Do not continue unless availability has been checked
+  if (!isAvailable) {
+    return;
+  }
 
-    // Do not continue unless availability has been checked
-    if (!isAvailable) {
-        return;
+  const checkIn = checkInInput.value;
+  const checkOut = checkOutInput.value;
+
+  try {
+    continueBtn.disabled = true;
+    continueBtn.textContent = "Saving...";
+
+    const response = await fetch(`/listings/${listingId}/book/stay-details`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: new URLSearchParams({
+        checkIn,
+        checkOut,
+      }),
+    });
+
+    const result = await response.json();
+
+    if (!response.ok) {
+      throw new Error(result.message || "Unable to save stay details.");
     }
 
-    const checkIn = checkInInput.value;
-    const checkOut = checkOutInput.value;
+    window.location.href = result.redirectUrl;
+  } catch (error) {
+    availabilityResult.textContent = error.message;
+    availabilityResult.className = "availability-result error";
 
-    try {
-        continueBtn.disabled = true;
-        continueBtn.textContent = "Saving...";
-
-        const response = await fetch(
-            `/listings/${listingId}/book/stay-details`,
-            {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/x-www-form-urlencoded"
-                },
-                body: new URLSearchParams({
-                    checkIn,
-                    checkOut
-                })
-            }
-        );
-
-        const result = await response.json();
-
-        if (!response.ok) {
-            throw new Error(
-                result.message || "Unable to save stay details."
-            );
-        }
-
-        window.location.href = result.redirectUrl;
-
-    } catch (error) {
-
-        availabilityResult.textContent = error.message;
-        availabilityResult.className = "availability-result error";
-
-        continueBtn.disabled = false;
-        continueBtn.textContent = "Continue";
-    }
+    continueBtn.disabled = false;
+    continueBtn.textContent = "Continue";
+  }
 });
 
 // 10. BACK TO GUEST DETAILS
@@ -319,44 +373,44 @@ continueBtn.addEventListener("click", async function () {
 const bookingContainer = document.querySelector(".booking-container");
 
 const availabilityChecked =
-    bookingContainer.dataset.availabilityChecked === "true";
+  bookingContainer.dataset.availabilityChecked === "true";
 
 // Restore the stay duration
 calculateStayDuration();
 
 // Restore availability if dates were previously saved
 if (
-    availabilityChecked &&
-    checkInPicker.selectedDates.length > 0 &&
-    checkOutPicker.selectedDates.length > 0
+  availabilityChecked &&
+  checkInPicker.selectedDates.length > 0 &&
+  checkOutPicker.selectedDates.length > 0
 ) {
-    // Mark availability as checked
-    isAvailable = true;
+  // Mark availability as checked
+  isAvailable = true;
 
-    // Enable Continue button
-    continueBtn.disabled = false;
-    continueBtn.textContent = "Continue";
+  // Enable Continue button
+  continueBtn.disabled = false;
+  continueBtn.textContent = "Continue";
 
-    // Restore availability message
-    availabilityResult.textContent =
-        "Great! This property is available for your selected dates.";
+  // Restore availability message
+  availabilityResult.textContent =
+    "Great! This property is available for your selected dates.";
 
-    availabilityResult.className = "availability-result success";
+  availabilityResult.className = "availability-result success";
 
-    // Restore availability button
-    checkAvailabilityBtn.disabled = false;
+  // Restore availability button
+  checkAvailabilityBtn.disabled = false;
 
-    checkAvailabilityBtn.innerHTML =
-        '<i class="fa-solid fa-check"></i> Check Again';
+  checkAvailabilityBtn.innerHTML =
+    '<i class="fa-solid fa-check"></i> Check Again';
 
-    // Update minimum check-out date
-    const selectedCheckIn = checkInPicker.selectedDates[0];
+  // Update minimum check-out date
+  const selectedCheckIn = checkInPicker.selectedDates[0];
 
-    const nextDay = new Date(
-        selectedCheckIn.getFullYear(),
-        selectedCheckIn.getMonth(),
-        selectedCheckIn.getDate() + 1
-    );
+  const nextDay = new Date(
+    selectedCheckIn.getFullYear(),
+    selectedCheckIn.getMonth(),
+    selectedCheckIn.getDate() + 1,
+  );
 
-    checkOutPicker.set("minDate", nextDay);
+  checkOutPicker.set("minDate", nextDay);
 }

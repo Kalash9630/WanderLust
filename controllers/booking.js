@@ -145,6 +145,92 @@ module.exports.renderStayDetails = async (req, res) => {
     stayDetails,
   });
 };
+
+
+
+// =========================================
+// CHECK PROPERTY AVAILABILITY
+// =========================================
+
+module.exports.checkAvailability = async (req, res) => {
+
+    // Get the selected listing ID
+    const listingId = req.params.id;
+
+    // Get the dates selected by the user
+    const { checkIn, checkOut } = req.body;
+
+    // Check whether both dates are provided
+    if (!checkIn || !checkOut) {
+        return res.status(400).json({
+            success: false,
+            message: "Please select both check-in and check-out dates."
+        });
+    }
+
+    // Convert selected dates into JavaScript Date objects
+    const checkInDate = new Date(`${checkIn}T00:00:00Z`);
+    const checkOutDate = new Date(`${checkOut}T00:00:00Z`);
+
+    // Validate the date format and values
+    if (
+        isNaN(checkInDate.getTime()) ||
+        isNaN(checkOutDate.getTime()) ||
+        checkInDate.toISOString().slice(0, 10) !== checkIn ||
+        checkOutDate.toISOString().slice(0, 10) !== checkOut
+    ) {
+        return res.status(400).json({
+            success: false,
+            message: "Please select valid dates."
+        });
+    }
+
+    // Check whether check-in is in the past
+    const today = new Date();
+    today.setUTCHours(0, 0, 0, 0);
+
+    if (checkInDate < today) {
+        return res.status(400).json({
+            success: false,
+            message: "Check-in date cannot be in the past."
+        });
+    }
+
+    // Check whether check-out is after check-in
+    if (checkOutDate <= checkInDate) {
+        return res.status(400).json({
+            success: false,
+            message: "Check-out date must be after check-in date."
+        });
+    }
+
+    // Find existing bookings that overlap with the requested dates (important) 
+    // both should be ture then only the room will be found booked
+    const overlappingBookings = await Booking.find({
+        listing: listingId,
+        // mara checkin karta phela badha nu checkout hovu joi ae
+        "stayDetails.checkIn": { $lt: checkOutDate },
+        // mara checkout karta phela koi nu checkin na hovu joi ae
+        "stayDetails.checkOut": { $gt: checkInDate }
+    });
+
+    // Check whether the selected dates are available
+    if (overlappingBookings.length > 0) {
+        return res.json({
+            success: true,
+            available: false,
+            message: "These dates are already booked. Please select different dates."
+        });
+    }
+
+    // Return available response
+    return res.json({
+        success: true,
+        available: true,
+        message: "Great! This property is available for your selected dates."
+    });
+};
+
 // =========================================
 // STAY DETAILS - POST CONTROLLER
 // =========================================

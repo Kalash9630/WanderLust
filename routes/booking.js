@@ -37,6 +37,13 @@ router.get(
     wrapAsync(bookingController.renderStayDetails)
 );
 
+// CHECK PROPERTY AVAILABILITY
+router.post(
+    "/:id/book/check-availability",
+    isLoggedIn,
+    wrapAsync(bookingController.checkAvailability)
+);
+
 // Stay Details POST
 router.post(
     "/:id/book/stay-details",
