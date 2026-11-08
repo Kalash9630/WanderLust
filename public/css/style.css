@@ -7261,9 +7261,7 @@ body:has(.review-page) {
 
 }
 
-/* =========================================
-   FLATPICKR - FIX CALENDAR DAY ALIGNMENT
-========================================= */
+   /* FLATPICKR - FIX CALENDAR DAY ALIGNMENT */
 
 .flatpickr-calendar {
     width: 360px ;
