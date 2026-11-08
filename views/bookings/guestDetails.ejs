@@ -198,7 +198,9 @@
                   type="text"
                   id="dateOfBirth"
                   name="dateOfBirth"
-                  value="<%= guestDetails?.dateOfBirth || '' %>"
+                  value="<%= guestDetails?.dateOfBirth
+                  ? new Date(guestDetails.dateOfBirth).toISOString().split('T')[0]
+                  : '' %>"
                   class="form-control"
                   placeholder="Select your date of birth"
                   autocomplete="off"
