@@ -3249,6 +3249,49 @@ body:has(.wanderlust-signup-page) footer {
   display: inline-block !important;
 }
 
+/* Main marker container */
+.custom-map-marker {
+    position: relative;
+    width: 110px;
+    height: 110px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+/* Pink circular background */
+.marker-glow {
+    width: 110px;
+    height: 110px;
+    flex-shrink: 0;
+    background: rgba(254, 64, 92, 0.15);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+}
+
+/* Hover tooltip */
+.marker-tooltip {
+    position: absolute;
+    bottom: calc(100% + 5px);
+    left: 50%;
+    transform: translate(-50%, 10px);
+    box-sizing: border-box;
+    width: 240px;
+    padding: 10px 16px;
+    background: white;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    pointer-events: none;
+    z-index: 10;
+}
 
 /* =========================================
    WANDERLUST - GUEST DETAILS PAGE
