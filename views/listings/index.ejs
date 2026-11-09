@@ -1,3 +1,4 @@
+
 <% layout("./layouts/boilerplate") %>
 
 <div class="listings-page">
@@ -9,6 +10,95 @@
             <h2>Find your next getaway</h2>
             <p>Discover beautiful places to stay and make your next trip memorable.</p>
         </div>
+    </div>
+
+    <!-- Filters Section -->
+    <div class="listing-filters">
+
+        <div class="filter-group">
+            <label for="minPrice">Minimum Price (₹)</label>
+            <input
+                type="number"
+                id="minPrice"
+                placeholder="Min price"
+                min="0"
+            >
+        </div>
+
+        <div class="filter-group">
+            <label for="maxPrice">Maximum Price (₹)</label>
+            <input
+                type="number"
+                id="maxPrice"
+                placeholder="Max price"
+            >
+        </div>
+
+        <div class="filter-group location-filter-group">
+            <label for="locationSearch">Country / Location</label>
+
+            <div class="location-dropdown" id="locationDropdown">
+
+                <div class="location-dropdown-input">
+                    <input
+                        type="text"
+                        id="locationSearch"
+                        placeholder="Search country or city..."
+                        autocomplete="off"
+                    >
+
+                    <i class="fa-solid fa-chevron-down"></i>
+                </div>
+
+                <div class="location-dropdown-menu" id="locationDropdownMenu">
+                    <input
+                        type="text"
+                        id="locationOptionSearch"
+                        placeholder="Search locations..."
+                        autocomplete="off"
+                    >
+
+                    <div class="location-options" id="locationOptions">
+                        <!-- Dynamic location options will appear here -->
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Filter Actions -->
+        <div class="filter-actions">
+            <button type="button" class="apply-filter-btn">
+                <i class="fa-solid fa-sliders"></i>
+                Apply Filters
+            </button>
+
+            <button type="button" class="clear-filter-btn">
+                Clear Filters
+            </button>
+        </div>
+
+    </div>
+
+    <!-- Listings Heading and Sorting -->
+    <div class="listings-toolbar">
+
+        <div>
+            <h3>Available Properties</h3>
+            <p>Explore places that match your preferences.</p>
+        </div>
+
+        <div class="sorting-group">
+            <i class="fa-solid fa-arrow-down-wide-short"></i>
+            <label for="sortBy">Sort By</label>
+
+            <select id="sortBy">
+                <option value="">Recommended</option>
+                <option value="price-asc">Price: Low to High</option>
+                <option value="price-desc">Price: High to Low</option>
+            </select>
+        </div>
+
     </div>
 
     <!-- Listings -->
@@ -51,6 +141,7 @@
                     </div>
 
                 </a>
+
                 <div class="listing-card-booking">
                     <a href="/listings/<%= listing._id %>/book/guest-details"
                        class="listing-book-btn">
