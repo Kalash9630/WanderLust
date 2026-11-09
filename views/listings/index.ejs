@@ -22,6 +22,7 @@
                 id="minPrice"
                 placeholder="Min price"
                 min="0"
+                value="<%= minPrice || '' %>"
             >
         </div>
 
@@ -31,6 +32,7 @@
                 type="number"
                 id="maxPrice"
                 placeholder="Max price"
+                value="<%= maxPrice || '' %>"
             >
         </div>
 
@@ -45,6 +47,7 @@
                         id="locationSearch"
                         placeholder="Search country or city..."
                         autocomplete="off"
+                        value="<%= selectedLocation || '' %>"
                     >
 
                     <i class="fa-solid fa-chevron-down"></i>
@@ -59,7 +62,19 @@
                     >
 
                     <div class="location-options" id="locationOptions">
-                        <!-- Dynamic location options will appear here -->
+
+                        <% countries.forEach(country => { %>
+                            <div class="location-option" data-value="<%= country %>">
+                                <%= country %>
+                            </div>
+                        <% }) %>
+                    
+                        <% locations.forEach(location => { %>
+                            <div class="location-option" data-value="<%= location %>">
+                                <%= location %>
+                            </div>
+                        <% }) %>
+                    
                     </div>
                 </div>
 
@@ -93,7 +108,7 @@
             <label for="sortBy">Sort By</label>
 
             <select id="sortBy">
-                <option value="">Recommended</option>
+                <option value="">Select</option>
                 <option value="price-asc">Price: Low to High</option>
                 <option value="price-desc">Price: High to Low</option>
             </select>
@@ -101,12 +116,31 @@
 
     </div>
 
+    <% if (noListingsFound) { %>
+        <div class="no-listings-message">
+            <div class="no-listings-icon">
+                <i class="fa-solid fa-house-circle-exclamation"></i>
+            </div>
+        
+            <h3>No properties found</h3>
+        
+            <p>
+                We couldn't find any properties matching your filters.
+                Try adjusting your search to discover more places.
+            </p>
+        
+            <span class="no-listings-subtext">
+                Your next getaway might be just a filter away!
+            </span>
+        </div>
+    <% } else { %>
+
     <!-- Listings -->
     <div class="listings-grid">
 
         <% for (listing of allListings) { %>
 
-            <div class="listing-card">
+            <div class="listing-card" data-price="<%= listing.price %>">
 
                 <a href="/listings/<%= listing._id %>"
                    class="listing-card-link">
@@ -155,5 +189,6 @@
         <% } %>
 
     </div>
+    <% } %>
 
 </div>

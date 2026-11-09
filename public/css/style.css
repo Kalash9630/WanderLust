@@ -7550,3 +7550,61 @@ body:has(.review-page) {
     }
 }
 
+/* No Listings Found Message */
+
+.no-listings-message {
+    max-width: 650px;
+    margin: 55px auto 70px;
+    padding: 45px 35px;
+    text-align: center;
+    background: #fff;
+    border: 1px solid #f1e4e4;
+    border-radius: 18px;
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.05);
+}
+
+.no-listings-icon {
+    width: 75px;
+    height: 75px;
+    margin: 0 auto 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff0f0;
+    border-radius: 50%;
+    color: #fe424d;
+    font-size: 30px;
+}
+
+.no-listings-message h3 {
+    color: #222;
+    font-size: 23px;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+.no-listings-message p {
+    max-width: 470px;
+    margin: 0 auto 16px;
+    color: #777;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+.no-listings-subtext {
+    display: block;
+    color: #fe424d;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+@media (max-width: 576px) {
+    .no-listings-message {
+        margin: 35px 0 45px;
+        padding: 35px 20px;
+    }
+
+    .no-listings-message h3 {
+        font-size: 20px;
+    }
+}

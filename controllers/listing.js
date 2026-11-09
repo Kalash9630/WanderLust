@@ -1,10 +1,45 @@
 const Listing = require("../models/listing");
 const { Country, City } = require("country-state-city");
 
-module.exports.index = async (req,res) => {
-    let allListings = await Listing.find({});
-    res.render("./listings/index.ejs", {allListings});
-}
+module.exports.index = async (req, res) => {
+    const { minPrice, maxPrice, location } = req.query;
+
+    const filter = {};
+
+    // Minimum price filter
+    if (minPrice) {
+        filter.price = { ...filter.price, $gte: Number(minPrice) };
+    }
+
+    // Maximum price filter
+    if (maxPrice) {
+        filter.price = { ...filter.price, $lte: Number(maxPrice) };
+    }
+
+    // Country or location filter
+    if (location) {
+        filter.$or = [
+            { country: location },
+            { location: location }
+        ];
+    }
+
+    const allListings = await Listing.find(filter);
+
+    const countries = await Listing.distinct("country");
+    const locations = await Listing.distinct("location");
+    const noListingsFound = allListings.length === 0;
+
+    res.render("./listings/index.ejs", {
+        allListings,
+        countries,
+        locations,
+        minPrice,
+        maxPrice,
+        selectedLocation: location,
+        noListingsFound
+    });
+};
 
 module.exports.new = (req,res) => {
     res.render("./listings/new.ejs");
