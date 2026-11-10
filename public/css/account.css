@@ -1,0 +1,218 @@
+
+/* =========================================
+   MY ACCOUNT PAGE
+========================================= */
+
+.account-page {
+    width: 100%;
+    min-height: 75vh;
+    padding: 45px 0 70px;
+}
+
+.account-container {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Account Header */
+.account-header {
+    margin-bottom: 30px;
+}
+
+.account-header h2 {
+    margin-bottom: 8px;
+    color: #222;
+    font-size: 30px;
+    font-weight: 700;
+}
+
+.account-header p {
+    margin: 0;
+    color: #777;
+    font-size: 14px;
+}
+
+/* Account Layout */
+.account-layout {
+    display: grid;
+    grid-template-columns: 260px minmax(0, 1fr);
+    gap: 25px;
+    align-items: start;
+}
+
+/* Sidebar */
+.account-sidebar {
+    padding: 22px 15px;
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 14px;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.04);
+}
+
+.account-sidebar-header {
+    padding: 0 12px 15px;
+    margin-bottom: 12px;
+    border-bottom: 1px solid #eee;
+}
+
+.account-sidebar-header h5 {
+    margin: 0;
+    color: #333;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+/* Sidebar Navigation */
+.account-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.account-menu-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    color: #555;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    border-radius: 9px;
+    transition: all 0.2s ease;
+}
+
+.account-menu-link i {
+    width: 19px;
+    font-size: 16px;
+    text-align: center;
+}
+
+.account-menu-link:hover,
+.account-menu-link.active {
+    color: #fe424d;
+    background: #fff0f0;
+}
+
+.account-menu-link.active {
+    font-weight: 600;
+}
+
+/* Main Content */
+.account-content {
+    min-height: 450px;
+    padding: 30px;
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 14px;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.04);
+}
+
+.account-content-header {
+    padding-bottom: 20px;
+    margin-bottom: 25px;
+    border-bottom: 1px solid #eee;
+}
+
+.account-content-header h3 {
+    margin-bottom: 7px;
+    color: #222;
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.account-content-header p {
+    margin: 0;
+    color: #777;
+    font-size: 14px;
+}
+
+/* =========================================
+   RESPONSIVE DESIGN
+========================================= */
+
+/* Tablet */
+@media (max-width: 992px) {
+    .account-container {
+        width: 94%;
+    }
+
+    .account-layout {
+        grid-template-columns: 220px minmax(0, 1fr);
+        gap: 18px;
+    }
+
+    .account-content {
+        padding: 24px;
+    }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .account-page {
+        padding: 30px 0 50px;
+    }
+
+    .account-container {
+        width: 92%;
+    }
+
+    .account-header h2 {
+        font-size: 26px;
+    }
+
+    .account-layout {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+
+    .account-sidebar {
+        padding: 15px;
+    }
+
+    .account-menu {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 7px;
+    }
+
+    .account-menu-link {
+        gap: 8px;
+        padding: 11px 9px;
+        font-size: 13px;
+    }
+
+    .account-content {
+        min-height: 350px;
+        padding: 22px 18px;
+    }
+}
+
+/* Small Mobile */
+@media (max-width: 480px) {
+    .account-container {
+        width: 94%;
+    }
+
+    .account-header h2 {
+        font-size: 23px;
+    }
+
+    .account-menu {
+        grid-template-columns: 1fr;
+    }
+
+    .account-menu-link {
+        padding: 12px;
+        font-size: 14px;
+    }
+
+    .account-content {
+        padding: 20px 15px;
+    }
+
+    .account-content-header h3 {
+        font-size: 20px;
+    }
+}

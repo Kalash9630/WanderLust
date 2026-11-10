@@ -21,15 +21,30 @@
                 <% } %>
 
                 <% if (currUser) { %>
-                    <span class="desktop-user-info">
-                        <i class="fa-regular fa-circle-user"></i>
-                        <%= currUser.username
-                            .toLowerCase()
-                            .split(" ")
-                            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-                            .join(" ") %>
-                    </span>
-                    <a href="/logout" class="desktop-logout-link">Logout</a>
+                    <div class="navbar-user-dropdown">
+                        
+                        <button type="button" class="desktop-user-info">
+                            <i class="fa-regular fa-circle-user"></i>
+                            <%= currUser.username
+                                .toLowerCase()
+                                .split(" ")
+                                .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                                .join(" ") %>
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </button>
+                
+                        <div class="navbar-dropdown-menu">
+                            <a href="/account" class="navbar-dropdown-link">
+                                <i class="fa-regular fa-user"></i>
+                                My Account
+                            </a>
+                
+                            <a href="/logout" class="navbar-dropdown-link">
+                                <i class="fa-solid fa-right-from-bracket"></i>
+                                Logout
+                            </a>
+                        </div>
+                    </div>
                 <% } %>
             </div>
         </div>
@@ -73,7 +88,16 @@
                             .map(word => word.charAt(0).toUpperCase() + word.slice(1))
                             .join(" ") %>
                 </div>
-                <a href="/logout" class="mobile-logout-link">Logout</a>
+            
+                <a href="/account" class="mobile-nav-link">
+                    <i class="fa-regular fa-user"></i>
+                    My Account
+                </a>
+            
+                <a href="/logout" class="mobile-logout-link">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    Logout
+                </a>
             <% } %>
         </div>
     </div>

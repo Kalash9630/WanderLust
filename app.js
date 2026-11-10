@@ -18,6 +18,7 @@ const listingRouter = require("./routes/listing.js");
 const reviewRouter = require("./routes/review.js");
 const userRouter = require("./routes/user.js");
 const bookingRouter = require("./routes/booking.js");
+const accountRouter = require("./routes/account.js");
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
@@ -101,6 +102,9 @@ app.use("/listings/:id/reviews",reviewRouter);
 
 // user router
 app.use("/",userRouter);
+
+// my account router
+app.use("/account", accountRouter); 
 
 // handling if any other page is requested other than the one that are created
 app.all("/{*splat}", (req,res,next) => {
