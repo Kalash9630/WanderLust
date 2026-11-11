@@ -93,3 +93,42 @@ module.exports.stayDetailsSchema = Joi.object({
 }).messages({
     "date.checkout": "Check-out date must be after the check-in date."
 });
+
+// =========================================
+// PROFILE UPDATE VALIDATION
+// =========================================
+
+module.exports.profileSchema = Joi.object({
+    username: Joi.string()
+        .trim()
+        .min(2)
+        .required()
+        .messages({
+            "string.empty": "Username is required.",
+            "string.min": "Username must contain at least 2 characters.",
+            "any.required": "Username is required."
+        }),
+
+    mobileNumber: Joi.string()
+        .pattern(/^[0-9]{10}$/)
+        .allow("")
+        .messages({
+            "string.pattern.base": "Mobile number must contain exactly 10 digits."
+        }),
+
+    dateOfBirth: Joi.date()
+        .iso()
+        .max("now")
+        .allow("", null)
+        .messages({
+            "date.base": "Please enter a valid date of birth.",
+            "date.max": "Date of birth cannot be in the future."
+        }),
+
+    sex: Joi.string()
+        .valid("male", "female", "other", "prefer_not_to_say")
+        .allow("")
+        .messages({
+            "any.only": "Please select a valid gender."
+        })
+});

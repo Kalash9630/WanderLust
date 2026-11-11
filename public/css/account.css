@@ -218,10 +218,6 @@
 }
 
 
-/* =========================================
-   MY PROFILE SECTION
-========================================= */
-
 /* Profile Overview */
 .profile-overview {
     display: flex;
@@ -258,6 +254,7 @@
     margin: 0 0 10px;
     color: #777;
     font-size: 14px;
+    overflow-wrap: anywhere;
 }
 
 .profile-member-badge {
@@ -324,7 +321,6 @@
     gap: 16px;
 }
 
-/* Individual Detail Card */
 .profile-detail-card {
     display: flex;
     align-items: center;
@@ -342,7 +338,6 @@
     box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
 }
 
-/* Detail Icon */
 .profile-detail-icon {
     display: flex;
     align-items: center;
@@ -356,7 +351,6 @@
     font-size: 17px;
 }
 
-/* Detail Information */
 .profile-detail-info {
     min-width: 0;
 }
@@ -377,44 +371,48 @@
     overflow-wrap: anywhere;
 }
 
+/* Member Since */
 .profile-member-since {
     display: flex;
     align-items: center;
-    gap: 7px;
-    margin: 10px 0 0;
+    gap: 6px;
+    margin-top: 10px;
     color: #777;
     font-size: 13px;
-    padding-top: 8px;
 }
 
 .profile-member-since i {
     color: #fe424d;
 }
 
-/* Hide edit fields and form actions by default */
-.profile-edit-input,
-.profile-form-actions {
-    display: none;
+.profile-member-since strong {
+    color: #444;
+    font-weight: 600;
 }
 
-/* Style editable inputs */
+
+/* Profile Edit Mode */
+
+/* Hide editable fields initially */
 .profile-edit-input {
+    display: none;
     width: 100%;
-    margin-top: 5px;
-    padding: 9px 10px;
+    margin-top: 8px;
+    padding: 9px 11px;
     border: 1px solid #ddd;
-    border-radius: 7px;
-    outline: none;
-    font: inherit;
-    font-size: 13px;
+    border-radius: 8px;
     color: #333;
+    font-size: 13px;
+    outline: none;
+    box-shadow: none;
 }
 
 .profile-edit-input:focus {
     border-color: #fe424d;
+    box-shadow: 0 0 0 3px rgba(254, 66, 77, 0.1);
 }
 
-/* Edit mode */
+/* Show inputs and hide displayed values in edit mode */
 .profile-details-section.edit-mode .profile-view-value {
     display: none;
 }
@@ -423,33 +421,71 @@
     display: block;
 }
 
-.profile-details-section.edit-mode .profile-form-actions {
-    display: flex;
+/* Save and Cancel buttons */
+.profile-form-actions {
+    display: none;
     justify-content: flex-end;
-    gap: 10px;
-    margin-top: 22px;
+    gap: 12px;
+    margin-top: 25px;
 }
 
-/* Cancel button */
-.cancel-profile-btn {
-    padding: 10px 16px;
-    background: #fff;
-    color: #555;
-    border: 1px solid #ddd;
+.profile-details-section.edit-mode .profile-form-actions {
+    display: flex;
+}
+
+.cancel-profile-btn,
+.save-profile-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 18px;
     border-radius: 8px;
     font-size: 13px;
     font-weight: 600;
     cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.cancel-profile-btn {
+    background: #fff;
+    color: #555;
+    border: 1px solid #ddd;
 }
 
 .cancel-profile-btn:hover {
     background: #f5f5f5;
 }
-/* =========================================
-   RESPONSIVE DESIGN
-========================================= */
 
-/* Tablet */
+.save-profile-btn {
+    background: #fe424d;
+    color: #fff;
+    border: 1px solid #fe424d;
+}
+
+.save-profile-btn:hover {
+    background: #e8323e;
+    border-color: #e8323e;
+}
+
+.profile-details-section.edit-mode .edit-profile-btn {
+    display: none;
+}
+
+/* Mobile layout */
+@media (max-width: 480px) {
+    .profile-form-actions {
+        flex-direction: column-reverse;
+    }
+
+    .cancel-profile-btn,
+    .save-profile-btn {
+        width: 100%;
+    }
+}
+
+
+/* Responsive Design */
 @media (max-width: 992px) {
     .profile-details-grid {
         gap: 12px;
@@ -461,7 +497,6 @@
     }
 }
 
-/* Mobile */
 @media (max-width: 768px) {
     .profile-overview {
         padding: 20px;
@@ -489,7 +524,6 @@
     }
 }
 
-/* Small Mobile */
 @media (max-width: 480px) {
     .profile-overview {
         padding: 16px;
@@ -509,7 +543,6 @@
 
     .profile-overview-info p {
         font-size: 12px;
-        overflow-wrap: anywhere;
     }
 
     .profile-member-badge {

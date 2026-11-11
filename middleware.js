@@ -1,4 +1,5 @@
 const { guestDetailsSchema, stayDetailsSchema } = require("./schema.js");
+const { profileSchema } = require("./schema.js");
 
 // to check whether the user is logged in
 module.exports.isLoggedIn = (req, res, next) => {
@@ -140,4 +141,23 @@ module.exports.validateBookingConfirmation = (req, res, next) => {
 
   // Continue if all validations pass
   next();
+};
+
+// Validate profile update
+module.exports.validateProfile = (req, res, next) => {
+    const { error } = profileSchema.validate(req.body, {
+        abortEarly: false,
+        stripUnknown: true
+    });
+
+    if (error) {
+        const errorMessage = error.details
+            .map((detail) => detail.message)
+            .join(", ");
+
+        req.flash("error", errorMessage);
+        return res.redirect("/account");
+    }
+
+    next();
 };
