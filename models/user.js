@@ -32,7 +32,22 @@ const userSchema = new Schema({
       ref: "Booking",
     },
   ],
-});
+
+  // Additional personal information
+  mobileNumber: {
+    type: String,
+    trim: true,
+  },
+
+  dateOfBirth: {
+    type: Date,
+  },
+
+  sex: {
+    type: String,
+    enum: ["male", "female", "other", "prefer_not_to_say"],
+  },
+}, { timestamps: true });
 
 userSchema.plugin(passportLocalMongoose, {
   usernameLowerCase: true,

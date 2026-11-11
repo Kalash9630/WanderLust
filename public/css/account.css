@@ -216,3 +216,316 @@
         font-size: 20px;
     }
 }
+
+
+/* =========================================
+   MY PROFILE SECTION
+========================================= */
+
+/* Profile Overview */
+.profile-overview {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 25px;
+    margin-bottom: 30px;
+    background: #fffafa;
+    border: 1px solid #f5e5e5;
+    border-radius: 14px;
+}
+
+.profile-avatar {
+    width: 75px;
+    height: 75px;
+    min-width: 75px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff0f0;
+    color: #fe424d;
+    border-radius: 50%;
+    font-size: 30px;
+}
+
+.profile-overview-info h4 {
+    margin: 0 0 5px;
+    color: #222;
+    font-size: 21px;
+    font-weight: 700;
+}
+
+.profile-overview-info p {
+    margin: 0 0 10px;
+    color: #777;
+    font-size: 14px;
+}
+
+.profile-member-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    background: #eaf7ef;
+    color: #26834a;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+/* Personal Information Heading */
+.profile-section-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.profile-section-heading h4 {
+    margin: 0 0 6px;
+    color: #222;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.profile-section-heading p {
+    margin: 0;
+    color: #777;
+    font-size: 13px;
+}
+
+/* Edit Profile Button */
+.edit-profile-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 16px;
+    background: #fe424d;
+    color: #fff;
+    border: 1px solid #fe424d;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+}
+
+.edit-profile-btn:hover {
+    background: #e8323e;
+    border-color: #e8323e;
+}
+
+/* Profile Details Grid */
+.profile-details-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+/* Individual Detail Card */
+.profile-detail-card {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    min-width: 0;
+    padding: 18px;
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 12px;
+    transition: all 0.2s ease;
+}
+
+.profile-detail-card:hover {
+    border-color: #f5bfc2;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+}
+
+/* Detail Icon */
+.profile-detail-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 43px;
+    height: 43px;
+    min-width: 43px;
+    background: #fff0f0;
+    color: #fe424d;
+    border-radius: 10px;
+    font-size: 17px;
+}
+
+/* Detail Information */
+.profile-detail-info {
+    min-width: 0;
+}
+
+.profile-detail-info span {
+    display: block;
+    margin-bottom: 6px;
+    color: #888;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.profile-detail-info h5 {
+    margin: 0;
+    color: #333;
+    font-size: 14px;
+    font-weight: 600;
+    overflow-wrap: anywhere;
+}
+
+.profile-member-since {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin: 10px 0 0;
+    color: #777;
+    font-size: 13px;
+    padding-top: 8px;
+}
+
+.profile-member-since i {
+    color: #fe424d;
+}
+
+/* Hide edit fields and form actions by default */
+.profile-edit-input,
+.profile-form-actions {
+    display: none;
+}
+
+/* Style editable inputs */
+.profile-edit-input {
+    width: 100%;
+    margin-top: 5px;
+    padding: 9px 10px;
+    border: 1px solid #ddd;
+    border-radius: 7px;
+    outline: none;
+    font: inherit;
+    font-size: 13px;
+    color: #333;
+}
+
+.profile-edit-input:focus {
+    border-color: #fe424d;
+}
+
+/* Edit mode */
+.profile-details-section.edit-mode .profile-view-value {
+    display: none;
+}
+
+.profile-details-section.edit-mode .profile-edit-input {
+    display: block;
+}
+
+.profile-details-section.edit-mode .profile-form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 22px;
+}
+
+/* Cancel button */
+.cancel-profile-btn {
+    padding: 10px 16px;
+    background: #fff;
+    color: #555;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.cancel-profile-btn:hover {
+    background: #f5f5f5;
+}
+/* =========================================
+   RESPONSIVE DESIGN
+========================================= */
+
+/* Tablet */
+@media (max-width: 992px) {
+    .profile-details-grid {
+        gap: 12px;
+    }
+
+    .profile-detail-card {
+        padding: 15px;
+        gap: 12px;
+    }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .profile-overview {
+        padding: 20px;
+        gap: 15px;
+    }
+
+    .profile-avatar {
+        width: 65px;
+        height: 65px;
+        min-width: 65px;
+        font-size: 26px;
+    }
+
+    .profile-overview-info h4 {
+        font-size: 19px;
+    }
+
+    .profile-section-heading {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .profile-details-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Small Mobile */
+@media (max-width: 480px) {
+    .profile-overview {
+        padding: 16px;
+        gap: 12px;
+    }
+
+    .profile-avatar {
+        width: 55px;
+        height: 55px;
+        min-width: 55px;
+        font-size: 23px;
+    }
+
+    .profile-overview-info h4 {
+        font-size: 17px;
+    }
+
+    .profile-overview-info p {
+        font-size: 12px;
+        overflow-wrap: anywhere;
+    }
+
+    .profile-member-badge {
+        font-size: 11px;
+    }
+
+    .profile-section-heading h4 {
+        font-size: 17px;
+    }
+
+    .edit-profile-btn {
+        padding: 9px 13px;
+        font-size: 12px;
+    }
+
+    .profile-detail-card {
+        padding: 15px;
+    }
+}
