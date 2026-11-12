@@ -25,16 +25,30 @@ module.exports.add = async (req,res) => {
     res.redirect(`/listings/${id}`);
 }
 
-module.exports.delete = async (req,res) => {
-    let reviewId = req.params.reviewId;
-    let id = req.params.id;
+// Delete review
+module.exports.delete = async (req, res) => {
+    const { id, reviewId } = req.params;
 
-    // deleting from reivews collection
-    let deleteReview = await Review.findByIdAndDelete(reviewId);
-    console.log(deleteReview);
+    // Find and delete the review
+    const deletedReview = await Review.findByIdAndDelete(reviewId);
 
-    // deleting from listing collection
-    await Listing.findByIdAndUpdate(id, {$pull: {reviews : reviewId}});
+    if (!deletedReview) {
+        req.flash("error", "Review not found!");
+        return res.redirect("/account/reviews");
+    }
+
+    // Remove the review reference from its associated listing
+    await Listing.updateOne(
+        { reviews: reviewId },
+        { $pull: { reviews: reviewId } }
+    );
+
     req.flash("success", "Review deleted successfully!");
-    res.redirect(`/listings/${id}`);
-}
+
+    // Redirect based on the page from which the review was deleted
+    const redirectUrl = req.get("Referrer")?.includes("/account/reviews")
+        ? "/account/reviews"
+        : `/listings/${id}`;
+
+    res.redirect(redirectUrl);
+};

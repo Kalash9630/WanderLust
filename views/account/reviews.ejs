@@ -1,0 +1,158 @@
+<% layout("./layouts/boilerplate") %>
+
+    <div class="account-page">
+        <div class="account-container">
+
+            <!-- Account header -->
+            <div class="account-header">
+                <h2>My Account</h2>
+                <p>Manage your profile and WanderLust activities.</p>
+            </div>
+
+            <div class="account-layout">
+
+                <!-- Account sidebar -->
+                <aside class="account-sidebar">
+                    <div class="account-sidebar-header">
+                        <h5>Account Menu</h5>
+                    </div>
+
+                    <nav class="account-menu">
+                        <a href="/account" class="account-menu-link">
+                            <i class="fa-regular fa-user"></i>
+                            My Profile
+                        </a>
+
+                        <a href="/account/bookings" class="account-menu-link">
+                            <i class="fa-regular fa-calendar-check"></i>
+                            My Bookings
+                        </a>
+
+                        <a href="/account/wishlist" class="account-menu-link">
+                            <i class="fa-regular fa-heart"></i>
+                            My Wishlist
+                        </a>
+
+                        <a href="/account/listings" class="account-menu-link">
+                            <i class="fa-regular fa-house"></i>
+                            My Listings
+                        </a>
+
+                        <a href="/account/reviews" class="account-menu-link active">
+                            <i class="fa-regular fa-star"></i>
+                            My Reviews
+                        </a>
+
+                        <a href="/account/settings" class="account-menu-link">
+                            <i class="fa-solid fa-gear"></i>
+                            Account Settings
+                        </a>
+                    </nav>
+                </aside>
+
+                <!-- Reviews content -->
+                <main class="account-content">
+
+
+                    <div class="account-content-header">
+                        <div>
+                            <h3>My Reviews</h3>
+                            <p>View and manage the reviews you have shared on WanderLust.</p>
+                        </div>
+
+                        <span class="reviews-count">
+                            <%= userReviews.length %>
+                                <%= userReviews.length===1 ? "Review" : "Reviews" %>
+                        </span>
+                    </div>
+
+                    <% if (userReviews.length> 0) { %>
+
+                        <div class="account-reviews-list">
+
+                            <% userReviews.forEach(review=> { %>
+
+                                <div class="account-review-card">
+
+                                    <!-- Property image -->
+                                    <div class="account-review-image">
+                                        <% if (review.listing) { %>
+                                            <img src="<%= review.listing.image %>" alt="<%= review.listing.title %>">
+                                            <% } else { %>
+                                                <div class="account-review-no-image">
+                                                    <i class="fa-regular fa-image"></i>
+                                                </div>
+                                                <% } %>
+                                    </div>
+
+                                    <!-- Review details -->
+                                    <div class="account-review-details">
+
+                                        <h4 class="account-review-property-title">
+                                            <%= review.listing ? review.listing.title : "Property Unavailable" %>
+                                        </h4>
+
+                                        <div class="account-review-rating">
+                                            <% for (let i=1; i <=5; i++) { %>
+                                                <i
+                                                    class="fa-solid fa-star <%= i <= review.rating ? 'filled' : 'empty' %>"></i>
+                                                <% } %>
+                                                    <span>
+                                                        <%= review.rating %>/5
+                                                    </span>
+                                        </div>
+
+                                        <p class="account-review-comment">
+                                            <%= review.comment %>
+                                        </p>
+
+                                        <div class="account-review-actions">
+
+                                            <% if (review.listingId) { %>
+                                                <form
+                                                    action="/listings/<%= review.listingId %>/reviews/<%= review._id %>?_method=DELETE"
+                                                    method="POST">
+                                                    <button type="submit" class="account-review-delete-btn">
+                                                        <i class="fa-regular fa-trash-can"></i>
+                                                        Delete Review
+                                                    </button>
+                                                </form>
+                                                <% } %>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                                <% }); %>
+
+                        </div>
+
+                        <% } else { %>
+
+                            <div class="reviews-empty-state">
+                                <div class="reviews-empty-icon">
+                                    <i class="fa-regular fa-star"></i>
+                                </div>
+
+                                <h4>No Reviews Yet</h4>
+
+                                <p>
+                                    You haven't shared any reviews yet.
+                                    Explore properties and share your experience with others!
+                                </p>
+
+                                <a href="/listings" class="reviews-explore-btn">
+                                    Explore Properties
+                                    <i class="fa-solid fa-arrow-right"></i>
+                                </a>
+                            </div>
+
+                            <% } %>
+
+                </main>
+
+            </div>
+        </div>
+    </div>

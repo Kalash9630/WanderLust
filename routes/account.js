@@ -26,4 +26,6 @@ router.get(
 // Render My Listings page
 router.get("/listings", isLoggedIn, wrapAsync(accountController.renderListings));
 
+// Render My Reviews page
+router.get("/reviews", isLoggedIn, wrapAsync(accountController.renderReviews));
 module.exports = router;
