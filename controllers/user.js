@@ -16,6 +16,7 @@ module.exports.checkEmailVerified = async (req, res, next) => {
   next();
 };
 
+// singup for displaying
 module.exports.signupGet = (req, res) => {
   res.render("./users/signup.ejs", {
     verifiedSignup: req.session.pendingSignup?.isEmailVerified
@@ -24,6 +25,8 @@ module.exports.signupGet = (req, res) => {
   });
 };
 
+
+// acutally signing up in backend
 module.exports.signupPost = async (req, res, next) => {
   try {
     const pendingSignup = req.session.pendingSignup;
@@ -242,16 +245,19 @@ module.exports.verifyOTP = async (req, res) => {
   });
 };
 
+// for dispalying the login form
 module.exports.loginGet = (req, res) => {
   res.render("./users/login.ejs");
 };
 
+// for the actual login thourgh backend
 module.exports.loginPost = async (req, res) => {
   let redirectUrl = res.locals.redirectUrl || "/listings";
   req.flash("success", `Welcome back to WanderLust ${req.user.username}.`);
   res.redirect(redirectUrl);
 };
 
+// for logout
 module.exports.logout = (req, res, next) => {
   req.logout((err) => {
     if (err) {
@@ -262,10 +268,12 @@ module.exports.logout = (req, res, next) => {
   });
 };
 
+// for privacy
 module.exports.privacy = (req, res) => {
   res.render("privacy.ejs");
 };
 
+// for terms
 module.exports.terms = (req, res) => {
   res.render("terms.ejs");
 };
