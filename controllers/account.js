@@ -44,3 +44,19 @@ module.exports.updateProfile = async (req, res) => {
         message: "Your profile has been updated successfully."
     });
 };
+
+// Render My Wishlist page
+module.exports.renderWishlist = async (req, res) => {
+
+    // Populate the user's wishlist with actual listing documents
+    const user = await User.findById(req.user._id).populate("wishlist");
+
+    // Get the wishlist properties
+    const wishlistItems = user.wishlist;
+
+    // Render the wishlist page
+    res.render("account/wishlist.ejs", {
+        wishlistItems,
+        wishlistCount: wishlistItems.length
+    });
+};

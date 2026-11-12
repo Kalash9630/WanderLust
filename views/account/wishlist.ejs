@@ -1,0 +1,150 @@
+<% layout("./layouts/boilerplate") %>
+
+    <div class="account-page">
+        <div class="account-container">
+
+            <!-- Account Header -->
+            <div class="account-header">
+                <h2>My Account</h2>
+                <p>Manage your profile and WanderLust activities.</p>
+            </div>
+
+            <!-- Account Layout -->
+            <div class="account-layout">
+
+                <!-- Sidebar -->
+                <aside class="account-sidebar">
+                    <div class="account-sidebar-header">
+                        <h5>Account Menu</h5>
+                    </div>
+
+                    <nav class="account-menu">
+                        <a href="/account" class="account-menu-link">
+                            <i class="fa-regular fa-user"></i>
+                            <span>My Profile</span>
+                        </a>
+
+                        <a href="/account/bookings" class="account-menu-link">
+                            <i class="fa-regular fa-calendar-check"></i>
+                            <span>My Bookings</span>
+                        </a>
+
+                        <a href="/account/wishlist" class="account-menu-link active">
+                            <i class="fa-regular fa-heart"></i>
+                            <span>My Wishlist</span>
+                        </a>
+
+                        <a href="/account/listings" class="account-menu-link">
+                            <i class="fa-solid fa-house"></i>
+                            <span>My Listings</span>
+                        </a>
+
+                        <a href="/account/reviews" class="account-menu-link">
+                            <i class="fa-regular fa-star"></i>
+                            <span>My Reviews</span>
+                        </a>
+
+                        <a href="/account/settings" class="account-menu-link">
+                            <i class="fa-solid fa-gear"></i>
+                            <span>Account Settings</span>
+                        </a>
+                    </nav>
+                </aside>
+
+                <!-- Main Content -->
+                <main class="account-content">
+
+                    <div class="account-content-header">
+                        <h3>My Wishlist</h3>
+                        <p>View and manage your saved properties.</p>
+                    </div>
+
+                    <!-- Wishlist Summary -->
+                    <div class="wishlist-summary">
+                        <div class="wishlist-summary-info">
+                            <h4>Saved Properties</h4>
+                            <p>Places you've saved for your future adventures.</p>
+                        </div>
+
+                        <span class="wishlist-count">
+                            <i class="fa-solid fa-heart"></i>
+                            <%= wishlistCount %> Saved
+                        </span>
+                    </div>
+
+                    <% if (wishlistItems.length> 0) { %>
+
+                        <div class="wishlist-grid">
+
+                            <% wishlistItems.forEach(item=> { %>
+
+                                <!-- Property Card -->
+                                <div class="wishlist-card">
+
+                                    <div class="wishlist-card-image">
+                                        <img src="<%= item.image %>" alt="<%= item.title %>">
+
+                                        <form action="/listings/<%= item._id %>/wishlist?_method=PATCH" method="POST">
+                                            <button type="submit" class="wishlist-remove-btn"
+                                                aria-label="Remove from wishlist">
+                                                <i class="fa-solid fa-heart"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+
+                                    <div class="wishlist-card-body">
+
+                                        <h4 class="wishlist-card-title">
+                                            <%= item.title %>
+                                        </h4>
+
+                                        <p class="wishlist-card-location">
+                                            <i class="fa-solid fa-location-dot"></i>
+                                            <%= item.location %>, <%= item.country %>
+                                        </p>
+
+                                        <div class="wishlist-card-footer">
+                                            <div class="wishlist-card-price">
+                                                <strong>₹<%= item.price.toLocaleString("en-IN") %></strong>
+                                                <span>/ night</span>
+                                            </div>
+
+                                            <a href="/listings/<%= item._id %>" class="wishlist-view-btn">
+                                                View Property
+                                                <i class="fa-solid fa-arrow-right"></i>
+                                            </a>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <% }); %>
+
+                        </div>
+
+                        <% } else { %>
+
+                            <!-- Empty Wishlist -->
+                            <div class="wishlist-empty">
+                                <div class="wishlist-empty-icon">
+                                    <i class="fa-regular fa-heart"></i>
+                                </div>
+
+                                <h4>Your wishlist is empty</h4>
+                                <p>
+                                    You haven't saved any properties yet.
+                                    Explore WanderLust and find your favourite places.
+                                </p>
+
+                                <a href="/listings" class="wishlist-explore-btn">
+                                    <i class="fa-solid fa-compass"></i>
+                                    Explore Properties
+                                </a>
+                            </div>
+
+                            <% } %>
+
+                </main>
+            </div>
+        </div>
+    </div>

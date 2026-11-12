@@ -40,6 +40,13 @@ router.get("/countries", listingController.getCountries);
 // Get cities of selected country
 router.get("/cities/:countryCode", listingController.getCities);
 
+// Toggle listing wishlist
+router.patch(
+    "/:id/wishlist",
+    isLoggedIn,
+    wrapAsync(listingController.toggleWishlist)
+);
+
 // Read : Show route
 router.get("/:id", wrapAsync(listingController.show));
 

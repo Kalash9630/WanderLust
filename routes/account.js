@@ -16,4 +16,11 @@ router.patch(
     wrapAsync(accountController.updateProfile)
 );
 
+// My Wishlist
+router.get(
+    "/wishlist",
+    isLoggedIn,
+    wrapAsync(accountController.renderWishlist)
+);
+
 module.exports = router;

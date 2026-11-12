@@ -47,6 +47,13 @@ const userSchema = new Schema({
         enum: ["male", "female", "other", "prefer_not_to_say"],
     },
 
+    wishlist: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: "Listing"
+        }
+    ],
+
 }, { timestamps: true });
 
 userSchema.plugin(passportLocalMongoose, {

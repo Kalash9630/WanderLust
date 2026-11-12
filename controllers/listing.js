@@ -30,6 +30,8 @@ module.exports.index = async (req, res) => {
     const locations = await Listing.distinct("location");
     const noListingsFound = allListings.length === 0;
 
+    const wishlist = req.user ? req.user.wishlist.map(id => id.toString()) : [];
+
     res.render("./listings/index.ejs", {
         allListings,
         countries,
@@ -37,7 +39,8 @@ module.exports.index = async (req, res) => {
         minPrice,
         maxPrice,
         selectedLocation: location,
-        noListingsFound
+        noListingsFound,
+        wishlist
     });
 };
 
@@ -136,4 +139,42 @@ module.exports.getCities = (req, res) => {
     res.json(
         (cities || []).map(city => city.name)
     );
+};
+
+// Add or remove a listing from the user's wishlist
+module.exports.toggleWishlist = async (req, res) => {
+    const { id } = req.params;
+
+    // Determine the page from which the request was submitted
+    const redirectUrl = req.get("Referrer")?.includes("/account/wishlist")
+        ? "/account/wishlist"
+        : "/listings";
+
+    // Find the listing
+    const listing = await Listing.findById(id);
+
+    if (!listing) {
+        req.flash("error", "Listing not found.");
+        return res.redirect(redirectUrl);
+    }
+
+    // Check whether the listing is already in the wishlist
+    const isInWishlist = req.user.wishlist.some(
+        listingId => listingId.toString() === id
+    );
+
+    if (isInWishlist) {
+        // Remove listing from wishlist
+        req.user.wishlist.pull(id);
+        req.flash("success", "Listing removed from your wishlist successfully!");
+    } else {
+        // Add listing to wishlist
+        req.user.wishlist.push(id);
+        req.flash("success", "Listing added to your wishlist successfully!");
+    }
+
+    await req.user.save();
+
+    // Return to the page where the action was performed
+    res.redirect(redirectUrl);
 };

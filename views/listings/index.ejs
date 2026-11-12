@@ -1,194 +1,179 @@
-
 <% layout("./layouts/boilerplate") %>
 
-<div class="listings-page">
+    <div class="listings-page">
 
-    <!-- Page Header -->
-    <div class="listings-header">
-        <div>
-            <span class="listings-eyebrow">EXPLORE WANDERLUST</span>
-            <h2>Find your next getaway</h2>
-            <p>Discover beautiful places to stay and make your next trip memorable.</p>
-        </div>
-    </div>
-
-    <!-- Filters Section -->
-    <div class="listing-filters">
-
-        <div class="filter-group">
-            <label for="minPrice">Minimum Price (₹)</label>
-            <input
-                type="number"
-                id="minPrice"
-                placeholder="Min price"
-                min="0"
-                value="<%= minPrice || '' %>"
-            >
+        <!-- Page Header -->
+        <div class="listings-header">
+            <div>
+                <span class="listings-eyebrow">EXPLORE WANDERLUST</span>
+                <h2>Find your next getaway</h2>
+                <p>Discover beautiful places to stay and make your next trip memorable.</p>
+            </div>
         </div>
 
-        <div class="filter-group">
-            <label for="maxPrice">Maximum Price (₹)</label>
-            <input
-                type="number"
-                id="maxPrice"
-                placeholder="Max price"
-                value="<%= maxPrice || '' %>"
-            >
+        <!-- Filters Section -->
+        <div class="listing-filters">
+
+            <div class="filter-group">
+                <label for="minPrice">Minimum Price (₹)</label>
+                <input type="number" id="minPrice" placeholder="Min price" min="0" value="<%= minPrice || '' %>">
+            </div>
+
+            <div class="filter-group">
+                <label for="maxPrice">Maximum Price (₹)</label>
+                <input type="number" id="maxPrice" placeholder="Max price" value="<%= maxPrice || '' %>">
+            </div>
+
+            <div class="filter-group location-filter-group">
+                <label for="locationSearch">Country / Location</label>
+
+                <div class="location-dropdown" id="locationDropdown">
+
+                    <div class="location-dropdown-input">
+                        <input type="text" id="locationSearch" placeholder="Search country or city..."
+                            autocomplete="off" value="<%= selectedLocation || '' %>">
+
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+
+                    <div class="location-dropdown-menu" id="locationDropdownMenu">
+                        <input type="text" id="locationOptionSearch" placeholder="Search locations..."
+                            autocomplete="off">
+
+                        <div class="location-options" id="locationOptions">
+
+                            <% countries.forEach(country=> { %>
+                                <div class="location-option" data-value="<%= country %>">
+                                    <%= country %>
+                                </div>
+                                <% }) %>
+
+                                    <% locations.forEach(location=> { %>
+                                        <div class="location-option" data-value="<%= location %>">
+                                            <%= location %>
+                                        </div>
+                                        <% }) %>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Filter Actions -->
+            <div class="filter-actions">
+                <button type="button" class="apply-filter-btn">
+                    <i class="fa-solid fa-sliders"></i>
+                    Apply Filters
+                </button>
+
+                <button type="button" class="clear-filter-btn">
+                    Clear Filters
+                </button>
+            </div>
+
         </div>
 
-        <div class="filter-group location-filter-group">
-            <label for="locationSearch">Country / Location</label>
+        <!-- Listings Heading and Sorting -->
+        <div class="listings-toolbar">
 
-            <div class="location-dropdown" id="locationDropdown">
+            <div>
+                <h3>Available Properties</h3>
+                <p>Explore places that match your preferences.</p>
+            </div>
 
-                <div class="location-dropdown-input">
-                    <input
-                        type="text"
-                        id="locationSearch"
-                        placeholder="Search country or city..."
-                        autocomplete="off"
-                        value="<%= selectedLocation || '' %>"
-                    >
+            <div class="sorting-group">
+                <i class="fa-solid fa-arrow-down-wide-short"></i>
+                <label for="sortBy">Sort By</label>
 
-                    <i class="fa-solid fa-chevron-down"></i>
+                <select id="sortBy">
+                    <option value="">Select</option>
+                    <option value="price-asc">Price: Low to High</option>
+                    <option value="price-desc">Price: High to Low</option>
+                </select>
+            </div>
+
+        </div>
+
+        <% if (noListingsFound) { %>
+            <div class="no-listings-message">
+                <div class="no-listings-icon">
+                    <i class="fa-solid fa-house-circle-exclamation"></i>
                 </div>
 
-                <div class="location-dropdown-menu" id="locationDropdownMenu">
-                    <input
-                        type="text"
-                        id="locationOptionSearch"
-                        placeholder="Search locations..."
-                        autocomplete="off"
-                    >
+                <h3>No properties found</h3>
 
-                    <div class="location-options" id="locationOptions">
+                <p>
+                    We couldn't find any properties matching your filters.
+                    Try adjusting your search to discover more places.
+                </p>
 
-                        <% countries.forEach(country => { %>
-                            <div class="location-option" data-value="<%= country %>">
-                                <%= country %>
+                <span class="no-listings-subtext">
+                    Your next getaway might be just a filter away!
+                </span>
+            </div>
+            <% } else { %>
+
+                <!-- Listings -->
+                <div class="listings-grid">
+
+                    <% for (listing of allListings) { %>
+
+
+                        <div class="listing-card" data-price="<%= listing.price %>">
+
+                            <!-- Listing Image -->
+                            <div class="listing-card-image">
+                                <a href="/listings/<%= listing._id %>" class="listing-card-image-link">
+                                    <img src="<%= listing.image %>" alt="<%= listing.title %>" />
+                                </a>
+
+                                <span class="listing-image-label">
+                                    <i class="fa-solid fa-compass"></i>
+                                    WanderLust
+                                </span>
+
+                                <!-- Wishlist Button -->
+                                <form action="/listings/<%= listing._id %>/wishlist?_method=PATCH" method="POST">
+                                    <button type="submit"
+                                        class="wishlist-btn <%= wishlist.includes(listing._id.toString()) ? 'active' : '' %>"
+                                        aria-label="Toggle wishlist">
+                                        <i class="fa-solid fa-heart"></i>
+                                    </button>
+                                </form>
                             </div>
-                        <% }) %>
-                    
-                        <% locations.forEach(location => { %>
-                            <div class="location-option" data-value="<%= location %>">
-                                <%= location %>
+
+                            <!-- Listing Information -->
+                            <a href="/listings/<%= listing._id %>" class="listing-card-link">
+                                <div class="listing-card-content">
+
+                                    <h3 class="listing-card-title">
+                                        <%= listing.title %>
+                                    </h3>
+
+                                    <p class="listing-card-price">
+                                        <strong>
+                                            &#8377; <%= String(listing.price).replace(/\B(?=(\d{3})+(?!\d))/g, "," ) %>
+                                        </strong>
+                                        <span>/ night</span>
+                                    </p>
+
+                                </div>
+                            </a>
+
+                            <div class="listing-card-booking">
+                                <a href="/listings/<%= listing._id %>/book/guest-details" class="listing-book-btn">
+                                    Book Now
+                                    <i class="fa-solid fa-arrow-right"></i>
+                                </a>
                             </div>
-                        <% }) %>
-                    
-                    </div>
+
+                        </div>
+
+
+                        <% } %>
+
                 </div>
-
-            </div>
-        </div>
-
-        <!-- Filter Actions -->
-        <div class="filter-actions">
-            <button type="button" class="apply-filter-btn">
-                <i class="fa-solid fa-sliders"></i>
-                Apply Filters
-            </button>
-
-            <button type="button" class="clear-filter-btn">
-                Clear Filters
-            </button>
-        </div>
+                <% } %>
 
     </div>
-
-    <!-- Listings Heading and Sorting -->
-    <div class="listings-toolbar">
-
-        <div>
-            <h3>Available Properties</h3>
-            <p>Explore places that match your preferences.</p>
-        </div>
-
-        <div class="sorting-group">
-            <i class="fa-solid fa-arrow-down-wide-short"></i>
-            <label for="sortBy">Sort By</label>
-
-            <select id="sortBy">
-                <option value="">Select</option>
-                <option value="price-asc">Price: Low to High</option>
-                <option value="price-desc">Price: High to Low</option>
-            </select>
-        </div>
-
-    </div>
-
-    <% if (noListingsFound) { %>
-        <div class="no-listings-message">
-            <div class="no-listings-icon">
-                <i class="fa-solid fa-house-circle-exclamation"></i>
-            </div>
-        
-            <h3>No properties found</h3>
-        
-            <p>
-                We couldn't find any properties matching your filters.
-                Try adjusting your search to discover more places.
-            </p>
-        
-            <span class="no-listings-subtext">
-                Your next getaway might be just a filter away!
-            </span>
-        </div>
-    <% } else { %>
-
-    <!-- Listings -->
-    <div class="listings-grid">
-
-        <% for (listing of allListings) { %>
-
-            <div class="listing-card" data-price="<%= listing.price %>">
-
-                <a href="/listings/<%= listing._id %>"
-                   class="listing-card-link">
-
-                    <!-- Listing Image -->
-                    <div class="listing-card-image">
-                        <img
-                            src="<%= listing.image %>"
-                            alt="<%= listing.title %>"
-                        />
-
-                        <span class="listing-image-label">
-                            <i class="fa-solid fa-compass"></i>
-                            WanderLust
-                        </span>
-                    </div>
-
-                    <!-- Listing Information -->
-                    <div class="listing-card-content">
-
-                        <h3 class="listing-card-title">
-                            <%= listing.title %>
-                        </h3>
-
-                        <p class="listing-card-price">
-                            <strong>
-                                &#8377; <%= String(listing.price).replace(/\B(?=(\d{3})+(?!\d))/g, ",") %>
-                            </strong>
-                            <span>/ night</span>
-                        </p>
-
-                    </div>
-
-                </a>
-
-                <div class="listing-card-booking">
-                    <a href="/listings/<%= listing._id %>/book/guest-details"
-                       class="listing-book-btn">
-                        Book Now
-                        <i class="fa-solid fa-arrow-right"></i>
-                    </a>
-                </div>
-
-            </div>
-
-        <% } %>
-
-    </div>
-    <% } %>
-
-</div>

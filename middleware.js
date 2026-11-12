@@ -4,11 +4,19 @@ const { profileSchema } = require("./schema.js");
 // to check whether the user is logged in
 module.exports.isLoggedIn = (req, res, next) => {
   if (!req.isAuthenticated()) {
-    // redierctURL info save
-    req.session.redirectUrl = req.originalUrl;
-    req.flash("error", "You must login first! ");
-    return res.redirect("/login");
+
+      // Redirect wishlist requests to Explore after login
+      if (req.originalUrl.includes("/wishlist")) {
+          req.session.redirectUrl = "/listings";
+      } else {
+          // Preserve the original redirect for other requests
+          req.session.redirectUrl = req.originalUrl;
+      }
+
+      req.flash("error", "You must login first!");
+      return res.redirect("/login");
   }
+
   next();
 };
 
