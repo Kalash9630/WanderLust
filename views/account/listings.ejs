@@ -1,0 +1,161 @@
+<% layout("./layouts/boilerplate") %>
+
+    <div class="account-page">
+        <div class="account-container">
+
+            <!-- Account Header -->
+            <div class="account-header">
+                <h2>My Account</h2>
+                <p>Manage your profile and WanderLust activities.</p>
+            </div>
+
+            <div class="account-layout">
+
+                <!-- Account Sidebar -->
+                <aside class="account-sidebar">
+                    <div class="account-sidebar-header">
+                        <h5>Account Menu</h5>
+                    </div>
+
+                    <nav class="account-menu">
+                        <a href="/account" class="account-menu-link">
+                            <i class="fa-regular fa-user"></i>
+                            My Profile
+                        </a>
+
+                        <a href="/account/bookings" class="account-menu-link">
+                            <i class="fa-solid fa-calendar-check"></i>
+                            My Bookings
+                        </a>
+
+                        <a href="/account/wishlist" class="account-menu-link">
+                            <i class="fa-regular fa-heart"></i>
+                            My Wishlist
+                        </a>
+
+                        <a href="/account/listings" class="account-menu-link active">
+                            <i class="fa-solid fa-house"></i>
+                            My Listings
+                        </a>
+
+                        <a href="/account/reviews" class="account-menu-link">
+                            <i class="fa-regular fa-star"></i>
+                            My Reviews
+                        </a>
+
+                        <a href="/account/settings" class="account-menu-link">
+                            <i class="fa-solid fa-gear"></i>
+                            Account Settings
+                        </a>
+                    </nav>
+                </aside>
+
+                <!-- My Listings Content -->
+                <main class="account-content">
+
+                    <div class="account-content-header">
+                        <div>
+                            <h3>My Listings</h3>
+                            <p>Manage the properties you have listed on WanderLust.</p>
+                        </div>
+
+                        <span class="listings-count">
+                            <%= userListings.length %>
+                                <%= userListings.length===1 ? "Property" : "Properties" %>
+                        </span>
+                    </div>
+
+
+                    <% if (userListings.length> 0) { %>
+
+                        <div class="account-listings-grid">
+
+                            <% userListings.forEach(listing=> { %>
+
+                                <div class="account-listing-card">
+
+                                    <!-- Property Image -->
+                                    <div class="account-listing-image">
+                                        <img src="<%= listing.image %>" alt="<%= listing.title %>">
+                                    </div>
+
+                                    <!-- Property Details -->
+                                    <div class="account-listing-body">
+
+                                        <h4 class="account-listing-title">
+                                            <%= listing.title %>
+                                        </h4>
+
+                                        <p class="account-listing-location">
+                                            <i class="fa-solid fa-location-dot"></i>
+                                            <%= listing.location %>, <%= listing.country %>
+                                        </p>
+
+                                        <div class="account-listing-price">
+                                            <strong>
+                                                ₹<%= listing.price.toLocaleString("en-IN") %>
+                                            </strong>
+                                            <span>/ night</span>
+                                        </div>
+
+                                        <!-- Listing Actions -->
+                                        <div class="account-listing-actions">
+
+                                            <a href="/listings/<%= listing._id %>" class="account-listing-view-btn">
+                                                <i class="fa-regular fa-eye"></i>
+                                                View
+                                            </a>
+
+                                            <a href="/listings/<%= listing._id %>/edit?from=account"
+                                                class="account-listing-edit-btn">
+                                                <i class="fa-regular fa-pen-to-square"></i>
+                                                Edit
+                                            </a>
+
+                                            <form action="/listings/<%= listing._id %>?_method=DELETE" method="POST"
+                                                class="account-listing-delete-form">
+                                                <button type="submit" class="account-listing-delete-btn">
+                                                    <i class="fa-regular fa-trash-can"></i>
+                                                    Delete
+                                                </button>
+                                            </form>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <% }); %>
+
+                        </div>
+
+                        <% } else { %>
+
+                            <!-- Empty State -->
+                            <div class="account-listings-empty">
+
+                                <div class="account-listings-empty-icon">
+                                    <i class="fa-solid fa-house-circle-exclamation"></i>
+                                </div>
+
+                                <h4>No Properties Listed Yet</h4>
+
+                                <p>
+                                    You haven't listed any properties on WanderLust.
+                                    Start sharing your property with travellers!
+                                </p>
+
+                                <a href="/listings/new" class="account-listings-create-btn">
+                                    <i class="fa-solid fa-plus"></i>
+                                    List Your Property
+                                </a>
+
+                            </div>
+
+                            <% } %>
+
+
+                </main>
+            </div>
+        </div>
+    </div>

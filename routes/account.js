@@ -23,4 +23,7 @@ router.get(
     wrapAsync(accountController.renderWishlist)
 );
 
+// Render My Listings page
+router.get("/listings", isLoggedIn, wrapAsync(accountController.renderListings));
+
 module.exports = router;

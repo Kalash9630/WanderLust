@@ -1,4 +1,5 @@
 const User = require("../models/user.js");
+const Listing = require("../models/listing.js");
 
 // Render My Account page
 module.exports.renderAccount = async (req, res) => {
@@ -58,5 +59,19 @@ module.exports.renderWishlist = async (req, res) => {
     res.render("account/wishlist.ejs", {
         wishlistItems,
         wishlistCount: wishlistItems.length
+    });
+};
+
+// Render My Listings page
+module.exports.renderListings = async (req, res) => {
+
+    // Find listings created by the logged-in user
+    const userListings = await Listing.find({
+        owner: req.user._id
+    });
+
+    // Render My Listings page
+    res.render("account/listings.ejs", {
+        userListings
     });
 };

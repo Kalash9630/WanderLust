@@ -48,6 +48,11 @@
     border: 1px solid #eee;
     border-radius: 14px;
     box-shadow: 0 4px 18px rgba(0, 0, 0, 0.04);
+
+    /* Keep sidebar visible while scrolling */
+    position: sticky;
+    top: 90px;
+    align-self: start;
 }
 
 .account-sidebar-header {
@@ -168,6 +173,8 @@
     }
 
     .account-sidebar {
+        position: static;
+        top: auto;
         padding: 15px;
     }
 
@@ -888,5 +895,304 @@
 
     .wishlist-summary-info h4 {
         font-size: 17px;
+    }
+}
+
+
+/* My Listings Content */
+
+.account-content-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 28px;
+}
+
+.account-content-header h3 {
+    font-size: 23px;
+    font-weight: 700;
+    margin-bottom: 7px;
+    color: #222;
+}
+
+.account-content-header p {
+    font-size: 14px;
+    color: #777;
+    margin-bottom: 0;
+}
+
+.listings-count {
+    background: #fff0f1;
+    color: #fe424d;
+    padding: 9px 15px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+/* Listings Grid */
+
+.account-listings-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+}
+
+.account-listing-card {
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 14px;
+    overflow: hidden;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.account-listing-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.09);
+}
+
+/* Listing Image */
+
+.account-listing-image {
+    width: 100%;
+    height: 210px;
+    overflow: hidden;
+}
+
+.account-listing-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.35s ease;
+}
+
+.account-listing-card:hover .account-listing-image img {
+    transform: scale(1.05);
+}
+
+/* Listing Details */
+
+.account-listing-body {
+    padding: 18px;
+}
+
+.account-listing-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: #222;
+    margin-bottom: 9px;
+    line-height: 1.4;
+}
+
+.account-listing-location {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 13px;
+    color: #777;
+    margin-bottom: 14px;
+}
+
+.account-listing-location i {
+    color: #fe424d;
+}
+
+/* Listing Price */
+
+.account-listing-price {
+    margin-bottom: 17px;
+}
+
+.account-listing-price strong {
+    font-size: 17px;
+    color: #222;
+}
+
+.account-listing-price span {
+    font-size: 12px;
+    color: #888;
+}
+
+/* Listing Actions */
+
+.account-listing-actions {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+}
+
+.account-listing-actions a,
+.account-listing-actions button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    flex: 1;
+    min-width: 0;
+    padding: 10px 8px;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.account-listing-view-btn {
+    background: #fe424d;
+    color: #fff;
+    border: 1px solid #fe424d;
+}
+
+.account-listing-view-btn:hover {
+    background: #e93642;
+    border-color: #e93642;
+    color: #fff;
+}
+
+.account-listing-edit-btn {
+    background: #f5f5f5;
+    color: #444;
+    border: 1px solid #e8e8e8;
+}
+
+.account-listing-edit-btn:hover {
+    background: #eaeaea;
+    color: #222;
+}
+
+.account-listing-delete-btn {
+    background: #fff0f1;
+    color: #e63946;
+    border: 1px solid #ffe0e2;
+}
+
+.account-listing-delete-btn:hover {
+    background: #ffe0e2;
+    color: #d62836;
+}
+
+/* Empty State */
+
+.account-listings-empty {
+    min-height: 380px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 35px 20px;
+}
+
+.account-listings-empty-icon {
+    width: 75px;
+    height: 75px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff0f1;
+    color: #fe424d;
+    border-radius: 50%;
+    font-size: 30px;
+    margin-bottom: 22px;
+}
+
+.account-listings-empty h4 {
+    font-size: 20px;
+    font-weight: 700;
+    color: #222;
+    margin-bottom: 10px;
+}
+
+.account-listings-empty p {
+    max-width: 420px;
+    font-size: 14px;
+    line-height: 1.7;
+    color: #777;
+    margin-bottom: 22px;
+}
+
+.account-listings-create-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 12px 20px;
+    background: #fe424d;
+    color: #fff;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    transition: background 0.2s ease;
+}
+
+.account-listings-create-btn:hover {
+    background: #e93642;
+    color: #fff;
+}
+
+/* Keep delete form from affecting button layout */
+.account-listing-delete-form {
+    display: flex;
+    flex: 1;
+    min-width: 0;
+}
+
+.account-listing-delete-form .account-listing-delete-btn {
+    width: 100%;
+    height: 100%;
+}
+
+/* Responsive Design */
+
+@media (max-width: 1100px) {
+    .account-listings-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .account-content-header {
+        align-items: flex-start;
+    }
+
+    .account-listings-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .account-listing-image {
+        height: 180px;
+    }
+}
+
+@media (max-width: 576px) {
+    .account-listings-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .account-listing-image {
+        height: 220px;
+    }
+
+    .account-content-header h3 {
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 400px) {
+    .account-listing-actions {
+        gap: 6px;
+    }
+
+    .account-listing-actions a,
+    .account-listing-actions button {
+        font-size: 11px;
+        padding: 9px 5px;
     }
 }
