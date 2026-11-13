@@ -16,6 +16,16 @@ router.patch(
     wrapAsync(accountController.updateProfile)
 );
 
+// Render My Bookings page
+router.get("/bookings", isLoggedIn, wrapAsync(accountController.renderBookings));
+
+// Cancel booking
+router.delete(
+    "/bookings/:bookingId",
+    isLoggedIn,
+    wrapAsync(accountController.deleteBooking)
+);
+
 // My Wishlist
 router.get(
     "/wishlist",

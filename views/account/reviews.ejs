@@ -108,17 +108,30 @@
 
                                         <div class="account-review-actions">
 
+                                            <!-- View property -->
+                                            <% if (review.listingId) { %>
+                                                <a
+                                                    href="/listings/<%= review.listingId %>"
+                                                    class="account-review-view-btn"
+                                                >
+                                                    <i class="fa-regular fa-eye"></i>
+                                                    View Review
+                                                </a>
+                                            <% } %>
+                                        
+                                            <!-- Delete review -->
                                             <% if (review.listingId) { %>
                                                 <form
                                                     action="/listings/<%= review.listingId %>/reviews/<%= review._id %>?_method=DELETE"
-                                                    method="POST">
+                                                    method="POST"
+                                                >
                                                     <button type="submit" class="account-review-delete-btn">
                                                         <i class="fa-regular fa-trash-can"></i>
                                                         Delete Review
                                                     </button>
                                                 </form>
-                                                <% } %>
-
+                                            <% } %>
+                                        
                                         </div>
 
                                     </div>

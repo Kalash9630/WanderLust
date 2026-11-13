@@ -1,6 +1,7 @@
 const User = require("../models/user.js");
 const Listing = require("../models/listing.js");
 const Review = require("../models/review.js");
+const Booking = require("../models/booking.js");
 
 // Render My Account page
 module.exports.renderAccount = async (req, res) => {
@@ -45,6 +46,61 @@ module.exports.updateProfile = async (req, res) => {
         success: true,
         message: "Your profile has been updated successfully."
     });
+};
+
+// Render My Bookings page
+module.exports.renderBookings = async (req, res) => {
+
+    // Find the logged-in user and populate bookings with their listings
+    const user = await User.findById(req.user._id).populate({
+        path: "bookings",
+        populate: {
+            path: "listing"
+        }
+    });
+
+    // Get the user's bookings
+    const userBookings = user.bookings;
+
+    // Render My Bookings page
+    res.render("account/bookings.ejs", {
+        userBookings
+    });
+};
+
+module.exports.deleteBooking = async (req, res) => {
+    const { bookingId } = req.params;
+
+    // Find the booking
+    const booking = await Booking.findById(bookingId);
+
+    // Check whether the booking exists
+    if (!booking) {
+        req.flash("error", "Booking not found!");
+        return res.redirect("/account/bookings");
+    }
+
+    // Verify that the booking belongs to the logged-in user
+    if (booking.user.toString() !== req.user._id.toString()) {
+        req.flash("error", "You are not authorized to cancel this booking!");
+        return res.redirect("/account/bookings");
+    }
+
+    // Delete the booking from the Bookings collection
+    await Booking.findByIdAndDelete(bookingId);
+
+    // Remove the booking ID from the user's bookings array
+    await User.findByIdAndUpdate(req.user._id, {
+        $pull: { bookings: bookingId }
+    });
+
+    // Remove the booking ID from the listing's bookings array
+    await Listing.findByIdAndUpdate(booking.listing, {
+        $pull: { bookings: bookingId }
+    });
+
+    req.flash("success", "Booking cancelled successfully!");
+    res.redirect("/account/bookings");
 };
 
 // Render My Wishlist page

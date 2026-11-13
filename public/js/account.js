@@ -39,21 +39,21 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Initialize DOB calendar using flatpickr
-    const dobCalendar = flatpickr(dobInput, {
-        dateFormat: "Y-m-d",
-        maxDate: "today",
-        allowInput: false,
-        disableMobile: true,
-        defaultDate: dobInput.value || null,
+  const dobCalendar = flatpickr(dobInput, {
+    dateFormat: "Y-m-d",
+    maxDate: "today",
+    allowInput: false,
+    disableMobile: true,
+    defaultDate: dobInput.value || null,
 
-        // Month and year navigation
-        monthSelectorType: "dropdown",
-        yearRange: [1900, new Date().getFullYear()],
+    // Month and year navigation
+    monthSelectorType: "dropdown",
+    yearRange: [1900, new Date().getFullYear()],
 
-        onChange: function (selectedDates, dateStr) {
-            ageElement.textContent = calculateAge(dateStr);
-        }
-    });
+    onChange: function (selectedDates, dateStr) {
+      ageElement.textContent = calculateAge(dateStr);
+    }
+  });
 
   // Format date for display
   function formatDate(dob) {
@@ -119,49 +119,49 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Save profile changes to the backend
   profileForm.addEventListener("submit", async (event) => {
-      event.preventDefault();
-  
-      const inputs = profileForm.querySelectorAll(".profile-edit-input");
-      let isFormValid = true;
-  
-      // Validate all editable fields
-      inputs.forEach((input) => {
-          const isValid = input.checkValidity();
-  
-          input.classList.toggle("is-invalid", !isValid);
-  
-          if (!isValid) {
-              isFormValid = false;
-          }
-      });
-  
-      // Stop if validation fails
-      if (!isFormValid) return;
-  
-      try {
-        
-          const response = await fetch("/account", {
-              method: "PATCH",
-              headers: {
-                "Content-Type": "application/x-www-form-urlencoded",
-                "Accept": "application/json"
-              },
-              body: new URLSearchParams(new FormData(profileForm)),
-          });
-  
-          if (response.ok) {
-              // Reload to display the updated database information
-              window.location.reload();
-          } else {
-              alert("Unable to update your profile. Please try again.");
-          }
-  
-      } catch (error) {
-          console.error("Profile update error:", error);
-          alert("Something went wrong. Please try again.");
+    event.preventDefault();
+
+    const inputs = profileForm.querySelectorAll(".profile-edit-input");
+    let isFormValid = true;
+
+    // Validate all editable fields
+    inputs.forEach((input) => {
+      const isValid = input.checkValidity();
+
+      input.classList.toggle("is-invalid", !isValid);
+
+      if (!isValid) {
+        isFormValid = false;
       }
+    });
+
+    // Stop if validation fails
+    if (!isFormValid) return;
+
+    try {
+
+      const response = await fetch("/account", {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          "Accept": "application/json"
+        },
+        body: new URLSearchParams(new FormData(profileForm)),
+      });
+
+      if (response.ok) {
+        // Reload to display the updated database information
+        window.location.reload();
+      } else {
+        alert("Unable to update your profile. Please try again.");
+      }
+
+    } catch (error) {
+      console.error("Profile update error:", error);
+      alert("Something went wrong. Please try again.");
+    }
   });
-  
+
 
   // Return to view mode
   function exitEditMode() {
@@ -173,11 +173,30 @@ document.addEventListener("DOMContentLoaded", () => {
     profileSection.classList.remove("edit-mode");
   }
 
-//   cancel button functionality
+  //   cancel button functionality
   cancelProfileBtn.addEventListener("click", () => {
     profileForm.reset();
     dobCalendar.setDate(dobElement.dataset.dob || null, false);
     ageElement.textContent = calculateAge(dobElement.dataset.dob);
     exitEditMode();
+  });
+});
+
+// Booking tabs functionality 
+const bookingTabs = document.querySelectorAll(".booking-tab");
+const bookingContents = document.querySelectorAll(".booking-tab-content");
+
+bookingTabs.forEach(tab => {
+  tab.addEventListener("click", () => {
+
+    const target = tab.dataset.tab;
+
+    // Remove active class from all tabs and contents
+    bookingTabs.forEach(item => item.classList.remove("active"));
+    bookingContents.forEach(content => content.classList.remove("active"));
+
+    // Activate selected tab and content
+    tab.classList.add("active");
+    document.getElementById(target).classList.add("active");
   });
 });

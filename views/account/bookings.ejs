@@ -1,0 +1,373 @@
+<% layout("./layouts/boilerplate") %>
+
+<%
+    // Separate bookings based on their checkout dates
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const upcomingBookings = userBookings.filter(booking => {
+        const checkOut = new Date(booking.stayDetails.checkOut);
+        checkOut.setHours(0, 0, 0, 0);
+        return checkOut >= today;
+    });
+
+    const completedBookings = userBookings.filter(booking => {
+        const checkOut = new Date(booking.stayDetails.checkOut);
+        checkOut.setHours(0, 0, 0, 0);
+        return checkOut < today;
+    });
+%>
+
+<div class="account-page">
+    <div class="account-container">
+
+        <!-- Account header -->
+        <div class="account-header">
+            <h2>My Account</h2>
+            <p>Manage your profile and WanderLust activities.</p>
+        </div>
+
+        <div class="account-layout">
+
+            <!-- Account sidebar -->
+            <aside class="account-sidebar">
+                <div class="account-sidebar-header">
+                    <h5>Account Menu</h5>
+                </div>
+
+                <nav class="account-menu">
+                    <a href="/account" class="account-menu-link">
+                        <i class="fa-regular fa-user"></i>
+                        My Profile
+                    </a>
+
+                    <a href="/account/bookings" class="account-menu-link active">
+                        <i class="fa-regular fa-calendar-check"></i>
+                        My Bookings
+                    </a>
+
+                    <a href="/account/wishlist" class="account-menu-link">
+                        <i class="fa-regular fa-heart"></i>
+                        My Wishlist
+                    </a>
+
+                    <a href="/account/listings" class="account-menu-link">
+                        <i class="fa-regular fa-house"></i>
+                        My Listings
+                    </a>
+
+                    <a href="/account/reviews" class="account-menu-link">
+                        <i class="fa-regular fa-star"></i>
+                        My Reviews
+                    </a>
+
+                    <a href="/account/settings" class="account-menu-link">
+                        <i class="fa-solid fa-gear"></i>
+                        Account Settings
+                    </a>
+                </nav>
+            </aside>
+
+            <!-- Bookings content -->
+            <main class="account-content">
+
+                <div class="account-content-header">
+                    <div>
+                        <h3>My Bookings</h3>
+                        <p>Manage and keep track of your property bookings.</p>
+                    </div>
+
+                    <span class="bookings-count">
+                        <%= userBookings.length %>
+                            <%= userBookings.length===1 ? "Booking" : "Bookings" %>
+                    </span>
+                </div>
+
+                <!-- Booking tabs -->
+                <div class="booking-tabs">
+                    <button type="button" class="booking-tab active" data-tab="upcoming">
+                        Upcoming
+                        <span>
+                            <%= upcomingBookings.length %>
+                        </span>
+                    </button>
+
+                    <button type="button" class="booking-tab" data-tab="completed">
+                        Completed
+                        <span>
+                            <%= completedBookings.length %>
+                        </span>
+                    </button>
+                </div>
+
+                <!-- Upcoming bookings -->
+                <div class="booking-tab-content active" id="upcoming">
+
+                    <% if (upcomingBookings.length> 0) { %>
+
+                        <div class="account-bookings-list">
+
+                            <% upcomingBookings.forEach(booking=> { %>
+
+                                <div class="account-booking-card">
+
+                                    <!-- Property image -->
+                                    <div class="account-booking-image">
+                                        <% if (booking.listing) { %>
+                                            <img src="<%= booking.listing.image %>"
+                                                alt="<%= booking.listing.title %>">
+                                            <% } else { %>
+                                                <div class="booking-no-image">
+                                                    <i class="fa-regular fa-image"></i>
+                                                </div>
+                                                <% } %>
+                                    </div>
+
+                                    <!-- Booking details -->
+                                    <div class="account-booking-details">
+
+                                        <div class="booking-card-header">
+                                            <h4>
+                                                <%= booking.listing ? booking.listing.title
+                                                    : "Property Unavailable" %>
+                                            </h4>
+
+                                            <span class="booking-status upcoming-status">
+                                                Upcoming
+                                            </span>
+                                        </div>
+
+                                        <% if (booking.listing) { %>
+                                            <p class="booking-location">
+                                                <i class="fa-solid fa-location-dot"></i>
+                                                <%= booking.listing.location %>,
+                                                    <%= booking.listing.country %>
+                                            </p>
+                                            <% } %>
+
+                                                <p class="booking-reference">
+                                                    Booking Reference:
+                                                    <strong>
+                                                        <%= booking.bookingReference %>
+                                                    </strong>
+                                                </p>
+
+                                                <div class="booking-stay-details">
+
+                                                    <div>
+                                                        <span>Check-in</span>
+                                                        <strong>
+                                                            <%= new
+                                                                Date(booking.stayDetails.checkIn).toLocaleDateString("en-US",
+                                                                { day: "numeric" , month: "short" ,
+                                                                year: "numeric" }) %>
+                                                        </strong>
+                                                    </div>
+
+                                                    <div>
+                                                        <span>Check-out</span>
+                                                        <strong>
+                                                            <%= new
+                                                                Date(booking.stayDetails.checkOut).toLocaleDateString("en-US",
+                                                                { day: "numeric" , month: "short" ,
+                                                                year: "numeric" }) %>
+                                                        </strong>
+                                                    </div>
+
+                                                    <div>
+                                                        <span>Duration</span>
+                                                        <strong>
+                                                            <%= booking.stayDetails.nights %>
+                                                                <%= booking.stayDetails.nights===1 ? "Night"
+                                                                    : "Nights" %>
+                                                        </strong>
+                                                    </div>
+
+                                                </div>
+
+                                                <div class="booking-card-footer">
+
+                                                    <div class="booking-total-price">
+                                                        <span>Total Amount</span>
+                                                        <strong>
+                                                            ₹<%= booking.pricingDetails.totalPrice.toLocaleString("en-IN") %>
+                                                        </strong>
+                                                    </div>
+                                                
+                                                    <!-- Cancel booking form -->
+                                                    <form
+                                                        action="/account/bookings/<%= booking._id %>?_method=DELETE"
+                                                        method="POST"
+                                                        class="booking-cancel-form"
+                                                    >
+                                                        <button type="submit" class="booking-cancel-btn">
+                                                            <i class="fa-regular fa-trash-can"></i>
+                                                            Cancel Booking
+                                                        </button>
+                                                    </form>
+                                                
+                                                </div>
+                                    </div>
+                                </div>
+
+                                <% }); %>
+
+                        </div>
+
+                        <% } else { %>
+
+                            <div class="booking-empty-state">
+                                <div class="booking-empty-icon">
+                                    <i class="fa-regular fa-calendar"></i>
+                                </div>
+
+                                <h4>No Upcoming Bookings</h4>
+
+                                <p>
+                                    You don't have any upcoming stays.
+                                    Explore properties and plan your next trip!
+                                </p>
+
+                                <a href="/listings" class="booking-explore-btn">
+                                    Explore Properties
+                                    <i class="fa-solid fa-arrow-right"></i>
+                                </a>
+                            </div>
+
+                            <% } %>
+
+                </div>
+
+                <!-- Completed bookings -->
+                <div class="booking-tab-content" id="completed">
+
+                    <% if (completedBookings.length> 0) { %>
+
+                        <div class="account-bookings-list">
+
+                            <% completedBookings.forEach(booking=> { %>
+
+                                <div class="account-booking-card">
+
+                                    <!-- Property image -->
+                                    <div class="account-booking-image">
+                                        <% if (booking.listing) { %>
+                                            <img src="<%= booking.listing.image %>"
+                                                alt="<%= booking.listing.title %>">
+                                            <% } else { %>
+                                                <div class="booking-no-image">
+                                                    <i class="fa-regular fa-image"></i>
+                                                </div>
+                                                <% } %>
+                                    </div>
+
+                                    <!-- Booking details -->
+                                    <div class="account-booking-details">
+
+                                        <div class="booking-card-header">
+                                            <h4>
+                                                <%= booking.listing ? booking.listing.title
+                                                    : "Property Unavailable" %>
+                                            </h4>
+
+                                            <span class="booking-status completed-status">
+                                                Completed
+                                            </span>
+                                        </div>
+
+                                        <% if (booking.listing) { %>
+                                            <p class="booking-location">
+                                                <i class="fa-solid fa-location-dot"></i>
+                                                <%= booking.listing.location %>,
+                                                    <%= booking.listing.country %>
+                                            </p>
+                                            <% } %>
+
+                                                <p class="booking-reference">
+                                                    Booking Reference:
+                                                    <strong>
+                                                        <%= booking.bookingReference %>
+                                                    </strong>
+                                                </p>
+
+                                                <div class="booking-stay-details">
+
+                                                    <div>
+                                                        <span>Check-in</span>
+                                                        <strong>
+                                                            <%= new
+                                                                Date(booking.stayDetails.checkIn).toLocaleDateString("en-US",
+                                                                { day: "numeric" , month: "short" ,
+                                                                year: "numeric" }) %>
+                                                        </strong>
+                                                    </div>
+
+                                                    <div>
+                                                        <span>Check-out</span>
+                                                        <strong>
+                                                            <%= new
+                                                                Date(booking.stayDetails.checkOut).toLocaleDateString("en-US",
+                                                                { day: "numeric" , month: "short" ,
+                                                                year: "numeric" }) %>
+                                                        </strong>
+                                                    </div>
+
+                                                    <div>
+                                                        <span>Duration</span>
+                                                        <strong>
+                                                            <%= booking.stayDetails.nights %>
+                                                                <%= booking.stayDetails.nights===1 ? "Night"
+                                                                    : "Nights" %>
+                                                        </strong>
+                                                    </div>
+
+                                                </div>
+
+                                                <div class="booking-card-footer">
+                                                    <div class="booking-total-price">
+                                                        <span>Total Amount</span>
+                                                        <strong>
+                                                            ₹<%= booking.pricingDetails.totalPrice.toLocaleString("en-IN")
+                                                                %>
+                                                        </strong>
+                                                    </div>
+                                                </div>
+
+                                    </div>
+                                </div>
+
+                                <% }); %>
+
+                        </div>
+
+                        <% } else { %>
+
+                            <div class="booking-empty-state">
+                                <div class="booking-empty-icon">
+                                    <i class="fa-regular fa-calendar-check"></i>
+                                </div>
+
+                                <h4>No Completed Bookings</h4>
+
+                                <p>
+                                    You don't have any completed stays yet.
+                                    Your past bookings will appear here.
+                                </p>
+
+                                <a href="/listings" class="booking-explore-btn">
+                                    Explore Properties
+                                    <i class="fa-solid fa-arrow-right"></i>
+                                </a>
+                            </div>
+
+                            <% } %>
+
+                </div>
+
+            </main>
+
+        </div>
+    </div>
+</div>
+
+<script src="/js/account.js"></script>
