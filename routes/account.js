@@ -38,4 +38,32 @@ router.get("/listings", isLoggedIn, wrapAsync(accountController.renderListings))
 
 // Render My Reviews page
 router.get("/reviews", isLoggedIn, wrapAsync(accountController.renderReviews));
+
+// Account Settings page
+router.get(
+    "/settings",
+    isLoggedIn,
+    wrapAsync(accountController.renderSettings)
+);
+
+// Verify current password before changing it
+router.post(
+    "/verify-password",
+    isLoggedIn,
+    wrapAsync(accountController.verifyCurrentPassword)
+);
+
+// Change password
+router.post(
+    "/change-password",
+    isLoggedIn,
+    wrapAsync(accountController.changePassword)
+);
+
+// Cancel password change
+router.post(
+    "/cancel-password-change",
+    isLoggedIn,
+    wrapAsync(accountController.cancelPasswordChange)
+);
 module.exports = router;
