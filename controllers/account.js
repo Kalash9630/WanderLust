@@ -163,11 +163,17 @@ module.exports.renderReviews = async (req, res) => {
 // Render Account Settings page
 module.exports.renderSettings = async (req, res) => {
 
-    // Get the password verification status from the session
-    const passwordChangeVerified = req.session.passwordChangeVerified || false;
+    // Get password verification statuses from the session
+
+    const passwordChangeVerified =
+        req.session.passwordChangeVerified || false;
+
+    const accountDeletionVerified =
+        req.session.accountDeletionVerified || false;
 
     res.render("account/settings.ejs", {
-        passwordChangeVerified
+        passwordChangeVerified,
+        accountDeletionVerified
     });
 };
 
@@ -275,7 +281,191 @@ module.exports.cancelPasswordChange = async (req, res) => {
     // Clear the password verification status
     req.session.passwordChangeVerified = false;
 
+    req.flash("success", "Password change canceled");
+
     // Redirect to Account Settings
     return res.redirect("/account/settings");
 };
 
+// Verify current password before deleting the account
+module.exports.verifyDeletePassword = async (req, res) => {
+    const { currentPassword } = req.body;
+
+    // Validate current password length
+    if (!currentPassword || currentPassword.length < 3) {
+        req.flash("error", "Password must contain at least 3 characters.");
+        return res.redirect("/account/settings");
+    }
+
+    try {
+        // Find the logged-in user
+        const user = await User.findById(req.user._id);
+
+        if (!user) {
+            req.flash("error", "User not found.");
+            return res.redirect("/account/settings");
+        }
+
+        // Verify the current password
+        const authenticationResult = await user.authenticate(currentPassword);
+
+        const isPasswordValid = Boolean(authenticationResult.user);
+
+        // Check whether authentication was successful
+        if (!isPasswordValid) {
+            req.session.accountDeletionVerified = false;
+            req.flash("error", "Incorrect current password. Please try again.");
+            return res.redirect("/account/settings");
+        }
+
+        // Store successful verification in the session
+        req.session.accountDeletionVerified = true;
+
+        req.flash("success", "Password verified successfully!");
+
+        return res.redirect("/account/settings");
+
+    } catch (error) {
+        console.error("Account deletion password verification error:", error);
+
+        req.flash("error", "Something went wrong. Please try again.");
+        return res.redirect("/account/settings");
+    }
+};
+
+// Cancel the account deletion process
+module.exports.cancelDeleteAccount = async (req, res) => {
+
+    // Clear the account deletion verification status
+    req.session.accountDeletionVerified = false;
+
+    req.flash("success", "Account Deletion canceled");
+
+    // Redirect to Account Settings
+    return res.redirect("/account/settings");
+};
+
+
+// Permanently delete the user's account and associated data
+module.exports.deleteAccount = async (req, res) => {
+    try {
+        // Check whether the current password was verified
+        if (!req.session.accountDeletionVerified) {
+            req.flash("error", "Please verify your current password first.");
+            return res.redirect("/account/settings");
+        }
+
+        const userId = req.user._id;
+
+        // Find all listings owned by the logged-in user
+        const userListings = await Listing.find({
+            owner: userId
+        }).select("_id reviews");
+
+        const listingIds = userListings.map(listing => listing._id);
+
+        // Collect reviews associated with the user's listings
+        const listingReviewIds = userListings.flatMap(listing => listing.reviews);
+
+        // Find reviews written by the user or associated with their listings
+        const reviews = await Review.find({
+            $or: [
+                { author: userId },
+                { _id: { $in: listingReviewIds } }
+            ]
+        }).select("_id");
+
+        const reviewIds = reviews.map(review => review._id);
+
+        // Find bookings made by the user or associated with their listings
+        const bookings = await Booking.find({
+            $or: [
+                { user: userId },
+                { listing: { $in: listingIds } }
+            ]
+        }).select("_id");
+
+        const bookingIds = bookings.map(booking => booking._id);
+
+        // Remove deleted listing IDs from other users' wishlists
+        if (listingIds.length > 0) {
+            await User.updateMany(
+                { wishlist: { $in: listingIds } },
+                { $pull: { wishlist: { $in: listingIds } } }
+            );
+        }
+
+        // Remove review references from all affected listings
+        if (reviewIds.length > 0) {
+            await Listing.updateMany(
+                { reviews: { $in: reviewIds } },
+                { $pull: { reviews: { $in: reviewIds } } }
+            );
+
+            // Delete the associated reviews
+            await Review.deleteMany({
+                _id: { $in: reviewIds }
+            });
+        }
+
+        // Remove booking references from all affected users
+        if (bookingIds.length > 0) {
+            await User.updateMany(
+                { bookings: { $in: bookingIds } },
+                { $pull: { bookings: { $in: bookingIds } } }
+            );
+
+            // Remove booking references from all affected listings
+            await Listing.updateMany(
+                { bookings: { $in: bookingIds } },
+                { $pull: { bookings: { $in: bookingIds } } }
+            );
+
+            // Delete the associated bookings
+            await Booking.deleteMany({
+                _id: { $in: bookingIds }
+            });
+        }
+
+        // Delete all listings owned by the user
+        await Listing.deleteMany({
+            owner: userId
+        });
+
+        // Delete the user document
+        await User.findByIdAndDelete(userId);
+
+        // Log out the user
+        await new Promise((resolve, reject) => {
+            req.logout((err) => {
+                if (err) {
+                    return reject(err);
+                }
+
+                resolve();
+            });
+        });
+
+        // Destroy the user's session
+        await new Promise((resolve, reject) => {
+            req.session.destroy((err) => {
+                if (err) {
+                    return reject(err);
+                }
+
+                resolve();
+            });
+        });
+
+        // Clear the session cookie
+        res.clearCookie("connect.sid");
+        req.flash("success", "Account Deleted successfully!");
+        return res.redirect("/listings");
+
+    } catch (error) {
+        console.error("Account deletion error:", error);
+
+        req.flash("error", "Unable to delete your account. Please try again.");
+        return res.redirect("/account/settings");
+    }
+};

@@ -76,61 +76,31 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     // STEP 1: Verify current password before deleting the account
+    // Submit account deletion password verification to the backend
     verifyDeletePasswordForm.addEventListener("submit", (event) => {
 
+        // Check form validation
         if (!verifyDeletePasswordForm.checkValidity()) {
             event.preventDefault();
             verifyDeletePasswordForm.classList.add("was-validated");
-            deleteCurrentPassword.focus();
-            return;
         }
 
-        // TEMPORARY: Simulate successful verification for frontend testing.
-        // Remove this preventDefault and stage-switching logic after backend integration.
-        event.preventDefault();
-
-        deleteVerificationStep.hidden = true;
-        deleteConfirmationStep.hidden = false;
-
-        showMessage(
-            deleteAccountMessage,
-            "Frontend demonstration only. Your password has not been verified by the server.",
-            "info"
-        );
+        // Otherwise, allow the form to submit to the backend
     });
 
 
     // STEP 2: Final account deletion
+    // Submit account deletion request to the backend
     deleteAccountForm.addEventListener("submit", (event) => {
 
-        // TEMPORARY: Prevent actual account deletion until backend integration.
-        event.preventDefault();
+        // Check form validation
+        if (!deleteAccountForm.checkValidity()) {
+            event.preventDefault();
+            deleteAccountForm.classList.add("was-validated");
+        }
 
-        showMessage(
-            deleteAccountMessage,
-            "Backend integration is pending. Your account has not been deleted.",
-            "info"
-        );
+        // Otherwise, allow the form to submit to the backend
     });
-
-
-    // Cancel account deletion
-    cancelDeleteAccountForm.addEventListener("submit", (event) => {
-
-        // TEMPORARY: Simulate cancellation on the frontend.
-        // Remove this preventDefault after connecting the backend cancellation route.
-        event.preventDefault();
-
-        verifyDeletePasswordForm.reset();
-        verifyDeletePasswordForm.classList.remove("was-validated");
-
-        deleteConfirmationStep.hidden = true;
-        deleteVerificationStep.hidden = false;
-
-        deleteAccountMessage.hidden = true;
-        deleteVerificationMessage.hidden = true;
-    });
-
 
     // Show and hide password fields
     document.querySelectorAll(".settings-password-toggle").forEach((button) => {
@@ -152,6 +122,28 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
 
+    });
+
+    // Preserve scroll position when verifying the delete account password
+    verifyDeletePasswordForm.addEventListener("submit", () => {
+
+        if (verifyDeletePasswordForm.checkValidity()) {
+            sessionStorage.setItem("settingsScrollPosition", window.scrollY);
+        }
+    });
+
+    // Restore scroll position after the page reloads
+    window.addEventListener("pageshow", () => {
+
+        const savedPosition = sessionStorage.getItem("settingsScrollPosition");
+
+        if (savedPosition !== null) {
+            sessionStorage.removeItem("settingsScrollPosition");
+
+            window.requestAnimationFrame(() => {
+                window.scrollTo(0, Number(savedPosition));
+            });
+        }
     });
 
 });

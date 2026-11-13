@@ -66,4 +66,26 @@ router.post(
     isLoggedIn,
     wrapAsync(accountController.cancelPasswordChange)
 );
+
+// Verify password before account deletion
+router.post(
+    "/verify-delete-password",
+    isLoggedIn,
+    wrapAsync(accountController.verifyDeletePassword)
+);
+
+// Cancel account deletion
+router.post(
+    "/cancel-delete",
+    isLoggedIn,
+    wrapAsync(accountController.cancelDeleteAccount)
+);
+
+// Permanently delete account
+router.delete(
+    "/delete",
+    isLoggedIn,
+    wrapAsync(accountController.deleteAccount)
+);
+
 module.exports = router;
