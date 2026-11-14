@@ -47,10 +47,4 @@ router.post(
 // logout user in backend
 router.get("/logout", userController.logout);
 
-// privacy page
-router.get("/privacy", userController.privacy);
-
-// terms and conditions page
-router.get("/terms", userController.terms);
-
 module.exports = router;

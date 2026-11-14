@@ -267,13 +267,3 @@ module.exports.logout = (req, res, next) => {
     res.redirect("/listings");
   });
 };
-
-// for privacy
-module.exports.privacy = (req, res) => {
-  res.render("privacy.ejs");
-};
-
-// for terms
-module.exports.terms = (req, res) => {
-  res.render("terms.ejs");
-};
