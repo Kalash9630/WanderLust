@@ -1,5 +1,6 @@
-const { guestDetailsSchema, stayDetailsSchema } = require("./schema.js");
+const { guestDetailsSchema, stayDetailsSchema, contactSchema  } = require("./schema.js");
 const { profileSchema } = require("./schema.js");
+
 
 // to check whether the user is logged in
 module.exports.isLoggedIn = (req, res, next) => {
@@ -165,6 +166,25 @@ module.exports.validateProfile = (req, res, next) => {
 
         req.flash("error", errorMessage);
         return res.redirect("/account");
+    }
+
+    next();
+};
+
+// Validate Contact form
+module.exports.validateContact = (req, res, next) => {
+    const { error } = contactSchema.validate(req.body, {
+        abortEarly: false,
+        stripUnknown: true
+    });
+
+    if (error) {
+        const errorMessage = error.details
+            .map((detail) => detail.message)
+            .join(", ");
+
+        req.flash("error", errorMessage);
+        return res.redirect("/contact");
     }
 
     next();

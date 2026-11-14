@@ -132,3 +132,40 @@ module.exports.profileSchema = Joi.object({
             "any.only": "Please select a valid gender."
         })
 });
+
+// for contact section validation
+module.exports.contactSchema = Joi.object({
+    name: Joi.string()
+        .trim()
+        .required()
+        .messages({
+            "string.empty": "Name is required.",
+            "any.required": "Name is required."
+        }),
+
+    email: Joi.string()
+        .trim()
+        .email()
+        .required()
+        .messages({
+            "string.empty": "Email is required.",
+            "string.email": "Please enter a valid email address.",
+            "any.required": "Email is required."
+        }),
+
+    subject: Joi.string()
+        .trim()
+        .required()
+        .messages({
+            "string.empty": "Subject is required.",
+            "any.required": "Subject is required."
+        }),
+
+    message: Joi.string()
+        .trim()
+        .required()
+        .messages({
+            "string.empty": "Message is required.",
+            "any.required": "Message is required."
+        })
+});
