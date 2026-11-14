@@ -22,6 +22,7 @@ const accountRouter = require("./routes/account.js");
 const termsRouter = require("./routes/terms.js");
 const privacyRouter = require("./routes/privacy.js");
 const contactRouter = require("./routes/contact.js");
+const aboutRouter = require("./routes/about.js");
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
@@ -117,6 +118,9 @@ app.use("/",privacyRouter);
 
 // contact reouter
 app.use("/",contactRouter);
+
+// about reouter
+app.use("/",aboutRouter);
 
 // handling if any other page is requested other than the one that are created
 app.all("/{*splat}", (req,res,next) => {

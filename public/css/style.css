@@ -9617,3 +9617,895 @@ body:has(.review-page) {
     gap: 10px;
   }
 }
+
+/* =========================================
+   ABOUT PAGE - GENERAL STYLING
+========================================= */
+
+.about-page {
+    --about-primary: #fe424d;
+    --about-primary-dark: #e9323e;
+    --about-heading: #222222;
+    --about-text: #686868;
+    --about-light: #fff7f7;
+    --about-border: #eeeeee;
+    --about-radius: 16px;
+
+    color: var(--about-heading);
+    background-color: #ffffff;
+    overflow: hidden;
+}
+
+.about-page,
+.about-page * {
+    box-sizing: border-box;
+}
+
+.about-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-left: 25px;
+    padding-right: 25px;
+}
+
+.about-section {
+    padding: 75px 0;
+}
+
+.about-eyebrow {
+    display: inline-block;
+    margin-bottom: 17px;
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 2.2px;
+    color: #ffffff;
+}
+
+.about-eyebrow-dark {
+    color: var(--about-primary);
+}
+
+.about-section-heading {
+    margin-bottom: 50px;
+}
+
+.about-centered-heading {
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.about-section-heading h2 {
+    margin: 0 0 15px;
+    font-size: 38px;
+    line-height: 1.25;
+    font-weight: 800;
+    letter-spacing: -1px;
+}
+
+.about-section-heading p {
+    max-width: 620px;
+    margin: 0 auto;
+    color: var(--about-text);
+    font-size: 15px;
+    line-height: 1.8;
+}
+
+
+/* =========================================
+   BUTTONS
+========================================= */
+
+.about-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    min-height: 50px;
+    padding: 13px 25px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 700;
+    transition: all 0.25s ease;
+}
+
+.about-btn-primary {
+    color: #ffffff;
+    background: var(--about-primary);
+    border: 1px solid var(--about-primary);
+}
+
+.about-btn-primary:hover {
+    color: #ffffff;
+    background: var(--about-primary-dark);
+    border-color: var(--about-primary-dark);
+    transform: translateY(-2px);
+}
+
+.about-btn-outline {
+    color: #ffffff;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+}
+
+.about-btn-outline:hover {
+    color: var(--about-heading);
+    background: #ffffff;
+    border-color: #ffffff;
+}
+
+
+/* =========================================
+   1. HERO SECTION
+========================================= */
+
+.about-hero {
+    min-height: 530px;
+    height: 68vh;
+    background-image:
+        linear-gradient(
+            90deg,
+            rgba(15, 20, 25, 0.75) 0%,
+            rgba(15, 20, 25, 0.45) 55%,
+            rgba(15, 20, 25, 0.12) 100%
+        ),
+        url("/images/about-hero.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.about-hero-overlay {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 95%;
+}
+
+.about-hero-content {
+    color: #ffffff;
+}
+
+.about-hero-content h1 {
+    max-width: 760px;
+    margin: 0 0 22px;
+    font-size: clamp(42px, 5.2vw, 66px);
+    line-height: 1.13;
+    font-weight: 800;
+    letter-spacing: -2px;
+}
+
+.about-hero-content p {
+    max-width: 570px;
+    margin: 0 0 32px;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 17px;
+    line-height: 1.8;
+}
+
+
+/* =========================================
+   2. WHO WE ARE / STORY
+========================================= */
+
+.about-story-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 75px;
+}
+
+.about-story-image {
+    position: relative;
+    min-width: 0;
+}
+
+.about-story-image img {
+    display: block;
+    width: 100%;
+    height: 440px;
+    object-fit: cover;
+    border-radius: var(--about-radius);
+}
+
+.about-image-label {
+    position: absolute;
+    left: 20px;
+    bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    max-width: calc(100% - 40px);
+    padding: 14px 18px;
+    color: #333333;
+    background: #ffffff;
+    border-radius: 9px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.about-image-label i {
+    color: var(--about-primary);
+    font-size: 18px;
+}
+
+.about-story-content h2 {
+    margin: 0 0 22px;
+    font-size: 39px;
+    font-weight: 800;
+    line-height: 1.25;
+    letter-spacing: -1px;
+}
+
+.about-story-content p {
+    margin: 0 0 15px;
+    color: var(--about-text);
+    font-size: 14px;
+    line-height: 1.95;
+}
+
+
+/* =========================================
+   3. MISSION AND VISION
+========================================= */
+
+.about-mission-section {
+    background: #fff8f8;
+}
+
+.about-mission-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 25px;
+}
+
+.about-mission-card {
+    padding: 40px;
+    background: #ffffff;
+    border: 1px solid #f2e8e8;
+    border-radius: var(--about-radius);
+    transition: all 0.25s ease;
+}
+
+.about-mission-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.06);
+}
+
+.about-icon-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 58px;
+    height: 58px;
+    margin-bottom: 24px;
+    color: var(--about-primary);
+    background: #fff0f1;
+    border-radius: 14px;
+    font-size: 23px;
+}
+
+.about-mission-card h3 {
+    margin: 0 0 13px;
+    font-size: 23px;
+    font-weight: 800;
+}
+
+.about-mission-card p {
+    margin: 0;
+    color: var(--about-text);
+    font-size: 14px;
+    line-height: 1.9;
+}
+
+
+/* =========================================
+   4. HOW IT WORKS
+========================================= */
+
+.about-steps-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.about-step-card {
+    position: relative;
+    padding: 30px 23px;
+    background: #ffffff;
+    border: 1px solid var(--about-border);
+    border-radius: var(--about-radius);
+    transition: all 0.25s ease;
+}
+
+.about-step-card:hover {
+    border-color: #ffd0d3;
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.05);
+}
+
+.about-step-number {
+    position: absolute;
+    top: 20px;
+    right: 22px;
+    color: #f3dada;
+    font-size: 30px;
+    font-weight: 800;
+}
+
+.about-step-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 57px;
+    height: 57px;
+    margin-bottom: 28px;
+    color: #ffffff;
+    background: var(--about-primary);
+    border-radius: 14px;
+    font-size: 21px;
+}
+
+.about-step-card h3 {
+    margin: 0 0 12px;
+    font-size: 17px;
+    font-weight: 800;
+    line-height: 1.45;
+}
+
+.about-step-card p {
+    margin: 0;
+    color: var(--about-text);
+    font-size: 13px;
+    line-height: 1.85;
+}
+
+
+/* =========================================
+   5. WHY CHOOSE WANDERLUST
+========================================= */
+
+.about-why-section {
+    background: #fafafa;
+}
+
+.about-features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 22px;
+}
+
+.about-feature-card {
+    padding: 32px 27px;
+    background: #ffffff;
+    border: 1px solid var(--about-border);
+    border-radius: var(--about-radius);
+    transition: all 0.25s ease;
+}
+
+.about-feature-card:hover {
+    transform: translateY(-5px);
+    border-color: #ffd0d3;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.05);
+}
+
+.about-feature-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 52px;
+    height: 52px;
+    margin-bottom: 21px;
+    color: var(--about-primary);
+    background: #fff0f1;
+    border-radius: 13px;
+    font-size: 21px;
+}
+
+.about-feature-card h3 {
+    margin: 0 0 11px;
+    font-size: 17px;
+    font-weight: 800;
+}
+
+.about-feature-card p {
+    margin: 0;
+    color: var(--about-text);
+    font-size: 13px;
+    line-height: 1.85;
+}
+
+
+/* =========================================
+   6. GUESTS AND PROPERTY OWNERS
+========================================= */
+
+.about-audience-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 25px;
+}
+
+.about-audience-card {
+    padding: 42px;
+    border-radius: var(--about-radius);
+    transition: all 0.25s ease;
+}
+
+.about-audience-card:hover {
+    transform: translateY(-5px);
+}
+
+.about-guest-card {
+    background: #fff4f4;
+}
+
+.about-host-card {
+    background: #f6f7f9;
+}
+
+.about-audience-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    margin-bottom: 25px;
+    color: var(--about-primary);
+    background: #ffffff;
+    border-radius: 15px;
+    font-size: 25px;
+}
+
+.about-audience-label {
+    display: block;
+    margin-bottom: 13px;
+    color: var(--about-primary);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1.7px;
+}
+
+.about-audience-card h3 {
+    max-width: 400px;
+    margin: 0 0 15px;
+    font-size: 27px;
+    font-weight: 800;
+    line-height: 1.35;
+}
+
+.about-audience-card p {
+    max-width: 450px;
+    margin: 0 0 23px;
+    color: var(--about-text);
+    font-size: 14px;
+    line-height: 1.9;
+}
+
+.about-text-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--about-primary);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 800;
+    transition: all 0.2s ease;
+}
+
+.about-text-link:hover {
+    color: var(--about-primary-dark);
+    gap: 15px;
+}
+
+
+/* =========================================
+   7. OUR VALUES
+========================================= */
+
+.about-values-section {
+    background: #fff8f8;
+}
+
+.about-values-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.about-value-item {
+    padding: 27px 20px;
+    text-align: center;
+    background: #ffffff;
+    border-radius: var(--about-radius);
+    transition: all 0.25s ease;
+}
+
+.about-value-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.05);
+}
+
+.about-value-item i {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    margin: 0 auto 20px;
+    color: var(--about-primary);
+    background: #fff0f1;
+    border-radius: 50%;
+    font-size: 21px;
+}
+
+.about-value-item h3 {
+    margin: 0 0 10px;
+    font-size: 17px;
+    font-weight: 800;
+}
+
+.about-value-item p {
+    margin: 0;
+    color: var(--about-text);
+    font-size: 13px;
+    line-height: 1.8;
+}
+
+
+/* =========================================
+   8. MEET THE FOUNDER
+========================================= */
+
+.about-founder-grid {
+    display: grid;
+    grid-template-columns: 0.85fr 1.15fr;
+    align-items: center;
+    gap: 75px;
+}
+
+.about-founder-photo-wrapper {
+    position: relative;
+    min-width: 0;
+}
+
+.about-founder-photo {
+    display: block;
+    width: 100%;
+    height: 470px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: var(--about-radius);
+}
+
+.about-founder-photo-caption {
+    position: absolute;
+    left: 18px;
+    right: 18px;
+    bottom: 18px;
+    padding: 15px;
+    color: #ffffff;
+    background: rgba(0, 0, 0, 0.55);
+    border-radius: 8px;
+    text-align: center;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+}
+
+.about-founder-content h2 {
+    margin: 0 0 23px;
+    font-size: 38px;
+    font-weight: 800;
+    letter-spacing: -1px;
+}
+
+.about-founder-content h3 {
+    margin: 0 0 5px;
+    font-size: 25px;
+    font-weight: 800;
+}
+
+.about-founder-role {
+    display: block;
+    margin-bottom: 23px;
+    color: var(--about-primary);
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.about-founder-content p {
+    margin: 0 0 14px;
+    color: var(--about-text);
+    font-size: 14px;
+    line-height: 1.9;
+}
+
+.about-founder-signoff {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-top: 25px;
+}
+
+.about-founder-signoff span {
+    color: var(--about-text);
+    font-size: 13px;
+}
+
+.about-founder-signoff strong {
+    color: var(--about-primary);
+    font-size: 20px;
+    font-weight: 800;
+}
+
+
+/* =========================================
+   9. FINAL CTA
+========================================= */
+
+.about-cta-section {
+    min-height: 390px;
+    background-image:
+        linear-gradient(
+            rgba(20, 20, 20, 0.68),
+            rgba(20, 20, 20, 0.68)
+        ),
+        url("/images/about-hero.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.about-cta-overlay {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 390px;
+    padding: 65px 0;
+    margin-bottom: 65px;
+}
+
+.about-cta-content {
+    color: #ffffff;
+    text-align: center;
+}
+
+.about-cta-content h2 {
+    max-width: 750px;
+    margin: 0 auto 17px;
+    font-size: 42px;
+    font-weight: 800;
+    line-height: 1.25;
+    letter-spacing: -1px;
+}
+
+.about-cta-content p {
+    max-width: 650px;
+    margin: 0 auto 28px;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 15px;
+    line-height: 1.8;
+}
+
+.about-cta-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 13px;
+}
+
+
+/* =========================================
+   RESPONSIVE DESIGN - TABLETS
+========================================= */
+
+@media (max-width: 992px) {
+
+    .about-section {
+        padding: 75px 0;
+    }
+
+    .about-story-grid,
+    .about-founder-grid {
+        gap: 40px;
+    }
+
+    .about-steps-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .about-features-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .about-values-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .about-story-image img {
+        height: 410px;
+    }
+
+    .about-founder-photo {
+        height: 430px;
+    }
+}
+
+
+/* =========================================
+   RESPONSIVE DESIGN - MOBILE
+========================================= */
+
+@media (max-width: 768px) {
+
+    .about-container {
+        padding-top: 100px;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .about-section {
+        padding: 60px 0;
+    }
+
+    .about-hero {
+        min-height: 520px;
+        height: auto;
+        background-position: center;
+    }
+
+    .about-hero-content h1 {
+        font-size: 43px;
+        letter-spacing: -1.5px;
+    }
+
+    .about-hero-content p {
+        font-size: 15px;
+    }
+
+    .about-section-heading {
+        margin-bottom: 35px;
+    }
+
+    .about-section-heading h2 {
+        font-size: 31px;
+    }
+
+    .about-story-grid,
+    .about-founder-grid {
+        grid-template-columns: 1fr;
+        gap: 35px;
+    }
+
+    .about-story-image img {
+        height: 350px;
+    }
+
+    .about-story-content h2,
+    .about-founder-content h2 {
+        font-size: 32px;
+    }
+
+    .about-mission-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .about-mission-card {
+        padding: 30px;
+    }
+
+    .about-audience-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .about-audience-card {
+        padding: 32px;
+    }
+
+    .about-audience-card h3 {
+        font-size: 24px;
+    }
+
+    .about-founder-photo {
+        height: 420px;
+        max-width: 480px;
+        margin: 0 auto;
+    }
+
+    .about-cta-content h2 {
+        font-size: 33px;
+    }
+}
+
+
+/* =========================================
+   RESPONSIVE DESIGN - SMALL MOBILE
+========================================= */
+
+@media (max-width: 480px) {
+
+    .about-container {
+        padding-left: 17px;
+        padding-right: 17px;
+    }
+
+    .about-section {
+        padding: 50px 0;
+    }
+
+    .about-hero {
+        min-height: 480px;
+    }
+
+    .about-hero-content h1 {
+        font-size: 36px;
+    }
+
+    .about-hero-content p {
+        font-size: 14px;
+    }
+
+    .about-eyebrow {
+        font-size: 10px;
+        letter-spacing: 1.7px;
+    }
+
+    .about-section-heading h2 {
+        font-size: 28px;
+    }
+
+    .about-story-content h2,
+    .about-founder-content h2 {
+        font-size: 29px;
+    }
+
+    .about-story-image img {
+        height: 290px;
+    }
+
+    .about-steps-grid,
+    .about-features-grid,
+    .about-values-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .about-step-card,
+    .about-feature-card {
+        padding: 27px;
+    }
+
+    .about-mission-card,
+    .about-audience-card {
+        padding: 25px;
+    }
+
+    .about-founder-photo {
+        height: 350px;
+    }
+
+    .about-cta-content h2 {
+        font-size: 29px;
+    }
+
+    .about-cta-content p {
+        font-size: 14px;
+    }
+
+    .about-cta-actions {
+        flex-direction: column;
+        align-items: stretch;
+        max-width: 270px;
+        margin: 0 auto;
+    }
+
+    .about-btn {
+        width: 100%;
+    }
+
+}
