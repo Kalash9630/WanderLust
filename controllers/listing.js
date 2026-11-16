@@ -1,5 +1,7 @@
-const Listing = require("../models/listing");
 const { Country, City } = require("country-state-city");
+const Listing = require("../models/listing.js");
+const Booking = require("../models/booking.js");
+const User = require("../models/user.js");
 
 module.exports.index = async (req, res) => {
   const { minPrice, maxPrice, location } = req.query;
@@ -114,14 +116,30 @@ module.exports.update = async (req, res) => {
   res.redirect(redirectUrl);
 };
 
+
 // Delete listing
 module.exports.delete = async (req, res) => {
     let { id } = req.params;
 
-    // Find and delete the listing
-    let deletedListing = await Listing.findByIdAndDelete(id);
+    // Find the listing before deleting it
+    let deletedListing = await Listing.findById(id);
 
-    console.log(deletedListing);
+    if (deletedListing) {
+
+        // Delete all bookings associated with the listing
+        await Booking.deleteMany({
+            _id: { $in: deletedListing.bookings }
+        });
+
+        // Remove booking references from users
+        await User.updateMany(
+            { bookings: { $in: deletedListing.bookings } },
+            { $pull: { bookings: { $in: deletedListing.bookings } } }
+        );
+
+        // Delete the listing
+        await Listing.findByIdAndDelete(id);
+    }
 
     req.flash("success", "Listing deleted successfully!");
 
@@ -132,6 +150,7 @@ module.exports.delete = async (req, res) => {
 
     res.redirect(redirectUrl);
 };
+
 
 // Get all countries
 module.exports.getCountries = (req, res) => {
