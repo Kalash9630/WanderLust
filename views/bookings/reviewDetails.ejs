@@ -196,21 +196,21 @@
                 <div class="review-price-row">
                     <span>Accommodation</span>
                     <strong id="reviewAccommodation">
-                        ₹<%= booking.pricingDetails.accommodationPrice.toLocaleString("en-IN") %>
+                        $<%= booking.pricingDetails.accommodationPrice.toLocaleString("en-CA") %> CAD
                     </strong>
                 </div>
 
                 <div class="review-price-row">
                     <span>Platform fee (2%)</span>
                     <strong id="reviewPlatformFee">
-                        ₹<%= booking.pricingDetails.platformFee.toLocaleString("en-IN") %>
+                        $<%= booking.pricingDetails.platformFee.toLocaleString("en-CA") %> CAD
                     </strong>
                 </div>
 
                 <div class="review-price-row">
                     <span>Taxes (5%)</span>
                     <strong id="reviewTax">
-                        ₹<%= booking.pricingDetails.taxAmount.toLocaleString("en-IN") %>
+                        $<%= booking.pricingDetails.taxAmount.toLocaleString("en-CA") %> CAD
                     </strong>
                 </div>
 
@@ -221,7 +221,7 @@
                     </div>
 
                     <strong id="reviewTotal">
-                        ₹<%= booking.pricingDetails.totalPrice.toLocaleString("en-IN") %>
+                        $<%= booking.pricingDetails.totalPrice.toLocaleString("en-CA") %> CAD
                     </strong>
                 </div>
 
@@ -303,7 +303,7 @@
                 <div class="property-price">
                     <div>
                         <strong>
-                            ₹<%= Number(listing.price).toLocaleString("en-IN") %> <span>/ night</span>
+                            $<%= Number(listing.price).toLocaleString("en-CA") %> CAD <span>/ night</span>
                         </strong>
                         
                     </div>

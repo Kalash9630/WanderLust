@@ -58,7 +58,7 @@
                 <!-- Price -->
                 <div class="listing-price-section mt-4 mb-4">
                     <h4 class="fw-bold mb-1">
-                        &#8377; <%= String(listing.price).replace(/\B(?=(\d{3})+(?!\d))/g, ",") %>
+                        $<%= String(listing.price).replace(/\B(?=(\d{3})+(?!\d))/g, ",") %> CAD
                         <span class="price-night">/ night</span>
                     </h4>
                     <small class="text-muted">Price per night</small>

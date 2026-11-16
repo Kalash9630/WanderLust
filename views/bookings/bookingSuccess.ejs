@@ -48,7 +48,7 @@
                     </p>
 
                     <div class="reservation-nightly-price">
-                        ₹ <%= Number(booking.listing.price).toLocaleString("en-IN") %>
+                        $<%= Number(booking.listing.price).toLocaleString("en-CA") %> CAD
                         <span>/ night</span>
                     </div>
                 </div>
@@ -173,21 +173,21 @@
                     <div>
                         <span>Accommodation</span>
                         <strong>
-                            ₹ <%= booking.pricingDetails.accommodationPrice.toLocaleString("en-IN") %>
+                            $<%= booking.pricingDetails.accommodationPrice.toLocaleString("en-CA") %> CAD
                         </strong>
                     </div>
 
                     <div>
                         <span>Platform fee (2%)</span>
                         <strong>
-                            ₹ <%= booking.pricingDetails.platformFee.toLocaleString("en-IN") %>
+                            $<%= booking.pricingDetails.platformFee.toLocaleString("en-CA") %> CAD
                         </strong>
                     </div>
 
                     <div>
                         <span>Taxes (5%)</span>
                         <strong>
-                            ₹ <%= booking.pricingDetails.taxAmount.toLocaleString("en-IN") %>
+                            $<%= booking.pricingDetails.taxAmount.toLocaleString("en-CA") %> CAD
                         </strong>
                     </div>
 
@@ -196,7 +196,7 @@
                 <div class="reservation-total">
                     <span>Total booking amount</span>
                     <strong>
-                        ₹ <%= booking.pricingDetails.totalPrice.toLocaleString("en-IN") %>
+                        $<%= booking.pricingDetails.totalPrice.toLocaleString("en-CA") %> CAD
                     </strong>
                 </div>
 

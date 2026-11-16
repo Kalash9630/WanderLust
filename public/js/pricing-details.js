@@ -38,9 +38,9 @@ let pricingDetails = null;
 // 4. FORMAT CURRENCY
 
 function formatCurrency(amount) {
-    return new Intl.NumberFormat("en-IN", {
+    return new Intl.NumberFormat("en-CA", {
         style: "currency",
-        currency: "INR",
+        currency: "CAD",
         maximumFractionDigits: 0
     }).format(amount);
 }

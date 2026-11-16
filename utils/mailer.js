@@ -58,7 +58,7 @@ async function sendBookingConfirmationEmail(booking) {
 
                 <h3>Payment Summary</h3>
 
-                <p><strong>Total Amount:</strong> ₹ ${booking.pricingDetails.totalPrice.toLocaleString("en-IN")}</p>
+                <p><strong>Total Amount:</strong> $${booking.pricingDetails.totalPrice.toLocaleString("en-CA")} CAD</p>
 
                 <p>Thank you for choosing WanderLust!</p>
 
