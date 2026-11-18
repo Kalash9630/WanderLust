@@ -54,15 +54,18 @@ const sessionOptions = {
     },
 };
 
-store.on("error", () => {
-    console.log("Error in Mongo Session Store", err);
-})
-
 // storing map token for accesing in ejs files
 app.use((req, res, next) => {
     res.locals.mapToken = process.env.MAP_TOKEN;
     next();
 });
+
+store.on("error", (err) => {
+    console.log("Error in Mongo Session Store", err);
+});
+
+// Trust Render's proxy for secure cookies
+app.set("trust proxy", 1);
 
 // Session configuration
 app.use(session(sessionOptions));
