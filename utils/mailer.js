@@ -1,22 +1,51 @@
+const { google } = require("googleapis");
+const oauth2Client = require("./googleAuth.js");
 
-const nodemailer = require("nodemailer");
-
-const transporter = nodemailer.createTransport({
-    host: process.env.EMAIL_HOST,
-    port: Number(process.env.EMAIL_PORT),
-    secure: false,
-    auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
-    },
+// Configure Gmail API
+oauth2Client.setCredentials({
+    refresh_token: process.env.GOOGLE_REFRESH_TOKEN,
 });
 
+const gmail = google.gmail({
+    version: "v1",
+    auth: oauth2Client,
+});
+
+// Send an email using Gmail API
+async function sendEmail(to, subject, html) {
+    const message = [
+        `From: WanderLust <${process.env.GMAIL_USER}>`,
+        `To: ${to}`,
+        `Subject: ${subject}`,
+        "MIME-Version: 1.0",
+        'Content-Type: text/html; charset="UTF-8"',
+        "",
+        html,
+    ].join("\r\n");
+
+    // Encode the email in Gmail API format
+    const encodedMessage = Buffer.from(message)
+        .toString("base64")
+        .replace(/\+/g, "-")
+        .replace(/\//g, "_")
+        .replace(/=+$/, "");
+
+    const response = await gmail.users.messages.send({
+        userId: "me",
+        requestBody: {
+            raw: encodedMessage,
+        },
+    });
+
+    return response.data;
+}
+
+// Send email verification OTP
 async function sendVerificationEmail(email, otp) {
-    const info = await transporter.sendMail({
-        from: `"WanderLust" <${process.env.EMAIL_USER}>`,
-        to: email,
-        subject: "Verify your WanderLust account",
-        html: `
+    const info = await sendEmail(
+        email,
+        "Verify your WanderLust account",
+        `
             <div style="font-family: Arial, sans-serif; padding: 20px;">
                 <h2>Welcome to WanderLust!</h2>
                 <p>Thank you for creating an account.</p>
@@ -26,20 +55,20 @@ async function sendVerificationEmail(email, otp) {
                 <p>If you did not request this code, please ignore this email.</p>
                 <p>Happy exploring!<br>Team WanderLust</p>
             </div>
-        `,
-    });
+        `
+    );
 
-    console.log("Email sent:", info.messageId);
+    // console.log("Verification email sent:", info.id);
 
     return info;
 }
 
+// Send booking confirmation email
 async function sendBookingConfirmationEmail(booking) {
-    const info = await transporter.sendMail({
-        from: `"WanderLust" <${process.env.EMAIL_USER}>`,
-        to: booking.guestDetails.email,
-        subject: "Your WanderLust booking is confirmed!",
-        html: `
+    const info = await sendEmail(
+        booking.guestDetails.email,
+        "Your WanderLust booking is confirmed!",
+        `
             <div style="font-family: Arial, sans-serif; padding: 20px; color: #333;">
                 <h2 style="color: #FE405C;">Your stay is confirmed!</h2>
 
@@ -64,16 +93,15 @@ async function sendBookingConfirmationEmail(booking) {
 
                 <p>Happy exploring!<br>Team WanderLust</p>
             </div>
-        `,
-    });
+        `
+    );
 
-    console.log("Booking confirmation email sent:", info.messageId);
+    // console.log("Booking confirmation email sent:", info.id);
 
     return info;
 }
 
 module.exports = {
-    transporter,
     sendVerificationEmail,
-    sendBookingConfirmationEmail
+    sendBookingConfirmationEmail,
 };
